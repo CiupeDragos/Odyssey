@@ -3,10 +3,15 @@ import http from "http";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import { MONGO_URL, PORT } from "./util/constants";
+import { loginUser, registerUser } from "./routes/authentication";
 
 const app = express();
 
 app.use(bodyParser.json());
+
+//End-points
+app.post("/register", registerUser);
+app.post("/login", loginUser);
 
 const server = http.createServer(app);
 
