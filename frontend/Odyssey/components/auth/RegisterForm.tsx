@@ -11,7 +11,7 @@ import {
 import { registerAccount } from "../../http/auth-methods";
 import { HttpResponse } from "../../http/HttpResponse";
 import { useNavigation } from "@react-navigation/native";
-import { RootNavigationProp } from "../../types/navigation";
+import { AuthNavigationProp } from "../../types/navigation";
 
 type RegisterFields = {
   username: string;
@@ -41,7 +41,7 @@ function RegisterForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [registerResponse, setRegisterResponse] = useState<RegisterResponse>();
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
 
   function handleInputChange(field: RegisterInputValue, value: string) {
     setInputValues((curFields) => ({ ...curFields, [field]: value }));

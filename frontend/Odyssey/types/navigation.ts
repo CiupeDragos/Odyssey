@@ -9,4 +9,4 @@ export type MainNavParamList = {
   Home: undefined;
 };
 
-export type RootNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
+export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;

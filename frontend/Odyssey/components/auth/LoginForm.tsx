@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { loginAccount } from "../../http/auth-methods";
 import { HttpResponse } from "../../http/HttpResponse";
 import { useNavigation } from "@react-navigation/native";
-import { RootNavigationProp } from "../../types/navigation";
+import { AuthNavigationProp } from "../../types/navigation";
 import { MainContext } from "../../store/MainContext";
 
 type LoginInputValue = "username" | "password";
@@ -27,7 +27,7 @@ function LoginForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState<string>();
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
   const mainContext = useContext(MainContext);
 
   function handleInputChange(field: LoginInputValue, value: string) {
