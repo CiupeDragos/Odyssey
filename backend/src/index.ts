@@ -2,11 +2,13 @@ import express from "express";
 import http from "http";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import cors from "cors";
 import { MONGO_URL, PORT } from "./util/constants";
 import { loginUser, registerUser } from "./routes/authentication";
 
 const app = express();
 
+app.use(cors({ credentials: true }));
 app.use(bodyParser.json());
 
 //End-points
@@ -15,8 +17,8 @@ app.post("/login", loginUser);
 
 const server = http.createServer(app);
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+server.listen(PORT, "192.168.100.7", () => {
+  console.log(`Server running on http://192.168.100.7:${PORT}`);
 });
 
 mongoose.Promise = Promise;
