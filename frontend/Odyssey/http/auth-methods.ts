@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RegisterRequest } from "./request-types";
+import { LoginRequest, RegisterRequest } from "./request-types";
 import { BASE_URL } from "../util/constants";
 import { HttpError, HttpResponse, HttpSuccess } from "./HttpResponse";
 
@@ -32,4 +32,16 @@ export async function registerAccount(
   };
 
   return genericPostMethod(registerRequest, "register");
+}
+
+export async function loginAccount(
+  username: string,
+  password: string
+): Promise<HttpResponse<string>> {
+  const loginReqest: LoginRequest = {
+    username: username,
+    password: password,
+  };
+
+  return genericPostMethod(loginReqest, "login");
 }
