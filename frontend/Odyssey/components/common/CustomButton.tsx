@@ -1,11 +1,4 @@
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 type CustomButtonProps = {
   color: string;

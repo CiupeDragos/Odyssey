@@ -1,13 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import RegisterScreen from "./screens/auth/RegisterScreen";
 import { Colors } from "./util/constants";
 import LoginScreen from "./screens/auth/LoginScreen";
-import { RootStackParamList } from "./types/navigation";
+import { AuthNavParamList, MainNavParamList } from "./types/navigation";
+import HomeScreen from "./screens/main/home/HomeScreen";
+import MainContextProvider, { MainContext } from "./store/MainContext";
+import { useContext } from "react";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<AuthNavParamList>();
+const BottomTab = createBottomTabNavigator<MainNavParamList>();
 
 function AuthNavigation() {
   return (
@@ -32,10 +37,20 @@ function AuthNavigation() {
   );
 }
 
+function MainNavigation() {
+  return (
+    <BottomTab.Navigator>
+      <BottomTab.Screen name="Home" component={HomeScreen} />
+    </BottomTab.Navigator>
+  );
+}
+
 function Navigation() {
+  const mainContext = useContext(MainContext);
+
   return (
     <NavigationContainer>
-      <AuthNavigation />
+      {mainContext.isLoggedIn ? <MainNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );
 }
@@ -44,7 +59,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Navigation />
+      <MainContextProvider>
+        <Navigation />
+      </MainContextProvider>
     </View>
   );
 }
@@ -54,9 +71,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-declare global {
-  namespace ReactNavigation {
-    export interface RootParamList extends RootStackParamList {}
-  }
-}

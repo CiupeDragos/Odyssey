@@ -2,11 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import Input from "../common/Input";
 import CustomButton from "../common/CustomButton";
 import { Colors } from "../../util/constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { loginAccount } from "../../http/auth-methods";
 import { HttpResponse } from "../../http/HttpResponse";
 import { useNavigation } from "@react-navigation/native";
 import { RootNavigationProp } from "../../types/navigation";
+import { MainContext } from "../../store/MainContext";
 
 type LoginInputValue = "username" | "password";
 
@@ -27,6 +28,7 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState<string>();
   const navigation = useNavigation<RootNavigationProp>();
+  const mainContext = useContext(MainContext);
 
   function handleInputChange(field: LoginInputValue, value: string) {
     setInputValues((curFields) => ({ ...curFields, [field]: value }));
@@ -46,8 +48,7 @@ function LoginForm() {
     );
 
     if (HttpResponse.isSuccess(response)) {
-      // change stack to use the authenticated one
-      console.log("Success");
+      mainContext.login("Proper data will be returned from backend");
     } else if (HttpResponse.isError(response)) {
       setLoginResponse(response.error);
     }
