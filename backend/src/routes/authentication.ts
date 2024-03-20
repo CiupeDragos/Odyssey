@@ -8,10 +8,14 @@ import {
 import { INVALID_REQUEST_BODY_MESSAGE } from "../util/constants";
 import UserMethods from "../db_models/User/methods";
 import { UserDbModel } from "../db_models/User/model";
+import { UserData } from "./responses";
 
 export const registerUser = async (req: Request, res: Response) => {
   const registerRequest: RegisterRequest = {
     username: req.body.username,
+    realName: req.body.realName,
+    birthTimestamp: req.body.birthTimestamp,
+    country: req.body.country,
     password: req.body.password,
   };
 
@@ -32,7 +36,7 @@ export const registerUser = async (req: Request, res: Response) => {
   const encryptedPassword = await encryptPassword(registerRequest.password);
 
   const userToAdd: UserDbModel = {
-    username: registerRequest.username,
+    ...registerRequest,
     password: encryptedPassword,
   };
 
@@ -69,5 +73,13 @@ export const loginUser = async (req: Request, res: Response) => {
     return;
   }
 
-  res.send("You logged in successfully");
+  /*
+   Password is still passed,but not accesible through the object interface,
+   typescript doesn't complain about extra properties when spreading objects apparently
+
+   UserData is equal to User,without the password
+  */
+  const userData: UserData = { ...user };
+
+  res.json(userData);
 };

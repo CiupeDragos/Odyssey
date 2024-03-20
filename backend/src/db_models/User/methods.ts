@@ -16,6 +16,9 @@ export async function findUserByUsername(
   const user: User = {
     id: userModel._id.toString(),
     username: userModel.username,
+    realName: userModel.realName,
+    birthTimestamp: userModel.birthTimestamp,
+    country: userModel.country,
     password: userModel.password,
   };
 
