@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { LoginRequest, RegisterRequest } from "./requests";
-import { isRequestValid } from "../util/methods";
+import {
+  decryptPassword,
+  encryptPassword,
+  isRequestValid,
+} from "../util/methods";
 import { INVALID_REQUEST_BODY_MESSAGE } from "../util/constants";
 import UserMethods from "../db_models/User/methods";
 import { UserDbModel } from "../db_models/User/model";
@@ -25,9 +29,11 @@ export const registerUser = async (req: Request, res: Response) => {
     return;
   }
 
+  const encryptedPassword = await encryptPassword(registerRequest.password);
+
   const userToAdd: UserDbModel = {
     username: registerRequest.username,
-    password: registerRequest.password,
+    password: encryptedPassword,
   };
 
   await UserMethods.add(userToAdd);
@@ -53,7 +59,12 @@ export const loginUser = async (req: Request, res: Response) => {
     return;
   }
 
-  if (user.password != loginRequest.password) {
+  const isPasswordCorrect = await decryptPassword(
+    loginRequest.password,
+    user.password
+  );
+
+  if (!isPasswordCorrect) {
     res.status(400).send("The username and password do not match");
     return;
   }
