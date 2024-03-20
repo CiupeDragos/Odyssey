@@ -51,7 +51,6 @@ function Input({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-    padding: 2,
   },
   input: {
     height: 35,
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 4,
-    marginLeft: 1,
   },
   errText: {
     color: Colors.errorText,

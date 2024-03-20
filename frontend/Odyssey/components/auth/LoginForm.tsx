@@ -48,7 +48,7 @@ function LoginForm() {
     );
 
     if (HttpResponse.isSuccess(response)) {
-      mainContext.login("Proper data will be returned from backend");
+      mainContext.login(response.data);
     } else if (HttpResponse.isError(response)) {
       setLoginResponse(response.error);
     }

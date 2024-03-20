@@ -2,6 +2,9 @@ import axios from "axios";
 import { LoginRequest, RegisterRequest } from "./request-types";
 import { BASE_URL } from "../util/constants";
 import { HttpError, HttpResponse, HttpSuccess } from "./HttpResponse";
+import { UserData } from "./response-types";
+import { RegisterFields } from "../components/auth/RegisterForm";
+import { normalizeSpaces } from "../util/credentialsValidation";
 
 export async function genericPostMethod<T, K>(
   requestBody: T,
@@ -22,12 +25,18 @@ export async function genericPostMethod<T, K>(
   }
 }
 
-export async function registerAccount(
-  username: string,
-  password: string
-): Promise<HttpResponse<string>> {
+export async function registerAccount({
+  username,
+  realName,
+  birthTimestamp,
+  country,
+  password,
+}: RegisterFields): Promise<HttpResponse<string>> {
   const registerRequest: RegisterRequest = {
     username: username,
+    realName: normalizeSpaces(realName),
+    birthTimestamp: parseInt(birthTimestamp),
+    country: country,
     password: password,
   };
 
@@ -37,7 +46,7 @@ export async function registerAccount(
 export async function loginAccount(
   username: string,
   password: string
-): Promise<HttpResponse<string>> {
+): Promise<HttpResponse<UserData>> {
   const loginReqest: LoginRequest = {
     username: username,
     password: password,

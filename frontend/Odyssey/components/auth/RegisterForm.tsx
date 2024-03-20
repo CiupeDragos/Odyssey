@@ -4,25 +4,50 @@ import CustomButton from "../common/CustomButton";
 import { Colors } from "../../util/constants";
 import { useState } from "react";
 import {
+  validateBirthdayTimestamp,
   validateConfirmPassword,
+  validateCountry,
   validatePassword,
+  validateRealName,
   validateUsername,
 } from "../../util/credentialsValidation";
 import { registerAccount } from "../../http/auth-methods";
 import { HttpResponse } from "../../http/HttpResponse";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigationProp } from "../../types/navigation";
+import BirthDateInput from "./BirthDateInput";
 
-type RegisterFields = {
+export type RegisterFields = {
   username: string;
+  realName: string;
+  birthTimestamp: string;
+  country: string;
   password: string;
   confirmPassword: string;
 };
 
-type RegisterInputValue = "username" | "password" | "confirmPassword";
+type RegisterInputValue =
+  | "username"
+  | "realName"
+  | "birthTimestamp"
+  | "country"
+  | "password"
+  | "confirmPassword";
 
 const defaultRegisterState: RegisterFields = {
   username: "",
+  realName: "",
+  birthTimestamp: new Date().getTime().toString(),
+  country: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const defaultErrorsState: RegisterFields = {
+  username: "",
+  realName: "",
+  birthTimestamp: "",
+  country: "",
   password: "",
   confirmPassword: "",
 };
@@ -37,7 +62,7 @@ function RegisterForm() {
     useState<RegisterFields>(defaultRegisterState);
 
   const [inputErrors, setInputErrors] =
-    useState<RegisterFields>(defaultRegisterState);
+    useState<RegisterFields>(defaultErrorsState);
 
   const [isLoading, setIsLoading] = useState(false);
   const [registerResponse, setRegisterResponse] = useState<RegisterResponse>();
@@ -55,10 +80,7 @@ function RegisterForm() {
     if (!areCredentialsValid()) return;
 
     setIsLoading(true);
-    const response = await registerAccount(
-      inputValues.username,
-      inputValues.password
-    );
+    const response = await registerAccount(inputValues);
 
     if (HttpResponse.isSuccess(response)) {
       setRegisterResponse({ success: true, message: response.data });
@@ -71,6 +93,11 @@ function RegisterForm() {
 
   function areCredentialsValid(): boolean {
     const usernameError = validateUsername(inputValues.username);
+    const realNameError = validateRealName(inputValues.realName);
+    const birthdayTimestampError = validateBirthdayTimestamp(
+      inputValues.birthTimestamp
+    );
+    const countryError = validateCountry(inputValues.country);
     const passwordError = validatePassword(inputValues.password);
     const confirmPasswordError = validateConfirmPassword(
       inputValues.password,
@@ -80,6 +107,9 @@ function RegisterForm() {
     setInputErrors(() => {
       const updatedErrors: RegisterFields = {
         username: usernameError,
+        realName: realNameError,
+        birthTimestamp: birthdayTimestampError,
+        country: countryError,
         password: passwordError,
         confirmPassword: confirmPasswordError,
       };
@@ -89,6 +119,9 @@ function RegisterForm() {
 
     if (
       usernameError.length != 0 ||
+      realNameError.length != 0 ||
+      birthdayTimestampError.length != 0 ||
+      countryError.length != 0 ||
       passwordError.length != 0 ||
       confirmPasswordError.length != 0
     ) {
@@ -110,6 +143,32 @@ function RegisterForm() {
           borderWidth={1.5}
           errorText={inputErrors.username}
           value={inputValues.username}
+        />
+        <BirthDateInput
+          errorText={inputErrors.birthTimestamp}
+          onDateChange={(stringTimestamp) =>
+            handleInputChange("birthTimestamp", stringTimestamp)
+          }
+        />
+        <Input
+          label="Enter your real name"
+          onChangeText={(text) => handleInputChange("realName", text)}
+          customStyle={styles.input}
+          inputMode="text"
+          borderColor={Colors.primary}
+          borderWidth={1.5}
+          errorText={inputErrors.realName}
+          value={inputValues.realName}
+        />
+        <Input
+          label="Enter your country"
+          onChangeText={(text) => handleInputChange("country", text)}
+          customStyle={styles.input}
+          inputMode="text"
+          borderColor={Colors.primary}
+          borderWidth={1.5}
+          errorText={inputErrors.country}
+          value={inputValues.country}
         />
         <Input
           label="Enter your password"
@@ -170,20 +229,20 @@ function RegisterForm() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
   },
   innerContainer: {
-    height: "45%",
+    width: "80%",
+    height: "70%",
     justifyContent: "flex-end",
-    alignItems: "center",
   },
   actionsContainer: {
     flexDirection: "row",
     marginTop: 12,
+    width: "90%",
     justifyContent: "space-evenly",
   },
-  input: {
-    width: "80%",
-  },
+  input: {},
   button: {
     width: "40%",
   },

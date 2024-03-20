@@ -17,6 +17,43 @@ export function validateUsername(username: string): string {
   return "";
 }
 
+export function validateRealName(realName: string): string {
+  realName = trimEnd(realName);
+  if (realName.length == 0) {
+    return "You need to enter your real name!";
+  }
+
+  if (realName.split(" ").length < 2) {
+    return "Both first name and last name are necessary!";
+  }
+
+  return "";
+}
+
+export function validateBirthdayTimestamp(birthdayTimestamp: string): string {
+  const intBirthdayTimestamp = parseInt(birthdayTimestamp);
+
+  const currentTimestamp = new Date().getTime();
+  const differenceMs = currentTimestamp - intBirthdayTimestamp;
+
+  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+  const age = differenceMs / millisecondsPerYear;
+
+  if (age < 14) {
+    return "You need to be at least 14 years old!";
+  }
+
+  return "";
+}
+
+export function validateCountry(country: string): string {
+  if (country.length == 0) {
+    return "You need to specify your country!";
+  }
+
+  return "";
+}
+
 export function validatePassword(password: string): string {
   if (password.length < MIN_PASSWORD_LENGTH) {
     return `Password must have at least ${MIN_PASSWORD_LENGTH} characters!`;
@@ -38,4 +75,14 @@ export function validateConfirmPassword(
   }
 
   return "";
+}
+
+//Removing all white spaces at the end
+export function trimEnd(str: string) {
+  return str.replace(/\s+$/, "");
+}
+
+//Leaves only 1 space between words
+export function normalizeSpaces(str: string) {
+  return str.replace(/\s+/g, " ").trim();
 }

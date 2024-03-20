@@ -1,13 +1,14 @@
 import { ReactNode, createContext, useState } from "react";
+import { UserData } from "../http/response-types";
 
 type MainContextProviderProps = {
   children: ReactNode;
 };
 
 type MainContextData = {
-  userData: string | undefined;
+  userData: UserData | undefined;
   isLoggedIn: boolean;
-  login: (data: string) => void;
+  login: (data: UserData) => void;
   logout: () => void;
 };
 
@@ -19,9 +20,10 @@ export const MainContext = createContext<MainContextData>({
 });
 
 function MainContextProvider({ children }: MainContextProviderProps) {
-  const [userData, setUserData] = useState<string>();
+  const [userData, setUserData] = useState<UserData>();
 
-  function handleLogin(data: string) {
+  function handleLogin(data: UserData) {
+    // Need to save user data in some credentials local storage
     setUserData(data);
   }
 
