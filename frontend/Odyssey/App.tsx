@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,7 +9,8 @@ import LoginScreen from "./screens/auth/LoginScreen";
 import { AuthNavParamList, MainNavParamList } from "./types/navigation";
 import HomeScreen from "./screens/main/home/HomeScreen";
 import MainContextProvider, { MainContext } from "./store/MainContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import ProfileScreen from "./screens/main/profile/ProfileScreen";
 
 const Stack = createNativeStackNavigator<AuthNavParamList>();
 const BottomTab = createBottomTabNavigator<MainNavParamList>();
@@ -23,15 +24,15 @@ function AuthNavigation() {
       }}
     >
       <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ title: "Register an account" }}
-      />
-
-      <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{ title: "Log into your account" }}
+      />
+
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ title: "Register an account" }}
       />
     </Stack.Navigator>
   );
@@ -41,6 +42,7 @@ function MainNavigation() {
   return (
     <BottomTab.Navigator>
       <BottomTab.Screen name="Home" component={HomeScreen} />
+      <BottomTab.Screen name="Profile" component={ProfileScreen} />
     </BottomTab.Navigator>
   );
 }
