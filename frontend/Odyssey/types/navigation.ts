@@ -7,6 +7,9 @@ export type AuthNavParamList = {
 
 export type MainNavParamList = {
   Home: undefined;
+  Search: undefined;
+  Trips: undefined;
+  TravelerLounge: undefined;
   Profile: undefined;
 };
 
