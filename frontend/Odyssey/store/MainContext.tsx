@@ -1,5 +1,8 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useState, useEffect } from "react";
 import { UserData } from "../http/response-types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { USER_DATA_KEY } from "../util/constants";
+import * as Splash from "expo-splash-screen";
 
 type MainContextProviderProps = {
   children: ReactNode;
@@ -19,15 +22,34 @@ export const MainContext = createContext<MainContextData>({
   logout: () => {},
 });
 
+Splash.preventAutoHideAsync();
+
 function MainContextProvider({ children }: MainContextProviderProps) {
   const [userData, setUserData] = useState<UserData>();
 
+  useEffect(() => {
+    async function getUserData() {
+      const jsonUserData = await AsyncStorage.getItem(USER_DATA_KEY);
+
+      if (!jsonUserData) {
+        Splash.hideAsync();
+        return;
+      }
+
+      const userData = JSON.parse(jsonUserData);
+      handleLogin(userData);
+    }
+
+    getUserData();
+  }, []);
+
   function handleLogin(data: UserData) {
-    // Need to save user data in some credentials local storage
+    AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(data));
     setUserData(data);
   }
 
   function handleLogout() {
+    AsyncStorage.removeItem(USER_DATA_KEY);
     setUserData(undefined);
   }
 
