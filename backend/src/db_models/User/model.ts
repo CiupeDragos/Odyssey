@@ -1,14 +1,5 @@
-import { Follower, FollowerSchema } from "db_models/User/Follower/model";
+import { Follower, FollowerSchema } from "./Follower/model";
 import mongoose from "mongoose";
-
-/*
-  ⦁	visited countries
-  ⦁	favorite country
-  ⦁	profile description (bio)
-  ⦁	number of posted locations
-  ⦁	number of followers
-  ⦁	number of people followed
-*/
 
 export interface UserDbModel {
   username: string;

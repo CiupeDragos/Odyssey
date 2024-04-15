@@ -6,3 +6,7 @@ export type LoginRequest = {
   username: string;
   password: string;
 };
+
+export type ProfileDataRequest = {
+  userId: string;
+};

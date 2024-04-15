@@ -11,7 +11,7 @@ enum LocationTypeEnum {
   PANORAMIC = "Panoramic",
 }
 
-export interface LocationPost {
+export interface LocationDbModel {
   title: string;
   postedBy: LocationPoster;
   description: string;
@@ -22,7 +22,19 @@ export interface LocationPost {
   rating: Rating;
 }
 
-const LocationPostSchema = new mongoose.Schema<LocationPost>({
+export type LocationPost = {
+  id: string;
+  title: string;
+  postedBy: LocationPoster;
+  description: string;
+  photos: Array<string>;
+  textLocation: TextLocation;
+  coordinates: Coordinates;
+  categories: Array<LocationTypeEnum>;
+  rating: Rating;
+};
+
+const LocationPostSchema = new mongoose.Schema<LocationDbModel>({
   title: { type: String, required: true },
   postedBy: { type: LocationPosterSchema, required: true },
   description: { type: String, required: true },
@@ -37,7 +49,7 @@ const LocationPostSchema = new mongoose.Schema<LocationPost>({
   rating: { type: RatingSchema, required: true },
 });
 
-export const LocationPost = mongoose.model<LocationPost>(
+export const LocationPostModel = mongoose.model<LocationDbModel>(
   "location_post",
   LocationPostSchema
 );
