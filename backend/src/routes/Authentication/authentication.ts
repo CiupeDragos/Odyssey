@@ -17,11 +17,6 @@ export const registerUser = async (req: Request, res: Response) => {
     birthTimestamp: req.body.birthTimestamp,
     country: req.body.country,
     password: req.body.password,
-    visitedCountries: new Array(),
-    favoriteCountry: "",
-    profileDescription: "",
-    followers: new Array(),
-    following: new Array(),
   };
 
   if (!isRequestValid(registerRequest)) {
@@ -42,6 +37,11 @@ export const registerUser = async (req: Request, res: Response) => {
 
   const userToAdd: UserDbModel = {
     ...registerRequest,
+    visitedCountries: new Array(),
+    favoriteCountry: "",
+    profileDescription: "",
+    followers: new Array(),
+    following: new Array(),
     password: encryptedPassword,
   };
 
