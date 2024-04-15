@@ -1,4 +1,4 @@
-import { Follower, FollowerSchema } from "db_models/Follower/model";
+import { Follower, FollowerSchema } from "db_models/User/Follower/model";
 import mongoose from "mongoose";
 
 /*
