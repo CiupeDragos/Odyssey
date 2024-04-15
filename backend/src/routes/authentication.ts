@@ -17,6 +17,11 @@ export const registerUser = async (req: Request, res: Response) => {
     birthTimestamp: req.body.birthTimestamp,
     country: req.body.country,
     password: req.body.password,
+    visitedCountries: new Array(),
+    favoriteCountry: "",
+    profileDescription: "",
+    followers: new Array(),
+    following: new Array(),
   };
 
   if (!isRequestValid(registerRequest)) {

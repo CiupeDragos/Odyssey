@@ -20,6 +20,11 @@ export async function findUserByUsername(
     birthTimestamp: userModel.birthTimestamp,
     country: userModel.country,
     password: userModel.password,
+    visitedCountries: userModel.visitedCountries,
+    favoriteCountry: userModel.favoriteCountry,
+    profileDescription: userModel.profileDescription,
+    followers: userModel.followers,
+    following: userModel.following,
   };
 
   return user;
