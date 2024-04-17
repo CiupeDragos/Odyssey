@@ -59,5 +59,5 @@ export type ProfileData = {
   profileDescription: string;
   followers: Array<Follower>;
   following: Array<Follower>;
-  postedLocations: Array<LocationPost>;
+  locationPosts: Array<LocationPost>;
 };

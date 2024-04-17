@@ -1,3 +1,4 @@
+import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type AuthNavParamList = {
@@ -10,7 +11,9 @@ export type MainNavParamList = {
   Search: undefined;
   Trips: undefined;
   TravelerLounge: undefined;
-  Profile: undefined;
+  Profile: { userId: string } | undefined;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
+export type MainNavigationProp = NativeStackNavigationProp<MainNavParamList>;
+export type ProfileScreenRouteProp = RouteProp<MainNavParamList, "Profile">;

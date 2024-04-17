@@ -57,6 +57,7 @@ function MainNavigation() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons color={color} size={size} name="person" />
           ),
+          headerShown: false,
         }}
       />
     </BottomTab.Navigator>
