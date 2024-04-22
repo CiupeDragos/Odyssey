@@ -1,13 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { MainNavParamList } from "../../types/navigation";
+import { BottomNavParamList } from "../../types/navigation";
 import HomeScreen from "./home/HomeScreen";
 import ProfileScreen from "./profile/ProfileScreen";
 import SearchScreen from "./search/SearchScreen";
 import TravelerLoungeScreen from "./travelerlounge/TravelerLoungeScreen";
 import TripsScreen from "./trips/TripsScreen";
 
-const BottomTab = createBottomTabNavigator<MainNavParamList>();
+const BottomTab = createBottomTabNavigator<BottomNavParamList>();
 
 function MainTabsNavigation() {
   return (

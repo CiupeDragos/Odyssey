@@ -2,10 +2,12 @@ import { Image, View, Text, StyleSheet } from "react-native";
 import { useContext } from "react";
 import CountIndicator from "./CountIndicator";
 import CustomButton from "../../common/CustomButton";
-import { Colors } from "../../../util/constants";
+import { BASE_URL, Colors } from "../../../util/constants";
 import { SafeAreaView } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import { ProfileData } from "../../../http/response-types";
+import { useNavigation } from "@react-navigation/native";
+import { ProfileScreenNavProps } from "../../../types/navigation";
 
 type ProfileHeaderProps = {
   visitedUserId: string;
@@ -19,13 +21,20 @@ function ProfileHeader({
   profileData,
 }: ProfileHeaderProps) {
   const mainContext = useContext(MainContext);
+  const navigation = useNavigation<ProfileScreenNavProps>();
 
   function handleFollow() {
     // To be implemented
   }
 
   function handleEditProfile() {
-    // To be implemented
+    navigation.navigate("EditProfile", {
+      userId: visitedUserId,
+      country: profileData.country,
+      favoriteCountry: profileData.favoriteCountry,
+      visitedCountries: profileData.visitedCountries,
+      description: profileData.profileDescription,
+    });
   }
 
   console.log(profileData);
@@ -37,7 +46,7 @@ function ProfileHeader({
           <Image
             style={styles.image}
             source={{
-              uri: "https://lh4.googleusercontent.com/proxy/XZjBQs671YZjpKSHu4nOdgKygc5oteGGQ4nznFtymv2Vr1t6lHDdhqPe-Pk-8IJe7pW4AhhKOTWRVt_b6G4qHF92n7Z1QCMVCNXCP2yayQrC-6Fichft",
+              uri: `${BASE_URL}/profile/${visitedUserId}.jpg`,
             }}
           />
         </View>

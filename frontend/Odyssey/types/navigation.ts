@@ -1,19 +1,19 @@
-import { RouteProp } from "@react-navigation/native";
+import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ProfileUpdateRequest } from "../http/request-types";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 export type AuthNavParamList = {
   Register: undefined;
   Login: undefined;
 };
 
-export type ProfileNavigationParamList = {
-  Profile: undefined;
-  Followers: undefined;
-  Following: undefined;
-  EditProfile: undefined;
+export type MainNavParamList = {
+  BottomTabs: undefined;
+  EditProfile: ProfileDataParams;
 };
 
-export type MainNavParamList = {
+export type BottomNavParamList = {
   Home: undefined;
   Search: undefined;
   Trips: undefined;
@@ -22,5 +22,18 @@ export type MainNavParamList = {
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
-export type MainNavigationProp = NativeStackNavigationProp<MainNavParamList>;
-export type ProfileScreenRouteProp = RouteProp<MainNavParamList, "Profile">;
+
+export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
+
+export type ProfileScreenNavProps = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomNavParamList, "Profile">,
+  NativeStackNavigationProp<MainNavParamList>
+>;
+
+export type EditProfileScreenNavProps = CompositeNavigationProp<
+  NativeStackNavigationProp<MainNavParamList, "EditProfile">,
+  BottomTabNavigationProp<BottomNavParamList>
+>;
+
+// Params
+export type ProfileDataParams = Omit<ProfileUpdateRequest, "base64Photo">;

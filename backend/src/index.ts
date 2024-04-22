@@ -20,7 +20,7 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/profile", (req, res) => {
   express.static(profileImagesPath)(req, res, (err) => {
     console.log(err?.message);
-    res.sendFile(path.join(profileImagesPath, "no_profile_picture.png"));
+    res.sendFile(path.join(profileImagesPath, "no_profile_picture.jpeg"));
   });
 });
 

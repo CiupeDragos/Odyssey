@@ -10,3 +10,12 @@ export type LoginRequest = {
   username: string;
   password: string;
 };
+
+export type ProfileUpdateRequest = {
+  userId: string;
+  base64Photo: string;
+  country: string;
+  favoriteCountry: string;
+  visitedCountries: Array<string>;
+  description: string;
+};
