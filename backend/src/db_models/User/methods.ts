@@ -1,3 +1,4 @@
+import { ProfileUpdateRequest } from "routes/requests";
 import { UserDbModel, User } from "./model";
 import { Types, type Document } from "mongoose";
 
@@ -47,6 +48,15 @@ function getUserFromModel(userModel: UserModel): User | null {
   };
 
   return user;
+}
+
+export function updateUserProfileData(data: ProfileUpdateRequest) {
+  return User.findByIdAndUpdate(data.userId, {
+    country: data.country,
+    favoriteCountry: data.favoriteCountry,
+    visitedCountries: data.visitedCountries,
+    profileDescription: data.description,
+  });
 }
 
 const UserMethods = {
