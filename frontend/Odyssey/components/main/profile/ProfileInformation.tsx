@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import { ProfileData } from "../../../http/response-types";
 import ProfileDataField from "./ProfileDataField";
+import { getYearsFromTimestamp } from "../../../util/commonMethods";
 
 type ProfileInformationProps = {
   profileData: ProfileData;
@@ -23,7 +24,9 @@ function ProfileInformation({ profileData }: ProfileInformationProps) {
       </ProfileDataField>
 
       <ProfileDataField fieldLabel="Age">
-        <Text style={styles.textValue}>21</Text>
+        <Text style={styles.textValue}>
+          {getYearsFromTimestamp(profileData.birthTimestamp)}
+        </Text>
       </ProfileDataField>
 
       <ProfileDataField fieldLabel="Currently living in">
