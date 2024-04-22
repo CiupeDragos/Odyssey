@@ -31,7 +31,7 @@ function ProfileHeader({
   console.log(profileData);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.pictureRow}>
           <Image
@@ -40,24 +40,12 @@ function ProfileHeader({
               uri: "https://lh4.googleusercontent.com/proxy/XZjBQs671YZjpKSHu4nOdgKygc5oteGGQ4nznFtymv2Vr1t6lHDdhqPe-Pk-8IJe7pW4AhhKOTWRVt_b6G4qHF92n7Z1QCMVCNXCP2yayQrC-6Fichft",
             }}
           />
-          <View style={styles.countersView}>
-            <CountIndicator
-              label="posts"
-              count={profileData.locationPosts.length}
-            />
-            <CountIndicator
-              label="followers"
-              count={profileData.followers.length}
-            />
-            <CountIndicator
-              label="following"
-              count={profileData.following.length}
-            />
-          </View>
         </View>
+
         <View style={styles.usernameRow}>
           <Text style={styles.usernameLabel}>{profileData.username}</Text>
         </View>
+
         <View style={styles.actionsRow}>
           {!isPersonalProfile && (
             <CustomButton
@@ -78,44 +66,61 @@ function ProfileHeader({
             />
           )}
         </View>
+
+        <View style={styles.countersView}>
+          <CountIndicator
+            label="posts"
+            count={profileData.locationPosts.length}
+          />
+          <CountIndicator
+            label="followers"
+            count={profileData.followers.length}
+          />
+          <CountIndicator
+            label="following"
+            count={profileData.following.length}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  pictureRow: {
-    flexDirection: "row",
-    paddingLeft: 24,
-  },
-  image: {
+  container: {
     flex: 1,
-    height: 90,
-    borderRadius: 60,
-    resizeMode: "cover",
+    justifyContent: "center",
   },
-  countersView: {
-    flexDirection: "row",
-    flex: 3,
-    marginLeft: 6,
-    justifyContent: "space-evenly",
+  pictureRow: {
     alignItems: "center",
   },
+  image: {
+    width: "42%",
+    height: 170,
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: "white",
+  },
+  countersView: {
+    marginTop: 16,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
   usernameRow: {
-    marginTop: 4,
-    paddingLeft: 24,
+    marginTop: 6,
+    alignItems: "center",
   },
   usernameLabel: {
     fontSize: 18,
     fontWeight: "500",
+    color: "white",
   },
   actionsRow: {
-    marginTop: 8,
+    marginTop: 16,
     alignItems: "center",
   },
   actionButton: {
-    width: "90%",
+    width: "55%",
   },
 });
 

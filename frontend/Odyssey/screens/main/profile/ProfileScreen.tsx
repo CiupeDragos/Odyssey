@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, Button, StyleSheet, View } from "react-native";
+import { Text, Button, ScrollView, StyleSheet, View } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
 import { ProfileScreenRouteProp } from "../../../types/navigation";
 import { ProfileData } from "../../../http/response-types";
 import { getProfileData } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
-import HorizontalRule from "../../../components/common/HorizontalRule";
+import ProfileInformation from "../../../components/main/profile/ProfileInformation";
+import { Colors } from "../../../util/constants";
+import LoadingText from "../../../components/common/LoadingText";
 
 type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
@@ -31,7 +33,7 @@ function ProfileScreen({ route }: ProfileScreenProps) {
   const [profileData, setProfileData] = useState<ProfileData | undefined>();
 
   const curUserId = mainContext.userData!!.id;
-  let visitedUserId = route.params?.userId ?? curUserId;
+  const visitedUserId = route.params?.userId ?? curUserId;
 
   useEffect(() => {
     async function loadProfileData() {
@@ -49,26 +51,42 @@ function ProfileScreen({ route }: ProfileScreenProps) {
   }, []);
 
   if (!profileData) {
-    return <ActivityIndicator />;
+    return <LoadingText text="Loading profile data..." />;
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <StatusBar style="auto" />
-      <ProfileHeader
-        visitedUserId={visitedUserId}
-        isPersonalProfile={curUserId === visitedUserId}
-        profileData={profileData}
-      />
-      <HorizontalRule />
-      <Button title="Logout" onPress={mainContext.logout} />
-    </View>
+      <View style={styles.scrollableArea}>
+        <View style={styles.headerArea}>
+          <ProfileHeader
+            visitedUserId={visitedUserId}
+            isPersonalProfile={curUserId === visitedUserId}
+            profileData={profileData}
+          />
+        </View>
+        <View style={styles.mainArea}>
+          <ProfileInformation profileData={profileData} />
+          <Button title="Logout" onPress={mainContext.logout} />
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
+  },
+  scrollableArea: {
     flex: 1,
+  },
+  headerArea: {
+    flex: 1,
+    backgroundColor: Colors.primary,
+  },
+  mainArea: {
+    flex: 1.5,
   },
 });
 

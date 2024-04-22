@@ -18,9 +18,11 @@ const styles = StyleSheet.create({
   count: {
     fontSize: 16,
     textAlign: "center",
+    color: "white",
   },
   label: {
     fontSize: 16,
+    color: "white",
   },
 });
 

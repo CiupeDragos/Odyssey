@@ -6,6 +6,13 @@ export type AuthNavParamList = {
   Login: undefined;
 };
 
+export type ProfileNavigationParamList = {
+  Profile: undefined;
+  Followers: undefined;
+  Following: undefined;
+  EditProfile: undefined;
+};
+
 export type MainNavParamList = {
   Home: undefined;
   Search: undefined;
