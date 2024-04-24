@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text } from "react-native";
-import { ProfileData } from "../../../http/response-types";
+import { ProfileData } from "../../../types/response-types";
 import ProfileDataField from "./ProfileDataField";
 import { getYearsFromTimestamp } from "../../../util/commonMethods";
 import VisitedCountries from "./VisitedCountries";

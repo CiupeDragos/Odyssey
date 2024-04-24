@@ -4,7 +4,7 @@ import { Text, Button, ScrollView, StyleSheet, View } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
 import { ProfileScreenRouteProp } from "../../../types/navigation";
-import { ProfileData } from "../../../http/response-types";
+import { ProfileData } from "../../../types/response-types";
 import { getProfileData } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
 import ProfileInformation from "../../../components/main/profile/ProfileInformation";

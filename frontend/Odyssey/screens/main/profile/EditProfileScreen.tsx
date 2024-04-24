@@ -11,7 +11,7 @@ import HorizontalRule from "../../../components/common/HorizontalRule";
 import Input from "../../../components/common/Input";
 import KeyboardAvoidingContainer from "../../../components/common/KeyboardAvoidingContainer";
 import VisitedCountries from "../../../components/main/profile/VisitedCountries";
-import { ProfileUpdateRequest } from "../../../http/request-types";
+import { ProfileUpdateRequest } from "../../../types/request-types";
 import ImagePicker from "../../../components/common/ImagePicker";
 import { updateUserProfile } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";

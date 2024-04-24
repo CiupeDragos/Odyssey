@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ProfileData } from "./response-types";
+import { ProfileData } from "../types/response-types";
 import { HttpResponse } from "./HttpResponse";
 import { BASE_URL } from "../util/constants";
 import { genericGetMethod, genericPostMethod } from "./base-methods";
@@ -7,7 +7,7 @@ import {
   FollowUserRequest,
   ProfileDataRequest,
   ProfileUpdateRequest,
-} from "./request-types";
+} from "../types/request-types";
 
 export async function getProfileData(
   userId: string,

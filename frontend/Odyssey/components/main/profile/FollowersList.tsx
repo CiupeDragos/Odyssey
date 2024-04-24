@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import { Follower } from "../../../http/response-types";
+import { Follower } from "../../../types/response-types";
 import UsernameWithPhoto from "../../common/UsernameWithPhoto";
 import { FollowersNavProp } from "../../../types/navigation";
 import { useNavigation } from "@react-navigation/native";

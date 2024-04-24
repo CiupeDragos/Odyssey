@@ -5,9 +5,9 @@ import {
   RouteProp,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ProfileUpdateRequest } from "../http/request-types";
+import { ProfileUpdateRequest } from "./request-types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { Follower } from "../http/response-types";
+import { Follower } from "./response-types";
 
 export type AuthNavParamList = {
   Register: undefined;

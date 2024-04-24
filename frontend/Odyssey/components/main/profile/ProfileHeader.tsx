@@ -5,7 +5,7 @@ import CustomButton from "../../common/CustomButton";
 import { BASE_URL, Colors } from "../../../util/constants";
 import { SafeAreaView } from "react-native";
 import { MainContext } from "../../../store/MainContext";
-import { Follower, ProfileData } from "../../../http/response-types";
+import { Follower, ProfileData } from "../../../types/response-types";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileScreenNavProp } from "../../../types/navigation";
 import { followUser } from "../../../http/profile-methods";

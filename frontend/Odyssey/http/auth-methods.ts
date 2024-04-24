@@ -1,6 +1,6 @@
-import { LoginRequest, RegisterRequest } from "./request-types";
+import { LoginRequest, RegisterRequest } from "../types/request-types";
 import { HttpResponse } from "./HttpResponse";
-import { UserData } from "./response-types";
+import { UserData } from "../types/response-types";
 import { RegisterFields } from "../components/auth/RegisterForm";
 import { normalizeSpaces } from "../util/credentialsValidation";
 import { genericPostMethod } from "./base-methods";

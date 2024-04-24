@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState, useEffect } from "react";
-import { UserData } from "../http/response-types";
+import { UserData } from "../types/response-types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { USER_DATA_KEY } from "../util/constants";
 import * as Splash from "expo-splash-screen";
