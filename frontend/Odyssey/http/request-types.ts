@@ -19,3 +19,13 @@ export type ProfileUpdateRequest = {
   visitedCountries: Array<string>;
   description: string;
 };
+
+export type ProfileDataRequest = {
+  userId: string;
+  requesterId: string;
+};
+
+export type FollowUserRequest = {
+  fromUserId: string;
+  toUserId: string;
+};

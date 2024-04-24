@@ -59,6 +59,17 @@ export function updateUserProfileData(data: ProfileUpdateRequest) {
   });
 }
 
+export async function updateFollowers(fromUser: User, toUser: User) {
+  const fromUpdate = await User.findByIdAndUpdate(fromUser.id, {
+    following: fromUser.following,
+  });
+  const toUpdate = await User.findByIdAndUpdate(toUser.id, {
+    followers: toUser.followers,
+  });
+
+  return fromUpdate != null && toUpdate != null;
+}
+
 const UserMethods = {
   add: addUser,
   findById: findUserById,

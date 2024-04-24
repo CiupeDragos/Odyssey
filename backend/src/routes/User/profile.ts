@@ -1,10 +1,15 @@
 import { getUserLocations } from "../../db_models/LocationPost/methods";
 import {
   findUserById,
+  updateFollowers,
   updateUserProfileData,
 } from "../../db_models/User/methods";
 import { Request, Response } from "express";
-import { ProfileDataRequest, ProfileUpdateRequest } from "routes/requests";
+import {
+  FollowUserRequest,
+  ProfileDataRequest,
+  ProfileUpdateRequest,
+} from "routes/requests";
 import { ProfileData } from "routes/responses";
 import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
 import { isRequestValid } from "../../util/methods";
@@ -13,6 +18,7 @@ import fs from "fs";
 export const getProfileData = async (req: Request, res: Response) => {
   const profileDataRequest: ProfileDataRequest = {
     userId: req.query.userId as string,
+    requesterId: req.query.requesterId as string,
   };
 
   if (!isRequestValid(profileDataRequest)) {
@@ -21,9 +27,10 @@ export const getProfileData = async (req: Request, res: Response) => {
   }
 
   const user = await findUserById(profileDataRequest.userId);
+  const requester = await findUserById(profileDataRequest.requesterId);
 
-  if (!user) {
-    res.status(400).send("The user does not exist");
+  if (!user || !requester) {
+    res.status(400).send("One of the users does not exist");
     return;
   }
 
@@ -32,6 +39,7 @@ export const getProfileData = async (req: Request, res: Response) => {
 
   const profileData: ProfileData = {
     ...userProfileData,
+    requesterFollowing: requester.following,
     locationPosts: userLocations,
   };
 
@@ -92,4 +100,45 @@ export const updateProfileData = async (req: Request, res: Response) => {
   });
 
   res.send("Profile data updated successfully");
+};
+
+export const followUser = async (req: Request, res: Response) => {
+  const followUserRequest: FollowUserRequest = {
+    fromUserId: req.body.fromUserId,
+    toUserId: req.body.toUserId,
+  };
+
+  if (!isRequestValid(followUserRequest)) {
+    res.status(400).send(INVALID_REQUEST_BODY_MESSAGE);
+    return;
+  }
+
+  const fromUser = await findUserById(followUserRequest.fromUserId);
+  const toUser = await findUserById(followUserRequest.toUserId);
+
+  if (!fromUser || !toUser) {
+    res.status(400).send("One of the users does not exist");
+    return;
+  }
+
+  const following = !!fromUser.following.find((f) => f.userId === toUser.id);
+
+  if (following) {
+    fromUser.following = fromUser.following.filter(
+      (f) => f.userId !== toUser.id
+    );
+
+    toUser.followers = toUser.followers.filter((f) => f.userId !== fromUser.id);
+  } else {
+    fromUser.following.push({ userId: toUser.id, username: toUser.username });
+    toUser.followers.push({ userId: fromUser.id, username: fromUser.username });
+  }
+
+  const updateFollowingRequest = await updateFollowers(fromUser, toUser);
+  if (!updateFollowingRequest) {
+    res.status(400).send("Failed to update followers");
+    return;
+  }
+
+  res.send("Followers updated successfully");
 };

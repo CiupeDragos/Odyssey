@@ -1,32 +1,47 @@
-import { StyleSheet, View, Image, Text } from "react-native";
-import { BASE_URL } from "../../util/constants";
+import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import { BASE_URL, Colors } from "../../util/constants";
 
 type UsernameWithPhotoProps = {
   userId: string;
   username: string;
+  onClick?: () => void;
 };
 
-function UsernameWithPhoto({ userId, username }: UsernameWithPhotoProps) {
+function UsernameWithPhoto({
+  userId,
+  username,
+  onClick,
+}: UsernameWithPhotoProps) {
   return (
-    <View style={styles.container}>
-      <View style={styles.photoView}>
-        <Image
-          style={styles.photo}
-          source={{ uri: `${BASE_URL}/profile/${userId}.jpg` }}
-        />
-      </View>
+    <Pressable style={styles.container} onPress={onClick}>
+      <Image
+        style={styles.photo}
+        source={{ uri: `${BASE_URL}/profile/${userId}.jpg` }}
+      />
       <Text style={styles.username}>{username}</Text>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "row",
+    padding: 4,
+    alignItems: "center",
   },
-  username: {},
-  photoView: {},
-  photo: {},
+  username: {
+    fontSize: 24,
+    fontWeight: "400",
+    marginLeft: 24,
+  },
+  photo: {
+    width: "20%",
+    height: 75,
+    borderRadius: 100,
+    borderColor: Colors.primary,
+    borderWidth: 2,
+  },
 });
 
 export default UsernameWithPhoto;

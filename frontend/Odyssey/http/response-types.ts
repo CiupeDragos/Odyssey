@@ -60,4 +60,5 @@ export type ProfileData = {
   followers: Array<Follower>;
   following: Array<Follower>;
   locationPosts: Array<LocationPost>;
+  requesterFollowing: Array<Follower>;
 };

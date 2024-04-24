@@ -84,6 +84,7 @@ function VisitedCountriesContent({
             <VisitedCountryItem
               country={item}
               onDelete={() => deleteCountry(item)}
+              editMode={editMode}
             />
           )}
         />
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     padding: 8,
+    justifyContent: "center",
   },
   input: {
     width: "60%",

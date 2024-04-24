@@ -76,10 +76,6 @@ function EditProfileScreen() {
     }
   }
 
-  function cancelEdit() {
-    navigation.replace("MainTabs", { screen: "Profile" });
-  }
-
   return (
     <KeyboardAvoidingContainer>
       <View style={styles.photoView}>

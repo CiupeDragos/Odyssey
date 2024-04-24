@@ -2,6 +2,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { ProfileData } from "../../../http/response-types";
 import ProfileDataField from "./ProfileDataField";
 import { getYearsFromTimestamp } from "../../../util/commonMethods";
+import VisitedCountries from "./VisitedCountries";
 
 type ProfileInformationProps = {
   profileData: ProfileData;
@@ -37,9 +38,9 @@ function ProfileInformation({ profileData }: ProfileInformationProps) {
         <Text style={styles.textValue}>{profileData.favoriteCountry}</Text>
       </ProfileDataField>
 
-      <ProfileDataField fieldLabel="Countries visited">
-        <Text style={styles.textValue}>Will create component</Text>
-      </ProfileDataField>
+      <View style={styles.visitedCountries}>
+        <VisitedCountries visitedCountries={profileData.visitedCountries} />
+      </View>
 
       <ProfileDataField fieldLabel="About me">
         <Text style={styles.textValue}>{profileData.profileDescription}</Text>
@@ -75,6 +76,9 @@ const styles = StyleSheet.create({
   textValue: {
     fontSize: 18,
     color: "#555555",
+  },
+  visitedCountries: {
+    marginTop: 3,
   },
 });
 

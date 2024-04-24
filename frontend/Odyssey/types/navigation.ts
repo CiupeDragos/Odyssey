@@ -7,6 +7,7 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ProfileUpdateRequest } from "../http/request-types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { Follower } from "../http/response-types";
 
 export type AuthNavParamList = {
   Register: undefined;
@@ -24,6 +25,8 @@ export type BottomNavParamList = {
 export type MainNavParamList = {
   MainTabs: NavigatorScreenParams<BottomNavParamList>;
   EditProfile: ProfileDataParams;
+  Followers: FollowersScreenParams;
+  Following: FollowingScreenParams;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
@@ -42,5 +45,26 @@ export type EditProfileNavProp = NativeStackNavigationProp<
   "EditProfile"
 >;
 
+export type FollowersRouteProp = RouteProp<MainNavParamList, "Followers">;
+export type FollowingRouteProp = RouteProp<MainNavParamList, "Following">;
+
+export type FollowersNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "Followers"
+>;
+
+export type FollowingNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "Following"
+>;
+
 // Params
 export type ProfileDataParams = Omit<ProfileUpdateRequest, "base64Photo">;
+export type FollowersScreenParams = {
+  username: string;
+  followers: Array<Follower>;
+};
+export type FollowingScreenParams = {
+  username: string;
+  following: Array<Follower>;
+};

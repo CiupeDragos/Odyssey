@@ -26,6 +26,7 @@ const defaultProfileData: ProfileData = {
   realName: "",
   username: "",
   visitedCountries: [],
+  requesterFollowing: [],
 };
 
 function ProfileScreen({ route }: ProfileScreenProps) {
@@ -35,9 +36,11 @@ function ProfileScreen({ route }: ProfileScreenProps) {
   const curUserId = mainContext.userData!!.id;
   const visitedUserId = route.params?.userId ?? curUserId;
 
+  console.log(visitedUserId);
+
   useEffect(() => {
     async function loadProfileData() {
-      const response = await getProfileData(visitedUserId);
+      const response = await getProfileData(visitedUserId, curUserId);
 
       if (HttpResponse.isSuccess(response)) {
         setProfileData(response.data);
@@ -60,8 +63,8 @@ function ProfileScreen({ route }: ProfileScreenProps) {
       <View style={styles.scrollableArea}>
         <View style={styles.headerArea}>
           <ProfileHeader
+            curUserId={curUserId}
             visitedUserId={visitedUserId}
-            isPersonalProfile={curUserId === visitedUserId}
             profileData={profileData}
           />
         </View>

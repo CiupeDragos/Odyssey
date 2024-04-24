@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type CountIndicatorProps = {
   label: string;
   count: number;
+  onClick?: () => void;
 };
 
-function CountIndicator({ label, count }: CountIndicatorProps) {
+function CountIndicator({ label, count, onClick }: CountIndicatorProps) {
   return (
     <View>
-      <Text style={styles.count}>{count}</Text>
-      <Text style={styles.label}>{label}</Text>
+      <Pressable onPress={onClick}>
+        <Text style={styles.count}>{count}</Text>
+        <Text style={styles.label}>{label}</Text>
+      </Pressable>
     </View>
   );
 }

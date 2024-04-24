@@ -1,35 +1,89 @@
-import { Image, View, Text, StyleSheet } from "react-native";
-import { useContext } from "react";
+import { Image, View, Text, StyleSheet, Alert } from "react-native";
+import { useContext, useState } from "react";
 import CountIndicator from "./CountIndicator";
 import CustomButton from "../../common/CustomButton";
 import { BASE_URL, Colors } from "../../../util/constants";
 import { SafeAreaView } from "react-native";
 import { MainContext } from "../../../store/MainContext";
-import { ProfileData } from "../../../http/response-types";
+import { Follower, ProfileData } from "../../../http/response-types";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileScreenNavProp } from "../../../types/navigation";
+import { followUser } from "../../../http/profile-methods";
+import { HttpResponse } from "../../../http/HttpResponse";
 
 type ProfileHeaderProps = {
+  curUserId: string;
   visitedUserId: string;
-  isPersonalProfile: boolean;
   profileData: ProfileData;
 };
 
 function ProfileHeader({
+  curUserId,
   visitedUserId,
-  isPersonalProfile,
   profileData,
 }: ProfileHeaderProps) {
   const mainContext = useContext(MainContext);
   const navigation = useNavigation<ProfileScreenNavProp>();
+  const [visitorFollowing, setVisitorFollowing] = useState(
+    profileData.requesterFollowing
+  );
+  const [visitedFollowers, setVisitedFollowers] = useState(
+    profileData.followers
+  );
+  const following = !!visitorFollowing.find((f) => f.userId === visitedUserId);
+  const isPersonalProfile = curUserId === visitedUserId;
 
-  function handleFollow() {
-    // To be implemented
+  function navigateToFollowers() {
+    navigation.push("Followers", {
+      username: profileData.username,
+      followers: visitedFollowers,
+    });
+  }
+
+  function navigateToFollowing() {
+    navigation.push("Following", {
+      username: profileData.username,
+      following: profileData.following,
+    });
+  }
+
+  async function handleFollow() {
+    const followResponse = await followUser({
+      fromUserId: curUserId,
+      toUserId: visitedUserId,
+    });
+
+    if (HttpResponse.isError(followResponse)) {
+      Alert.alert("An unknown error occurred, try again");
+      return;
+    }
+
+    if (following) {
+      setVisitorFollowing((curList) => {
+        const newList = curList.filter((f) => f.userId !== visitedUserId);
+        return newList;
+      });
+
+      setVisitedFollowers((curList) => {
+        const newList = curList.filter((f) => f.userId !== curUserId);
+        return newList;
+      });
+    } else {
+      setVisitorFollowing((curList) => [
+        ...curList,
+        { userId: visitedUserId, username: profileData.username },
+      ]);
+
+      setVisitedFollowers((curList) => [
+        ...curList,
+        { userId: curUserId, username: mainContext.userData!!.username },
+      ]);
+    }
   }
 
   function handleEditProfile() {
     navigation.navigate("EditProfile", {
-      userId: visitedUserId,
+      userId: curUserId,
       country: profileData.country,
       favoriteCountry: profileData.favoriteCountry,
       visitedCountries: profileData.visitedCountries,
@@ -58,8 +112,8 @@ function ProfileHeader({
         <View style={styles.actionsRow}>
           {!isPersonalProfile && (
             <CustomButton
-              color={Colors.secondary}
-              label="Follow"
+              color={!following ? Colors.secondary : "lightgray"}
+              label={!following ? "Follow" : "Unfollow"}
               onTap={handleFollow}
               customStyle={styles.actionButton}
             />
@@ -83,11 +137,13 @@ function ProfileHeader({
           />
           <CountIndicator
             label="followers"
-            count={profileData.followers.length}
+            count={visitedFollowers.length}
+            onClick={navigateToFollowers}
           />
           <CountIndicator
             label="following"
             count={profileData.following.length}
+            onClick={navigateToFollowing}
           />
         </View>
       </View>

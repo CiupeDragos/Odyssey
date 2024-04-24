@@ -6,7 +6,7 @@ function HorizontalRule() {
 
 const styles = StyleSheet.create({
   horizontalRule: {
-    marginTop: 8,
+    marginTop: 0,
     marginLeft: 8,
     marginRight: 8,
     height: 1.5,

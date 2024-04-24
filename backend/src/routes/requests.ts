@@ -24,4 +24,10 @@ export type LoginRequest = {
 
 export type ProfileDataRequest = {
   userId: string;
+  requesterId: string;
+};
+
+export type FollowUserRequest = {
+  fromUserId: string;
+  toUserId: string;
 };

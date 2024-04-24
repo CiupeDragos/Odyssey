@@ -8,7 +8,11 @@ import {
   loginUser,
   registerUser,
 } from "./routes/Authentication/authentication";
-import { getProfileData, updateProfileData } from "./routes/User/profile";
+import {
+  followUser,
+  getProfileData,
+  updateProfileData,
+} from "./routes/User/profile";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -33,6 +37,7 @@ app.post("/login", loginUser);
 // Profile
 app.get("/profileData", getProfileData);
 app.post("/updateProfileData", updateProfileData);
+app.post("/followUser", followUser);
 
 const server = http.createServer(app);
 

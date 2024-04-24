@@ -1,17 +1,17 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { useContext, useLayoutEffect } from "react";
 import FollowersList from "../../../components/main/profile/FollowersList";
 import {
-  FollowersNavProp,
-  FollowersRouteProp,
+  FollowingNavProp,
+  FollowingRouteProp,
 } from "../../../types/navigation";
-import { useContext, useLayoutEffect } from "react";
 import { MainContext } from "../../../store/MainContext";
 
-function FollowersScreen() {
+function FollowingScreen() {
   const mainContext = useContext(MainContext);
-  const route = useRoute<FollowersRouteProp>();
-  const navigation = useNavigation<FollowersNavProp>();
-  const followers = route.params.followers;
+  const route = useRoute<FollowingRouteProp>();
+  const navigation = useNavigation<FollowingNavProp>();
+  const following = route.params.following;
   const username =
     mainContext.userData!!.username === route.params.username
       ? "Your profile"
@@ -21,7 +21,7 @@ function FollowersScreen() {
     navigation.setOptions({ headerBackTitle: username });
   }, []);
 
-  return <FollowersList followers={followers} />;
+  return <FollowersList followers={following} />;
 }
 
-export default FollowersScreen;
+export default FollowingScreen;

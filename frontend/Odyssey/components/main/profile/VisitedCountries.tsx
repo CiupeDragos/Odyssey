@@ -1,16 +1,7 @@
 import { useState } from "react";
-import {
-  Modal,
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  ViewStyle,
-  FlatList,
-} from "react-native";
+import { Modal, StyleSheet, View, Text, Pressable } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "../../../util/constants";
-import CustomButton from "../../common/CustomButton";
 import VisitedCountriesContent from "./VisitedCountriesContent";
 
 type VisitedCountriesProps = {
@@ -32,8 +23,9 @@ function VisitedCountries({
 
   return (
     <View style={styles.countriesCount}>
-      <Text style={styles.visitedCountriesTest}>
-        Visited countries: {visitedCountries.length}
+      <Text style={styles.visitedCountriesText}>Visited countries:</Text>
+      <Text style={styles.visitedCountriesCount}>
+        {visitedCountries.length}
       </Text>
       <Pressable
         onPress={() => {
@@ -65,10 +57,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  visitedCountriesTest: {
+  visitedCountriesText: {
     fontSize: 18,
-    marginRight: 16,
-    textAlignVertical: "center",
+    marginRight: 8,
+    marginTop: 3,
+  },
+  visitedCountriesCount: {
+    fontSize: 18,
+    marginRight: 12,
+    marginTop: 5,
   },
   centeredView: {
     flex: 1,
