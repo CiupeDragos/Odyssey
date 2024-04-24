@@ -15,6 +15,7 @@ type InputProps = {
   borderColor?: string;
   borderWidth?: number;
   customStyle?: ViewStyle;
+  height?: number;
 } & TextInputProps;
 
 function Input({
@@ -24,8 +25,10 @@ function Input({
   customStyle,
   errorText,
   onChangeText,
+  height,
   ...inputProps
 }: InputProps) {
+  const inputHeight = height ?? 35;
   return (
     <View style={[styles.container, customStyle]}>
       <Text style={styles.label}>{label}</Text>
@@ -38,7 +41,7 @@ function Input({
         }}
       >
         <TextInput
-          style={styles.input}
+          style={[styles.input, { height: inputHeight }]}
           onChangeText={onChangeText}
           {...inputProps}
         />
@@ -53,7 +56,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    height: 35,
     padding: 4,
     paddingLeft: 8,
     fontSize: 18,

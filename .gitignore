@@ -163,3 +163,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+#resources
+backend/public/profile/*

@@ -41,7 +41,7 @@ export const getProfileData = async (req: Request, res: Response) => {
 export const updateProfileData = async (req: Request, res: Response) => {
   const profileUpdateRequest: ProfileUpdateRequest = {
     userId: req.body.userId,
-    base64Photo: req.body.photo,
+    base64Photo: req.body.base64Photo,
     country: req.body.country,
     favoriteCountry: req.body.favoriteCountry,
     visitedCountries: req.body.visitedCountries,
@@ -66,6 +66,10 @@ export const updateProfileData = async (req: Request, res: Response) => {
     return;
   }
 
+  if (profileUpdateRequest.base64Photo.length === 0) {
+    res.send("Profile updated successfully");
+    return;
+  }
   /*
    There should be more error handling,maybe reverse the data update if image update fails,
    also don't send success response even if photo update fails

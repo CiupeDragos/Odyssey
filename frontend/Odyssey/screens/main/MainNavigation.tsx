@@ -17,10 +17,9 @@ function MainNavigation() {
         name="EditProfile"
         component={EditProfileScreen}
         options={{
-          headerBackVisible: true,
-          headerBackTitle: "Profile",
           headerTintColor: "white",
-          headerTitle: "Edit your profile data",
+          headerTitle: "Edit your profile",
+          headerBackTitle: "Profile",
           headerStyle: { backgroundColor: Colors.primary },
         }}
       />

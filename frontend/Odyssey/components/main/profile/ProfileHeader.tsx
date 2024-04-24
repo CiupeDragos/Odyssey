@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import { ProfileData } from "../../../http/response-types";
 import { useNavigation } from "@react-navigation/native";
-import { ProfileScreenNavProps } from "../../../types/navigation";
+import { ProfileScreenNavProp } from "../../../types/navigation";
 
 type ProfileHeaderProps = {
   visitedUserId: string;
@@ -21,7 +21,7 @@ function ProfileHeader({
   profileData,
 }: ProfileHeaderProps) {
   const mainContext = useContext(MainContext);
-  const navigation = useNavigation<ProfileScreenNavProps>();
+  const navigation = useNavigation<ProfileScreenNavProp>();
 
   function handleFollow() {
     // To be implemented

@@ -3,10 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Text, Button, ScrollView, StyleSheet, View } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
-import {
-  ProfileScreenNavProps,
-  ProfileScreenRouteProp,
-} from "../../../types/navigation";
+import { ProfileScreenRouteProp } from "../../../types/navigation";
 import { ProfileData } from "../../../http/response-types";
 import { getProfileData } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
