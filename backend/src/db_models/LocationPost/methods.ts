@@ -11,12 +11,15 @@ export async function getUserLocations(
     const post: LocationPost = {
       id: model.id,
       title: model.title,
+      timestamp: model.timestamp,
       postedBy: model.postedBy,
       description: model.description,
       photos: model.photos,
       textLocation: model.textLocation,
       coordinates: model.coordinates,
       categories: model.categories,
+      comments: model.comments,
+      likes: model.likes,
       rating: model.rating,
     };
 
