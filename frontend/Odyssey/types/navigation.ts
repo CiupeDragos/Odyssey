@@ -1,13 +1,70 @@
+import {
+  CompositeNavigationProp,
+  CompositeScreenProps,
+  NavigatorScreenParams,
+  RouteProp,
+} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ProfileUpdateRequest } from "./request-types";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { Follower } from "./response-types";
 
 export type AuthNavParamList = {
   Register: undefined;
   Login: undefined;
 };
 
-export type MainNavParamList = {
+export type BottomNavParamList = {
   Home: undefined;
-  Profile: undefined;
+  Search: undefined;
+  Trips: undefined;
+  TravelerLounge: undefined;
+  Profile: { userId: string } | undefined;
+};
+
+export type MainNavParamList = {
+  MainTabs: NavigatorScreenParams<BottomNavParamList>;
+  EditProfile: ProfileDataParams;
+  Followers: FollowersScreenParams;
+  Following: FollowingScreenParams;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
+
+export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
+
+export type ProfileScreenNavProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomNavParamList, "Profile">,
+  NativeStackNavigationProp<MainNavParamList>
+>;
+
+export type EditProfileRouteProp = RouteProp<MainNavParamList, "EditProfile">;
+
+export type EditProfileNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "EditProfile"
+>;
+
+export type FollowersRouteProp = RouteProp<MainNavParamList, "Followers">;
+export type FollowingRouteProp = RouteProp<MainNavParamList, "Following">;
+
+export type FollowersNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "Followers"
+>;
+
+export type FollowingNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "Following"
+>;
+
+// Params
+export type ProfileDataParams = Omit<ProfileUpdateRequest, "base64Photo">;
+export type FollowersScreenParams = {
+  username: string;
+  followers: Array<Follower>;
+};
+export type FollowingScreenParams = {
+  username: string;
+  following: Array<Follower>;
+};

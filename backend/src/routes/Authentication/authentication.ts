@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { LoginRequest, RegisterRequest } from "./requests";
+import { LoginRequest, RegisterRequest } from "../requests";
 import {
   decryptPassword,
   encryptPassword,
   isRequestValid,
-} from "../util/methods";
-import { INVALID_REQUEST_BODY_MESSAGE } from "../util/constants";
-import UserMethods from "../db_models/User/methods";
-import { UserDbModel } from "../db_models/User/model";
-import { UserData } from "./responses";
+} from "../../util/methods";
+import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
+import UserMethods from "../../db_models/User/methods";
+import { UserDbModel } from "../../db_models/User/model";
+import { UserData } from "../responses";
 
 export const registerUser = async (req: Request, res: Response) => {
   const registerRequest: RegisterRequest = {
@@ -24,9 +24,9 @@ export const registerUser = async (req: Request, res: Response) => {
     return;
   }
 
-  const doesUserExist = !!(await UserMethods.findByUsername(
+  const doesUserExist = await UserMethods.findByUsername(
     registerRequest.username
-  ));
+  );
 
   if (doesUserExist) {
     res.status(400).send("The username is already in use");
@@ -37,6 +37,11 @@ export const registerUser = async (req: Request, res: Response) => {
 
   const userToAdd: UserDbModel = {
     ...registerRequest,
+    visitedCountries: new Array(),
+    favoriteCountry: "",
+    profileDescription: "",
+    followers: new Array(),
+    following: new Array(),
     password: encryptedPassword,
   };
 

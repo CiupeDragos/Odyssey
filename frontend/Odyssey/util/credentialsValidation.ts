@@ -1,3 +1,4 @@
+import { getYearsFromTimestamp } from "./commonMethods";
 import {
   MAX_PASSWORD_LENGTH,
   MAX_USERNAME_LENGTH,
@@ -31,13 +32,7 @@ export function validateRealName(realName: string): string {
 }
 
 export function validateBirthdayTimestamp(birthdayTimestamp: string): string {
-  const intBirthdayTimestamp = parseInt(birthdayTimestamp);
-
-  const currentTimestamp = new Date().getTime();
-  const differenceMs = currentTimestamp - intBirthdayTimestamp;
-
-  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
-  const age = differenceMs / millisecondsPerYear;
+  const age = getYearsFromTimestamp(birthdayTimestamp);
 
   if (age < 14) {
     return "You need to be at least 14 years old!";
