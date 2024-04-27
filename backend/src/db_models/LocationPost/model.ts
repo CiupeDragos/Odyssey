@@ -3,6 +3,7 @@ import { Coordinates, CoordinatesSchema } from "./Coordinates/model";
 import { LocationPoster, LocationPosterSchema } from "./LocationPoster/model";
 import { Rating, RatingSchema } from "./Rating/model";
 import { TextLocation, TextLocationSchema } from "./TextLocation/model";
+import { Comment, CommentSchema } from "../Comment/model";
 
 enum LocationTypeEnum {
   CULTURAL = "Cultural",
@@ -53,7 +54,7 @@ const LocationPostSchema = new mongoose.Schema<LocationDbModel>({
     enum: Object.values(LocationTypeEnum),
     required: true,
   },
-  comments: { type: [Comment], required: true },
+  comments: { type: [CommentSchema], required: true },
   likes: { type: [String], required: true },
   rating: { type: RatingSchema, required: true },
 });

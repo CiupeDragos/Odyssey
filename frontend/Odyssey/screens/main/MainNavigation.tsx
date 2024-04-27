@@ -4,6 +4,7 @@ import EditProfileScreen from "./profile/EditProfileScreen";
 import { Colors } from "../../util/constants";
 import FollowersScreen from "./profile/FollowersScreen";
 import FollowingScreen from "./profile/FollowingScreen";
+import AddLocationScreen from "./home/AddLocationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,16 @@ function MainNavigation() {
           headerTintColor: "white",
           headerTitle: "Following",
           headerStyle: { backgroundColor: Colors.primary },
+        }}
+      />
+      <Stack.Screen
+        name="AddLocation"
+        component={AddLocationScreen}
+        options={{
+          headerTintColor: "white",
+          headerTitle: "Add a new location",
+          headerStyle: { backgroundColor: Colors.primary },
+          headerBackTitle: "Home",
         }}
       />
     </Stack.Navigator>

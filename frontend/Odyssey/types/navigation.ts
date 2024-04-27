@@ -27,6 +27,7 @@ export type MainNavParamList = {
   EditProfile: ProfileDataParams;
   Followers: FollowersScreenParams;
   Following: FollowingScreenParams;
+  AddLocation: undefined;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
@@ -56,6 +57,11 @@ export type FollowersNavProp = NativeStackNavigationProp<
 export type FollowingNavProp = NativeStackNavigationProp<
   MainNavParamList,
   "Following"
+>;
+
+export type HomeScreenNavProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomNavParamList, "Home">,
+  NativeStackNavigationProp<MainNavParamList>
 >;
 
 // Params
