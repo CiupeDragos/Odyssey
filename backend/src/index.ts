@@ -41,8 +41,8 @@ app.post("/followUser", followUser);
 
 const server = http.createServer(app);
 
-server.listen(PORT, "192.168.100.7", () => {
-  console.log(`Server running on http://192.168.100.7:${PORT}`);
+server.listen(PORT, "192.168.0.108", () => {
+  console.log(`Server running on http://192.168.0.108:${PORT}`);
 });
 
 mongoose.Promise = Promise;

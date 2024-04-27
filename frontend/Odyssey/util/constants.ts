@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.100.7:3000";
+export const BASE_URL = "http://192.168.0.108:3000";
 
 export const Colors = {
   primary: "#024c6b",
