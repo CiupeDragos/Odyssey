@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Input from "../common/Input";
 import CustomButton from "../common/CustomButton";
 import { Colors } from "../../util/constants";
@@ -8,6 +8,8 @@ import { HttpResponse } from "../../http/HttpResponse";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigationProp } from "../../types/navigation";
 import { MainContext } from "../../store/MainContext";
+import { Ionicons } from "@expo/vector-icons";
+import AuthButton from "../common/AuthButton";
 
 type LoginInputValue = "username" | "password";
 
@@ -67,41 +69,42 @@ function LoginForm() {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
+        <Text style={styles.loginText}>Log in to your account</Text>
         <Input
-          label="Enter your username"
           onChangeText={(text) => handleInputChange("username", text)}
           customStyle={styles.input}
           inputMode="text"
-          borderColor={Colors.primary}
-          borderWidth={1.5}
+          placeholder="Enter your username"
+          borderRadius={30}
+          height={50}
+          icon={<Ionicons name="person" size={24} color="gray" />}
         />
         <Input
-          label="Enter your password"
           onChangeText={(text) => handleInputChange("password", text)}
           customStyle={styles.input}
           inputMode="text"
           secureTextEntry
-          borderColor={Colors.primary}
-          borderWidth={1.5}
+          placeholder="Enter your password"
+          borderRadius={30}
+          height={50}
+          icon={<Ionicons name="lock-closed" size={24} color="gray" />}
         />
+
+        {loginResponse && <Text style={styles.response}>{loginResponse}</Text>}
+
+        <View style={styles.actionButtonView}>
+          <AuthButton
+            label={!isLoading ? "Log in" : "Loading..."}
+            onClick={handleLogin}
+          />
+        </View>
       </View>
 
-      {loginResponse && <Text style={styles.response}>{loginResponse}</Text>}
-
       <View style={styles.actionsContainer}>
-        <CustomButton
-          color={Colors.secondary}
-          label="Go to register"
-          onTap={handleRegisterNavigation}
-          outlined
-          customStyle={styles.button}
-        />
-        <CustomButton
-          color={Colors.secondary}
-          label={isLoading ? "Loading..." : "Login"}
-          onTap={handleLogin}
-          customStyle={styles.button}
-        />
+        <Text style={styles.registerText}>Don't have an account yet?</Text>
+        <Pressable onPress={handleRegisterNavigation}>
+          <Text style={styles.registerActionText}>Register</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -112,26 +115,41 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   innerContainer: {
-    height: "45%",
+    height: "55%",
     justifyContent: "flex-end",
     alignItems: "center",
   },
   actionsContainer: {
     flexDirection: "row",
-    marginTop: 12,
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    height: "15%",
+    alignItems: "center",
   },
   input: {
     width: "80%",
-  },
-  button: {
-    width: "40%",
   },
   response: {
     textAlign: "center",
     fontSize: 15,
     marginBottom: 4,
     color: Colors.errorText,
+  },
+  actionButtonView: {
+    width: "80%",
+    alignItems: "flex-end",
+  },
+  registerText: {
+    fontSize: 18,
+  },
+  registerActionText: {
+    fontSize: 18,
+    textDecorationLine: "underline",
+  },
+  loginText: {
+    fontSize: 26,
+    fontWeight: "500",
+    textAlign: "center",
+    marginBottom: 36,
   },
 });
 

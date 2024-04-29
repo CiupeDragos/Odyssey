@@ -4,6 +4,7 @@ type CustomButtonProps = {
   color: string;
   label: string;
   outlined?: boolean;
+  elevated?: true;
   customStyle?: ViewStyle;
   onTap: () => void;
 };
@@ -12,11 +13,12 @@ function CustomButton({
   color,
   label,
   outlined,
+  elevated,
   customStyle,
   onTap,
 }: CustomButtonProps) {
   return (
-    <View style={[customStyle]}>
+    <View style={[customStyle, elevated && styles.elevatedButton]}>
       <Pressable
         onPress={onTap}
         style={({ pressed }) => [
@@ -37,6 +39,7 @@ function CustomButton({
 const styles = StyleSheet.create({
   innerContainer: {
     padding: 8,
+    justifyContent: "center",
   },
   text: {
     fontSize: 16,
@@ -48,6 +51,12 @@ const styles = StyleSheet.create({
   pressable: {
     borderRadius: 8,
     borderWidth: 1.5,
+  },
+  elevatedButton: {
+    shadowColor: "black",
+    shadowRadius: 4,
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
   },
 });
 

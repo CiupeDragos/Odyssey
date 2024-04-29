@@ -77,75 +77,96 @@ function EditProfileScreen() {
   }
 
   return (
-    <KeyboardAvoidingContainer>
-      <View style={styles.photoView}>
-        <Image
-          style={styles.photo}
-          source={
-            updatedFields.base64Photo.length === 0
-              ? { uri: defaultPhotoUri }
-              : { uri: `data:image/png;base64,${updatedFields.base64Photo}` }
-          }
-        />
-        <ImagePicker
-          label="Pick photo"
-          onPick={(base64img) => {
-            updateFields("base64Photo", base64img);
-          }}
-          customStyle={styles.pickButton}
-        />
-      </View>
-      <HorizontalRule />
-      <View style={styles.inputsView}>
-        <View style={styles.countriesCount}>
-          <VisitedCountries
-            visitedCountries={updatedFields.visitedCountries}
-            editMode
-            onUpdate={updateVisitedCountries}
+    <View style={styles.container}>
+      <KeyboardAvoidingContainer>
+        <View style={styles.photoView}>
+          <Image
+            style={styles.photo}
+            source={
+              updatedFields.base64Photo.length === 0
+                ? { uri: defaultPhotoUri }
+                : { uri: `data:image/png;base64,${updatedFields.base64Photo}` }
+            }
+          />
+          <ImagePicker
+            label="Pick photo"
+            onPick={(base64img) => {
+              updateFields("base64Photo", base64img);
+            }}
+            customStyle={styles.pickButton}
           />
         </View>
-        <Input
-          label="Your country"
-          onChangeText={(value) => {
-            updateFields("country", value);
-          }}
-          customStyle={styles.inputField}
-          value={updatedFields.country}
-        />
-        <Input
-          label="Your favorite country"
-          onChangeText={(value) => {
-            updateFields("favoriteCountry", value);
-          }}
-          customStyle={styles.inputField}
-          value={updatedFields.favoriteCountry}
-        />
-        <Input
-          label="Your profile description"
-          onChangeText={(value) => {
-            updateFields("description", value);
-          }}
-          multiline={true}
-          customStyle={styles.textAreaInputField}
-          blurOnSubmit={true}
-          height={100}
-          value={updatedFields.description}
-        />
+        <HorizontalRule />
+        <View style={styles.inputsView}>
+          <View style={styles.countriesCount}>
+            <VisitedCountries
+              visitedCountries={updatedFields.visitedCountries}
+              editMode
+              onUpdate={updateVisitedCountries}
+            />
+          </View>
+          <Input
+            label="Your country"
+            placeholder="Enter your country"
+            onChangeText={(value) => {
+              updateFields("country", value);
+            }}
+            flat
+            borderRadius={24}
+            borderColor={Colors.primary}
+            borderWidth={1}
+            customStyle={styles.inputField}
+            value={updatedFields.country}
+            marginBottom={12}
+          />
+          <Input
+            label="Your favorite country"
+            placeholder="Enter your favorite country"
+            onChangeText={(value) => {
+              updateFields("favoriteCountry", value);
+            }}
+            borderRadius={24}
+            borderColor={Colors.primary}
+            borderWidth={1}
+            customStyle={styles.inputField}
+            flat
+            value={updatedFields.favoriteCountry}
+            marginBottom={12}
+          />
+          <Input
+            label="Your profile description"
+            onChangeText={(value) => {
+              updateFields("description", value);
+            }}
+            multiline={true}
+            customStyle={styles.textAreaInputField}
+            blurOnSubmit={true}
+            borderRadius={24}
+            borderColor={Colors.primary}
+            borderWidth={1}
+            flat
+            height={100}
+            value={updatedFields.description}
+            marginBottom={12}
+          />
 
-        <CustomButton
-          color={Colors.secondary}
-          label="Save changes"
-          onTap={saveChanges}
-          customStyle={styles.actionButton}
-        />
-      </View>
-    </KeyboardAvoidingContainer>
+          <CustomButton
+            color={Colors.secondary}
+            label="Save changes"
+            onTap={saveChanges}
+            elevated
+            customStyle={styles.actionButton}
+          />
+        </View>
+      </KeyboardAvoidingContainer>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   actionRow: {
     width: "80%",
@@ -181,7 +202,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   textAreaInputField: {
-    marginTop: 8,
+    marginTop: 0,
     width: "80%",
     height: "20%",
   },

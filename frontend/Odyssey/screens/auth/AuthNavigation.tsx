@@ -10,8 +10,8 @@ function AuthNavigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary },
-        headerTintColor: "white",
+        headerShown: false,
+        contentStyle: { backgroundColor: "white" },
       }}
     >
       <Stack.Screen

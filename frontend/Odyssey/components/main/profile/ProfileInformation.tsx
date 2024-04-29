@@ -9,6 +9,10 @@ type ProfileInformationProps = {
 };
 
 function ProfileInformation({ profileData }: ProfileInformationProps) {
+  if (profileData.country.length == 0) {
+    profileData.country = "Not specified";
+  }
+
   if (profileData.favoriteCountry.length == 0) {
     profileData.favoriteCountry = "Not specified";
   }
@@ -51,8 +55,15 @@ function ProfileInformation({ profileData }: ProfileInformationProps) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    marginHorizontal: 10,
+    marginVertical: 12,
+    shadowColor: "black",
+    shadowRadius: 4,
+    shadowOpacity: 0.15,
+    padding: 12,
+    shadowOffset: { width: 0, height: 0 },
+    borderRadius: 12,
+    backgroundColor: "white",
   },
   personalDetails: {
     fontSize: 18,
@@ -61,7 +72,7 @@ const styles = StyleSheet.create({
     color: "#333333",
   },
   descriptionArea: {
-    marginTop: 8,
+    marginTop: 12,
   },
   descriptionLabel: {
     fontSize: 18,

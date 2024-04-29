@@ -1,6 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, Button, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Text,
+  Button,
+  ScrollView,
+  StyleSheet,
+  View,
+  SafeAreaView,
+} from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
 import { ProfileScreenRouteProp } from "../../../types/navigation";
@@ -58,9 +65,12 @@ function ProfileScreen({ route }: ProfileScreenProps) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <StatusBar style="auto" />
-      <View style={styles.scrollableArea}>
+      <SafeAreaView style={styles.scrollableArea}>
         <View style={styles.headerArea}>
           <ProfileHeader
             curUserId={curUserId}
@@ -72,7 +82,7 @@ function ProfileScreen({ route }: ProfileScreenProps) {
           <ProfileInformation profileData={profileData} />
           <Button title="Logout" onPress={mainContext.logout} />
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 }
@@ -80,13 +90,23 @@ function ProfileScreen({ route }: ProfileScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    backgroundColor: "white",
   },
   scrollableArea: {
     flex: 1,
+    marginTop: 54,
   },
   headerArea: {
     flex: 1,
     backgroundColor: Colors.primary,
+    paddingBottom: 24,
+    paddingTop: 24,
+    marginHorizontal: 10,
+    borderRadius: 24,
+    shadowColor: Colors.primary,
+    shadowRadius: 4,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
   },
   mainArea: {
     flex: 1.5,

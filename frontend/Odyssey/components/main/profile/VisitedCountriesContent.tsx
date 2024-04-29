@@ -5,6 +5,7 @@ import HorizontalRule from "../../common/HorizontalRule";
 import Input from "../../common/Input";
 import { useState } from "react";
 import VisitedCountryItem from "./VistitedCountryItem";
+import { Ionicons } from "@expo/vector-icons";
 
 type VisitedCountriesContentProps = {
   visitedCountries: Array<string>;
@@ -57,10 +58,17 @@ function VisitedCountriesContent({
   ) : (
     <>
       <Input
-        label="New country"
+        placeholder="New country"
+        placeholderTextColor="lightgray"
         onChangeText={handleCountryTextChange}
         customStyle={styles.input}
-        height={30}
+        height={40}
+        flat
+        borderWidth={1}
+        borderColor={Colors.primary}
+        borderRadius={20}
+        marginBottom={8}
+        icon={<Ionicons name="location" size={24} color={Colors.primary} />}
         value={country}
       />
       {addError && <Text style={styles.errorText}>{addError}</Text>}
@@ -94,6 +102,7 @@ function VisitedCountriesContent({
           color={Colors.secondary}
           label="Close"
           onTap={closeModal}
+          elevated
           customStyle={styles.button}
         />
       </View>
@@ -111,7 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    width: "60%",
+    width: "80%",
   },
   visitedCountriesText: {
     textAlign: "center",
@@ -131,12 +140,13 @@ const styles = StyleSheet.create({
     width: "60%",
   },
   addButton: {
-    width: "60%",
-    marginTop: 4,
+    width: "80%",
+    height: 35,
   },
   errorText: {
     textAlign: "center",
     fontSize: 16,
+    marginBottom: 4,
     color: Colors.errorText,
   },
 });
