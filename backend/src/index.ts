@@ -14,9 +14,11 @@ import {
   updateProfileData,
 } from "./routes/User/profile";
 import bodyParser from "body-parser";
+import { addLocationPost } from "./routes/LocationPost/crud";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "..", "public", "profile");
+const locationImagesPath = path.join(__dirname, "..", "public", "locations");
 
 app.use(cors({ credentials: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -27,6 +29,7 @@ app.use("/profile", (req, res) => {
     res.sendFile(path.join(profileImagesPath, "no_profile_picture.jpeg"));
   });
 });
+app.use("/locations", express.static(locationImagesPath));
 
 //End-points
 
@@ -38,6 +41,9 @@ app.post("/login", loginUser);
 app.get("/profileData", getProfileData);
 app.post("/updateProfileData", updateProfileData);
 app.post("/followUser", followUser);
+
+// Locations
+app.post("/addLocation", addLocationPost);
 
 const server = http.createServer(app);
 

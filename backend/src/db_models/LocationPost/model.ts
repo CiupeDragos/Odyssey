@@ -5,7 +5,7 @@ import { Rating, RatingSchema } from "./Rating/model";
 import { TextLocation, TextLocationSchema } from "./TextLocation/model";
 import { Comment, CommentSchema } from "../Comment/model";
 
-enum LocationTypeEnum {
+export enum LocationTypeEnum {
   CULTURAL = "Cultural",
   URBAN = "Urban",
   NATURE = "Nature",

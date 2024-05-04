@@ -1,4 +1,6 @@
 import * as FileSystem from "expo-file-system";
+import { AddressComponent } from "../screens/main/home/PickLocationScreen";
+import { TextLocation } from "../types/response-types";
 
 export function getYearsFromTimestamp(timestamp: string | number): number {
   const intTimestamp =
@@ -24,4 +26,20 @@ export async function getBase64FromUri(photoUri: string) {
     console.log("Reading the profile image file failed");
     return null;
   }
+}
+
+export function getTextLocationFromAddressArray(
+  addressComponents: Array<AddressComponent>
+): TextLocation {
+  const country = addressComponents.find((address) =>
+    address.types.includes("country")
+  )?.long_name;
+  const area = addressComponents.find((address) =>
+    address.types.includes("locality")
+  )?.long_name;
+
+  return {
+    area: area ?? "",
+    country: country ?? "",
+  };
 }

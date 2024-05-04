@@ -22,11 +22,13 @@ export async function genericPostMethod<T, K>(
 }
 
 export async function genericGetMethod<T, K>(
-  endpoint: string,
-  queryParams: T | undefined = undefined
+  endpoint?: string,
+  queryParams?: T,
+  fullUrl?: string
 ): Promise<HttpResponse<K>> {
   try {
-    const response = await axios.get(`${BASE_URL}/${endpoint}`, {
+    const url = fullUrl ?? `${BASE_URL}/${endpoint}`;
+    const response = await axios.get(url, {
       params: queryParams,
     });
 

@@ -17,7 +17,7 @@ export type LocationPoster = {
 
 export type TextLocation = {
   country: string;
-  city: string;
+  area: string;
 };
 
 export type Coordinates = {
@@ -28,8 +28,8 @@ export type Coordinates = {
 export type Rating = {
   safe: number;
   fun: number;
-  crowded: number;
-  expensive: number;
+  uncrowded: number;
+  affordable: number;
 };
 
 export type Follower = {

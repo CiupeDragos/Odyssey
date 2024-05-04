@@ -1,3 +1,11 @@
+import { LocationTypeEnum } from "../util/enums";
+import {
+  LocationPoster,
+  TextLocation,
+  Coordinates,
+  Rating,
+} from "./response-types";
+
 export type RegisterRequest = {
   username: string;
   realName: string;
@@ -28,4 +36,15 @@ export type ProfileDataRequest = {
 export type FollowUserRequest = {
   fromUserId: string;
   toUserId: string;
+};
+
+export type AddLocationRequest = {
+  title: string;
+  postedBy: LocationPoster;
+  description: string;
+  photos: Array<string>;
+  textLocation: TextLocation;
+  coordinates: Coordinates;
+  categories: Array<LocationTypeEnum>;
+  rating: Rating;
 };

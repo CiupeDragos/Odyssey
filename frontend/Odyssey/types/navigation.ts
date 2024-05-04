@@ -7,7 +7,7 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ProfileUpdateRequest } from "./request-types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { Follower } from "./response-types";
+import { Coordinates, Follower, TextLocation } from "./response-types";
 
 export type AuthNavParamList = {
   Register: undefined;
@@ -27,7 +27,10 @@ export type MainNavParamList = {
   EditProfile: ProfileDataParams;
   Followers: FollowersScreenParams;
   Following: FollowingScreenParams;
-  AddLocation: undefined;
+  AddLocation:
+    | { textLocation: TextLocation; coordinates: Coordinates }
+    | undefined;
+  PickLocation: { initialLocation: Coordinates };
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
@@ -39,12 +42,26 @@ export type ProfileScreenNavProp = CompositeNavigationProp<
   NativeStackNavigationProp<MainNavParamList>
 >;
 
+export type PickLocationRouteProp = RouteProp<MainNavParamList, "PickLocation">;
+
+export type PickLocationNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "PickLocation"
+>;
+
 export type EditProfileRouteProp = RouteProp<MainNavParamList, "EditProfile">;
 
 export type EditProfileNavProp = NativeStackNavigationProp<
   MainNavParamList,
   "EditProfile"
 >;
+
+export type AddLocationNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "AddLocation"
+>;
+
+export type AddLocationRouteProp = RouteProp<MainNavParamList, "AddLocation">;
 
 export type FollowersRouteProp = RouteProp<MainNavParamList, "Followers">;
 export type FollowingRouteProp = RouteProp<MainNavParamList, "Following">;

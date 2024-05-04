@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export function isRequestValid(requestObject: Object): boolean {
   const requestPropertiesTypes = Object.values(requestObject).map(
@@ -21,4 +23,31 @@ export async function decryptPassword(
   hashedPassword: string
 ): Promise<boolean> {
   return bcrypt.compare(plainTextPassword, hashedPassword);
+}
+
+export function writePhotosFromBase64(
+  base64Images: Array<string>,
+  baseFilePath: string
+) {
+  const images = new Array<string>();
+
+  base64Images.forEach((base64Img) => {
+    const dataWithoutPrefix = base64Img.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(dataWithoutPrefix, "base64");
+
+    const photoId = `${uuidv4()}.jpg`;
+    const curFilePath = `${baseFilePath}/${photoId}`;
+
+    images.push(photoId);
+
+    fs.writeFile(curFilePath, buffer, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Image saved successfully!");
+      }
+    });
+  });
+
+  return images;
 }

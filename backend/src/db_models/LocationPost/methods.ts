@@ -1,4 +1,4 @@
-import { LocationPost, LocationPostModel } from "./model";
+import { LocationDbModel, LocationPost, LocationPostModel } from "./model";
 
 export async function getUserLocations(
   userId: string
@@ -27,6 +27,10 @@ export async function getUserLocations(
   });
 
   return locationPosts;
+}
+
+export function addLocationPost(locationDbModel: LocationDbModel) {
+  return new LocationPostModel(locationDbModel).save();
 }
 
 const LocationPostMethods = {

@@ -9,7 +9,7 @@ import {
   ProfileUpdateRequest,
 } from "../types/request-types";
 
-export async function getProfileData(
+export function getProfileData(
   userId: string,
   requesterId: string
 ): Promise<HttpResponse<ProfileData>> {
@@ -20,13 +20,13 @@ export async function getProfileData(
   return genericGetMethod("profileData", queryParams);
 }
 
-export async function updateUserProfile(
+export function updateUserProfile(
   profileUpdateRequest: ProfileUpdateRequest
 ): Promise<HttpResponse<string>> {
   return genericPostMethod(profileUpdateRequest, "updateProfileData");
 }
 
-export async function followUser(
+export function followUser(
   followUserRequest: FollowUserRequest
 ): Promise<HttpResponse<string>> {
   return genericPostMethod(followUserRequest, "followUser");

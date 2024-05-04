@@ -5,12 +5,18 @@ import { Colors } from "../../util/constants";
 import FollowersScreen from "./profile/FollowersScreen";
 import FollowingScreen from "./profile/FollowingScreen";
 import AddLocationScreen from "./home/AddLocationScreen";
+import PickLocationScreen from "./home/PickLocationScreen";
 
 const Stack = createNativeStackNavigator();
 
 function MainNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary },
+        headerTintColor: "white",
+      }}
+    >
       <Stack.Screen
         name="MainTabs"
         component={MainTabsNavigation}
@@ -20,38 +26,38 @@ function MainNavigation() {
         name="EditProfile"
         component={EditProfileScreen}
         options={{
-          headerTintColor: "white",
           headerTitle: "Edit your profile",
           headerBackTitle: "Profile",
-          headerStyle: { backgroundColor: Colors.primary },
         }}
       />
       <Stack.Screen
         name="Followers"
         component={FollowersScreen}
         options={{
-          headerTintColor: "white",
           headerTitle: "Followers",
-          headerStyle: { backgroundColor: Colors.primary },
         }}
       />
       <Stack.Screen
         name="Following"
         component={FollowingScreen}
         options={{
-          headerTintColor: "white",
           headerTitle: "Following",
-          headerStyle: { backgroundColor: Colors.primary },
         }}
       />
       <Stack.Screen
         name="AddLocation"
         component={AddLocationScreen}
         options={{
-          headerTintColor: "white",
           headerTitle: "Add a new location",
-          headerStyle: { backgroundColor: Colors.primary },
           headerBackTitle: "Home",
+        }}
+      />
+      <Stack.Screen
+        name="PickLocation"
+        component={PickLocationScreen}
+        options={{
+          headerTitle: "Pick location",
+          headerBackTitle: "Add location",
         }}
       />
     </Stack.Navigator>

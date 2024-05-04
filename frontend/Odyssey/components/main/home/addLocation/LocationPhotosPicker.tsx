@@ -79,8 +79,8 @@ function LocationPhotosPicker({
                 }}
               />
             )}
-            itemWidth={250}
-            sliderWidth={300}
+            itemWidth={300}
+            sliderWidth={350}
           />
         )}
       </View>
@@ -90,6 +90,7 @@ function LocationPhotosPicker({
         label="Pick photos"
         onTap={handlePhotosPicking}
         outlined
+        elevated
       />
     </View>
   );
@@ -97,8 +98,8 @@ function LocationPhotosPicker({
 
 const styles = StyleSheet.create({
   container: {
-    height: "35%",
-    marginBottom: 12,
+    height: "25%",
+    marginBottom: 24,
   },
   label: { fontSize: 18 },
   carouselView: {

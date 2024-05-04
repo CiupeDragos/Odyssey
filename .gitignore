@@ -166,3 +166,4 @@ yarn-error.*
 
 #resources
 backend/public/profile/*
+backend/public/locations/*
