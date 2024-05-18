@@ -1,15 +1,16 @@
-import { Image, View, Text, StyleSheet, Alert } from "react-native";
+import { Image, View, Text, StyleSheet, Alert, Pressable } from "react-native";
 import { useContext, useState } from "react";
 import CountIndicator from "./CountIndicator";
 import CustomButton from "../../common/CustomButton";
 import { BASE_URL, Colors } from "../../../util/constants";
 import { SafeAreaView } from "react-native";
 import { MainContext } from "../../../store/MainContext";
-import { Follower, ProfileData } from "../../../types/response-types";
+import { ProfileData } from "../../../types/response-types";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileScreenNavProp } from "../../../types/navigation";
 import { followUser } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type ProfileHeaderProps = {
   curUserId: string;
@@ -97,12 +98,20 @@ function ProfileHeader({
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.pictureRow}>
+          {isPersonalProfile && <View style={{ flex: 1 }}></View>}
           <Image
             style={styles.image}
             source={{
               uri: `${BASE_URL}/profile/${visitedUserId}.jpg`,
             }}
           />
+          {isPersonalProfile && (
+            <View style={styles.logoutView}>
+              <Pressable onPress={mainContext.logout}>
+                <MaterialIcons name="logout" size={32} color="white" />
+              </Pressable>
+            </View>
+          )}
         </View>
 
         <View style={styles.usernameRow}>
@@ -157,7 +166,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   pictureRow: {
-    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  logoutView: {
+    flex: 1,
+    alignItems: "flex-end",
+    paddingRight: 12,
   },
   image: {
     width: "40%",

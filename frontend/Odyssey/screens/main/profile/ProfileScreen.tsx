@@ -17,6 +17,7 @@ import { HttpResponse } from "../../../http/HttpResponse";
 import ProfileInformation from "../../../components/main/profile/ProfileInformation";
 import { Colors } from "../../../util/constants";
 import LoadingText from "../../../components/common/LoadingText";
+import LocationPostsList from "../../../components/main/home/feed/LocationPostsList";
 
 type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
@@ -66,6 +67,7 @@ function ProfileScreen({ route }: ProfileScreenProps) {
 
   return (
     <ScrollView
+      style={styles.scrollView}
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
@@ -80,8 +82,8 @@ function ProfileScreen({ route }: ProfileScreenProps) {
         </View>
         <View style={styles.mainArea}>
           <ProfileInformation profileData={profileData} />
-          <Button title="Logout" onPress={mainContext.logout} />
         </View>
+        <LocationPostsList locationPosts={profileData.locationPosts} />
       </SafeAreaView>
     </ScrollView>
   );
@@ -90,6 +92,9 @@ function ProfileScreen({ route }: ProfileScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    backgroundColor: "white",
+  },
+  scrollView: {
     backgroundColor: "white",
   },
   scrollableArea: {
