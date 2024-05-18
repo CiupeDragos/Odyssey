@@ -1,9 +1,12 @@
 import { LocationDbModel } from "db_models/LocationPost/model";
 import { Request, Response } from "express";
-import { AddLocationRequest } from "routes/requests";
+import { AddLocationRequest, LocationPostsRequest } from "routes/requests";
 import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
 import { isRequestValid, writePhotosFromBase64 } from "../../util/methods";
-import { addLocationPost as addLocationToDb } from "../../db_models/LocationPost/methods";
+import {
+  addLocationPost as addLocationToDb,
+  getLocations,
+} from "../../db_models/LocationPost/methods";
 
 export const addLocationPost = async (req: Request, res: Response) => {
   const addLocationRequest: AddLocationRequest = {
@@ -44,4 +47,15 @@ export const addLocationPost = async (req: Request, res: Response) => {
   await addLocationToDb(locationToAdd);
 
   res.send("Location added successfully");
+};
+
+export const getLocationPosts = async (req: Request, res: Response) => {
+  const getLocationsRequest: LocationPostsRequest = {
+    posterId: req.query.posterId as string,
+  };
+
+  const locationPosts = await getLocations(getLocationsRequest.posterId);
+  locationPosts.sort((a, b) => b.timestamp - a.timestamp);
+
+  res.json(locationPosts);
 };

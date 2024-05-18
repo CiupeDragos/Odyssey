@@ -48,3 +48,7 @@ export type AddLocationRequest = {
   categories: Array<LocationTypeEnum>;
   rating: Rating;
 };
+
+export type LocationPostsRequest = {
+  posterId?: string;
+};

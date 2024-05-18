@@ -15,6 +15,16 @@ export function getYearsFromTimestamp(timestamp: string | number): number {
   return Math.floor(age);
 }
 
+export function getDateFromFromTimestamp(timestamp: number) {
+  const date = new Date(timestamp);
+  const options: Intl.DateTimeFormatOptions = {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+}
+
 export async function getBase64FromUri(photoUri: string) {
   try {
     const base64Img = await FileSystem.readAsStringAsync(photoUri, {

@@ -5,6 +5,7 @@ import MainContextProvider, { MainContext } from "./store/MainContext";
 import { useContext } from "react";
 import MainNavigation from "./screens/main/MainNavigation";
 import AuthNavigation from "./screens/auth/AuthNavigation";
+import "react-native-reanimated";
 
 function Navigation() {
   const mainContext = useContext(MainContext);

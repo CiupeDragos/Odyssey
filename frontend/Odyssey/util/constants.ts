@@ -17,6 +17,6 @@ export const MAX_PASSWORD_LENGTH = 20;
 
 // Location post
 export const MIN_TITLE_LENGTH = 6;
-export const MAX_TITLE_LENGTH = 20;
+export const MAX_TITLE_LENGTH = 35;
 
 export const USER_DATA_KEY = "userData";

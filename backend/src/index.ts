@@ -14,7 +14,7 @@ import {
   updateProfileData,
 } from "./routes/User/profile";
 import bodyParser from "body-parser";
-import { addLocationPost } from "./routes/LocationPost/crud";
+import { addLocationPost, getLocationPosts } from "./routes/LocationPost/crud";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "..", "public", "profile");
@@ -44,6 +44,7 @@ app.post("/followUser", followUser);
 
 // Locations
 app.post("/addLocation", addLocationPost);
+app.get("/locationPosts", getLocationPosts);
 
 const server = http.createServer(app);
 

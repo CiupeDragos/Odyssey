@@ -92,7 +92,6 @@ function PickLocationScreen() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
         region={{
           latitude: pickedLocation.lat,
