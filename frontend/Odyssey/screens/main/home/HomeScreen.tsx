@@ -18,7 +18,7 @@ function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavProp>();
 
   function onAddLocationClick() {
-    navigation.replace("AddLocation");
+    navigation.navigate("AddLocation");
   }
 
   async function getLocationPosts() {
