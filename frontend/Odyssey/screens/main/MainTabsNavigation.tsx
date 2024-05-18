@@ -12,7 +12,11 @@ const BottomTab = createBottomTabNavigator<BottomNavParamList>();
 function MainTabsNavigation() {
   return (
     <BottomTab.Navigator
-      screenOptions={{ headerTitle: "", tabBarShowLabel: false }}
+      screenOptions={{
+        headerTitle: "",
+        tabBarShowLabel: true,
+        headerShown: false,
+      }}
     >
       <BottomTab.Screen
         name="Home"
@@ -48,6 +52,7 @@ function MainTabsNavigation() {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons color={color} size={size} name="question-answer" />
           ),
+          tabBarLabel: "Lounge",
         }}
       />
       <BottomTab.Screen

@@ -3,25 +3,13 @@ import CustomButton from "./CustomButton";
 import { Colors } from "../../util/constants";
 import * as IPicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
+import { getBase64FromUri } from "../../util/commonMethods";
 
 type ImagePickerProps = {
   label: string;
   onPick: (base64Image: string) => void;
   customStyle?: ViewStyle;
 };
-
-async function getBase64FromUri(photoUri: string) {
-  try {
-    const base64Img = await FileSystem.readAsStringAsync(photoUri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    return base64Img;
-  } catch {
-    console.log("Reading the profile image file failed");
-    return null;
-  }
-}
 
 function ImagePicker({ label, onPick, customStyle }: ImagePickerProps) {
   async function handlePhotoPick() {

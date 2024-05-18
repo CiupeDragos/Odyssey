@@ -17,7 +17,7 @@ export type LocationPoster = {
 
 export type TextLocation = {
   country: string;
-  city: string;
+  area: string;
 };
 
 export type Coordinates = {
@@ -28,8 +28,8 @@ export type Coordinates = {
 export type Rating = {
   safe: number;
   fun: number;
-  crowded: number;
-  expensive: number;
+  uncrowded: number;
+  affordable: number;
 };
 
 export type Follower = {
@@ -37,15 +37,25 @@ export type Follower = {
   username: string;
 };
 
+export type Comment = {
+  authorId: string;
+  authorUsername: string;
+  timestamp: number;
+  content: string;
+};
+
 export type LocationPost = {
   id: string;
   title: string;
   postedBy: LocationPoster;
+  timestamp: number;
   description: string;
   photos: Array<string>;
   textLocation: TextLocation;
   coordinates: Coordinates;
   categories: Array<LocationTypeEnum>;
+  comments: Array<Comment>;
+  likes: Array<string>;
   rating: Rating;
 };
 

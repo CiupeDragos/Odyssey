@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Input from "../common/Input";
 import CustomButton from "../common/CustomButton";
 import { Colors } from "../../util/constants";
@@ -16,6 +16,9 @@ import { HttpResponse } from "../../http/HttpResponse";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigationProp } from "../../types/navigation";
 import BirthDateInput from "./BirthDateInput";
+import KeyboardAvoidingContainer from "../common/KeyboardAvoidingContainer";
+import { Ionicons } from "@expo/vector-icons";
+import AuthButton from "../common/AuthButton";
 
 export type RegisterFields = {
   username: string;
@@ -132,97 +135,103 @@ function RegisterForm() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <Input
-          label="Enter your username"
-          onChangeText={(text) => handleInputChange("username", text)}
-          customStyle={styles.input}
-          inputMode="text"
-          borderColor={Colors.primary}
-          borderWidth={1.5}
-          errorText={inputErrors.username}
-          value={inputValues.username}
-        />
-        <BirthDateInput
-          errorText={inputErrors.birthTimestamp}
-          onDateChange={(stringTimestamp) =>
-            handleInputChange("birthTimestamp", stringTimestamp)
-          }
-        />
-        <Input
-          label="Enter your real name"
-          onChangeText={(text) => handleInputChange("realName", text)}
-          customStyle={styles.input}
-          inputMode="text"
-          borderColor={Colors.primary}
-          borderWidth={1.5}
-          errorText={inputErrors.realName}
-          value={inputValues.realName}
-        />
-        <Input
-          label="Enter your country"
-          onChangeText={(text) => handleInputChange("country", text)}
-          customStyle={styles.input}
-          inputMode="text"
-          borderColor={Colors.primary}
-          borderWidth={1.5}
-          errorText={inputErrors.country}
-          value={inputValues.country}
-        />
-        <Input
-          label="Enter your password"
-          onChangeText={(text) => handleInputChange("password", text)}
-          customStyle={styles.input}
-          inputMode="text"
-          secureTextEntry
-          borderColor={Colors.primary}
-          borderWidth={1.5}
-          errorText={inputErrors.password}
-          value={inputValues.password}
-        />
-        <Input
-          label="Confirm your password"
-          onChangeText={(text) => handleInputChange("confirmPassword", text)}
-          customStyle={styles.input}
-          inputMode="text"
-          secureTextEntry
-          borderColor={Colors.primary}
-          borderWidth={1.5}
-          errorText={inputErrors.confirmPassword}
-          value={inputValues.confirmPassword}
-        />
-      </View>
+    <KeyboardAvoidingContainer>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.innerContainer}>
+          <Text style={styles.registerStaticText}>Create account</Text>
+          <Input
+            placeholder="Enter your username"
+            onChangeText={(text) => handleInputChange("username", text)}
+            customStyle={styles.input}
+            inputMode="text"
+            height={50}
+            borderRadius={30}
+            icon={<Ionicons name="person" size={24} color="gray" />}
+            errorText={inputErrors.username}
+            value={inputValues.username}
+          />
+          <Input
+            placeholder="Enter your real name"
+            onChangeText={(text) => handleInputChange("realName", text)}
+            customStyle={styles.input}
+            inputMode="text"
+            height={50}
+            borderRadius={30}
+            icon={<Ionicons name="person" size={24} color="gray" />}
+            errorText={inputErrors.realName}
+            value={inputValues.realName}
+          />
+          <Input
+            placeholder="Enter your country"
+            onChangeText={(text) => handleInputChange("country", text)}
+            customStyle={styles.input}
+            inputMode="text"
+            height={50}
+            borderRadius={30}
+            icon={<Ionicons name="location" size={24} color="gray" />}
+            errorText={inputErrors.country}
+            value={inputValues.country}
+          />
+          <Input
+            placeholder="Enter your password"
+            onChangeText={(text) => handleInputChange("password", text)}
+            customStyle={styles.input}
+            inputMode="text"
+            secureTextEntry
+            height={50}
+            borderRadius={30}
+            icon={<Ionicons name="lock-closed" size={24} color="gray" />}
+            errorText={inputErrors.password}
+            value={inputValues.password}
+          />
+          <Input
+            placeholder="Confirm your password"
+            onChangeText={(text) => handleInputChange("confirmPassword", text)}
+            customStyle={styles.input}
+            inputMode="text"
+            secureTextEntry
+            height={50}
+            borderRadius={30}
+            icon={<Ionicons name="lock-closed" size={24} color="gray" />}
+            errorText={inputErrors.confirmPassword}
+            value={inputValues.confirmPassword}
+          />
+          <BirthDateInput
+            errorText={inputErrors.birthTimestamp}
+            onDateChange={(stringTimestamp) =>
+              handleInputChange("birthTimestamp", stringTimestamp)
+            }
+          />
 
-      {registerResponse && (
-        <Text
-          style={[
-            styles.response,
-            registerResponse.success
-              ? styles.responseSuccess
-              : styles.responseError,
-          ]}
-        >
-          {registerResponse.message}
-        </Text>
-      )}
+          {registerResponse && (
+            <Text
+              style={[
+                styles.response,
+                registerResponse.success
+                  ? styles.responseSuccess
+                  : styles.responseError,
+              ]}
+            >
+              {registerResponse.message}
+            </Text>
+          )}
 
-      <View style={styles.actionsContainer}>
-        <CustomButton
-          color={Colors.secondary}
-          label="Go to login"
-          onTap={handleLoginNavigation}
-          outlined
-          customStyle={styles.button}
-        />
-        <CustomButton
-          color={Colors.secondary}
-          label={isLoading ? "Loading..." : "Register"}
-          onTap={handleRegistration}
-          customStyle={styles.button}
-        />
-      </View>
-    </View>
+          <View style={styles.actionButtonView}>
+            <AuthButton
+              label={!isLoading ? "Register" : "Loading..."}
+              onClick={handleRegistration}
+            />
+          </View>
+        </View>
+
+        <View style={styles.actionsContainer}>
+          <Text style={styles.registerText}>Already have an account?</Text>
+          <Pressable onPress={handleLoginNavigation}>
+            <Text style={styles.registerActionText}>Login</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingContainer>
   );
 }
 
@@ -231,20 +240,30 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  registerStaticText: {
+    fontSize: 26,
+    fontWeight: "500",
+    textAlign: "center",
+    marginBottom: 36,
+  },
   innerContainer: {
     width: "80%",
-    height: "70%",
+    height: 650,
     justifyContent: "flex-end",
+    paddingTop: 24,
   },
   actionsContainer: {
     flexDirection: "row",
-    marginTop: 12,
-    width: "90%",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    height: "15%",
+    alignItems: "center",
   },
   input: {},
   button: {
     width: "40%",
+  },
+  actionButtonView: {
+    alignItems: "flex-end",
   },
   response: {
     textAlign: "center",
@@ -256,6 +275,19 @@ const styles = StyleSheet.create({
   },
   responseError: {
     color: Colors.errorText,
+  },
+  registerText: {
+    fontSize: 18,
+  },
+  registerActionText: {
+    fontSize: 18,
+    textDecorationLine: "underline",
+  },
+  loginText: {
+    fontSize: 26,
+    fontWeight: "500",
+    textAlign: "center",
+    marginBottom: 36,
   },
 });
 

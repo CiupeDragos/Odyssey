@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: "42%",
-    height: 170,
+    width: "40%",
+    height: 160,
     borderRadius: 100,
     borderWidth: 2,
     borderColor: "white",

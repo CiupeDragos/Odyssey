@@ -4,14 +4,19 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  ViewStyle,
 } from "react-native";
 
 type KeyboardAvoidingContainerProps = {
   children: ReactNode;
+  customStyle?: ViewStyle;
+  scrollingEnabled?: boolean;
 };
 
 function KeyboardAvoidingContainer({
   children,
+  customStyle,
+  scrollingEnabled,
 }: KeyboardAvoidingContainerProps) {
   return (
     <KeyboardAvoidingView
@@ -21,7 +26,9 @@ function KeyboardAvoidingContainer({
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
+        style={{ flex: 1 }}
+        contentContainerStyle={[{ flexGrow: 1 }, customStyle]}
+        scrollEnabled={scrollingEnabled ?? true}
       >
         {children}
       </ScrollView>
@@ -32,6 +39,7 @@ function KeyboardAvoidingContainer({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
 });
 

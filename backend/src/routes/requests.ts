@@ -1,3 +1,8 @@
+import { Coordinates } from "db_models/LocationPost/Coordinates/model";
+import { LocationPoster } from "db_models/LocationPost/LocationPoster/model";
+import { Rating } from "db_models/LocationPost/Rating/model";
+import { TextLocation } from "db_models/LocationPost/TextLocation/model";
+import { LocationTypeEnum } from "db_models/LocationPost/model";
 import { UserDbModel } from "db_models/User/model";
 
 export type RegisterRequest = {
@@ -30,4 +35,19 @@ export type ProfileDataRequest = {
 export type FollowUserRequest = {
   fromUserId: string;
   toUserId: string;
+};
+
+export type AddLocationRequest = {
+  title: string;
+  postedBy: LocationPoster;
+  description: string;
+  photos: Array<string>;
+  textLocation: TextLocation;
+  coordinates: Coordinates;
+  categories: Array<LocationTypeEnum>;
+  rating: Rating;
+};
+
+export type LocationPostsRequest = {
+  posterId?: string;
 };

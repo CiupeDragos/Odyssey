@@ -1,24 +1,46 @@
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  Pressable,
+  DimensionValue,
+} from "react-native";
 import { BASE_URL, Colors } from "../../util/constants";
 
 type UsernameWithPhotoProps = {
   userId: string;
   username: string;
   onClick?: () => void;
+  usernameFontSize?: number;
+  imgWidth?: DimensionValue;
+  imgHeight?: DimensionValue;
+  usernameMarginLeft?: number;
 };
 
 function UsernameWithPhoto({
   userId,
   username,
   onClick,
+  imgWidth = "20%",
+  imgHeight = 75,
+  usernameFontSize = 24,
+  usernameMarginLeft = 24,
 }: UsernameWithPhotoProps) {
   return (
     <Pressable style={styles.container} onPress={onClick}>
       <Image
-        style={styles.photo}
+        style={[styles.photo, { width: imgWidth, height: imgHeight }]}
         source={{ uri: `${BASE_URL}/profile/${userId}.jpg` }}
       />
-      <Text style={styles.username}>{username}</Text>
+      <Text
+        style={[
+          styles.username,
+          { fontSize: usernameFontSize, marginLeft: usernameMarginLeft },
+        ]}
+      >
+        {username}
+      </Text>
     </Pressable>
   );
 }
@@ -31,13 +53,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   username: {
-    fontSize: 24,
     fontWeight: "400",
-    marginLeft: 24,
   },
   photo: {
-    width: "20%",
-    height: 75,
     borderRadius: 100,
     borderColor: Colors.primary,
     borderWidth: 2,

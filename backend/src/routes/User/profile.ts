@@ -1,4 +1,4 @@
-import { getUserLocations } from "../../db_models/LocationPost/methods";
+import { getLocations } from "../../db_models/LocationPost/methods";
 import {
   findUserById,
   updateFollowers,
@@ -34,7 +34,7 @@ export const getProfileData = async (req: Request, res: Response) => {
     return;
   }
 
-  const userLocations = await getUserLocations(profileDataRequest.userId);
+  const userLocations = await getLocations(profileDataRequest.userId);
   const { id, password, ...userProfileData } = user;
 
   const profileData: ProfileData = {

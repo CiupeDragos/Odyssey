@@ -1,22 +1,31 @@
-import { LocationPost, LocationPostModel } from "./model";
+import { LocationDbModel, LocationPost, LocationPostModel } from "./model";
 
-export async function getUserLocations(
-  userId: string
+export async function getLocations(
+  userId?: string
 ): Promise<Array<LocationPost>> {
-  const locationPostDbModels = await LocationPostModel.find({
-    "postedBy.userId": userId,
-  });
+  let locationPostDbModels;
+
+  if (userId) {
+    locationPostDbModels = await LocationPostModel.find({
+      "postedBy.userId": userId,
+    });
+  } else {
+    locationPostDbModels = await LocationPostModel.find();
+  }
 
   const locationPosts = locationPostDbModels.map((model) => {
     const post: LocationPost = {
       id: model.id,
       title: model.title,
+      timestamp: model.timestamp,
       postedBy: model.postedBy,
       description: model.description,
       photos: model.photos,
       textLocation: model.textLocation,
       coordinates: model.coordinates,
       categories: model.categories,
+      comments: model.comments,
+      likes: model.likes,
       rating: model.rating,
     };
 
@@ -26,8 +35,12 @@ export async function getUserLocations(
   return locationPosts;
 }
 
+export function addLocationPost(locationDbModel: LocationDbModel) {
+  return new LocationPostModel(locationDbModel).save();
+}
+
 const LocationPostMethods = {
-  getUserLocations: getUserLocations,
+  getUserLocations: getLocations,
 };
 
 export default LocationPostMethods;

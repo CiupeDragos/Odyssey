@@ -1,8 +1,10 @@
 import { getYearsFromTimestamp } from "./commonMethods";
 import {
   MAX_PASSWORD_LENGTH,
+  MAX_TITLE_LENGTH,
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
+  MIN_TITLE_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "./constants";
 
@@ -67,6 +69,14 @@ export function validateConfirmPassword(
 ): string {
   if (password != confirmPassword) {
     return "Passwords do not match";
+  }
+
+  return "";
+}
+
+export function validateLocationTitle(title: string) {
+  if (title.length < MIN_TITLE_LENGTH || title.length > MAX_TITLE_LENGTH) {
+    return `The title needs to be between ${MIN_TITLE_LENGTH} and ${MAX_TITLE_LENGTH} characters`;
   }
 
   return "";
