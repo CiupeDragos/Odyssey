@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  LogBox,
 } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
@@ -58,6 +59,7 @@ function ProfileScreen({ route }: ProfileScreenProps) {
       }
     }
 
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     loadProfileData();
   }, []);
 

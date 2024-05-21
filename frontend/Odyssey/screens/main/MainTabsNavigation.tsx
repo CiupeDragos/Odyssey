@@ -63,7 +63,11 @@ function MainTabsNavigation() {
             <Ionicons color={color} size={size} name="person" />
           ),
           headerShown: false,
+          unmountOnBlur: true,
         }}
+        listeners={({ navigation }) => ({
+          blur: () => navigation.setParams({ userId: undefined }),
+        })}
       />
     </BottomTab.Navigator>
   );

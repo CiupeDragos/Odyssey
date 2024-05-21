@@ -226,7 +226,8 @@ function AddLocationScreen() {
     const response = await addLocationPost(addLocationRequest);
     setIsLoading(false);
     if (HttpResponse.isSuccess(response)) {
-      navigation.pop();
+      navigation.popToTop();
+      navigation.replace("MainTabs", { screen: "Home" });
     } else if (HttpResponse.isError(response)) {
       Alert.alert("An error occurred", response.error);
     }

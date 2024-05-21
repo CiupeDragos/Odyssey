@@ -51,3 +51,7 @@ export type AddLocationRequest = {
 export type LocationPostsRequest = {
   posterId?: string;
 };
+
+export type SearchUsersRequest = {
+  searchQuery: string;
+};

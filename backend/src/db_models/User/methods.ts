@@ -1,6 +1,7 @@
 import { ProfileUpdateRequest } from "routes/requests";
 import { UserDbModel, User } from "./model";
 import { Types, type Document } from "mongoose";
+import { Follower } from "./Follower/model";
 
 //Type alias for the mongoose User table query response
 type UserModel =
@@ -70,10 +71,31 @@ export async function updateFollowers(fromUser: User, toUser: User) {
   return fromUpdate != null && toUpdate != null;
 }
 
+export async function searchForUsers(searchQuery: string) {
+  if (searchQuery.length === 0) return [];
+
+  const results = await User.find({
+    username: { $regex: searchQuery, $options: "i" },
+  });
+
+  // Using the Follower model because this function queries data for the search users screen, so we don't need more data than a Follower
+  const users = results.map((userModel) => {
+    const follower: Follower = {
+      userId: userModel.id,
+      username: userModel.username,
+    };
+
+    return follower;
+  });
+
+  return users;
+}
+
 const UserMethods = {
   add: addUser,
   findById: findUserById,
   findByUsername: findUserByUsername,
+  search: searchForUsers,
 };
 
 export default UserMethods;

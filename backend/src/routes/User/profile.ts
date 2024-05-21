@@ -35,6 +35,8 @@ export const getProfileData = async (req: Request, res: Response) => {
   }
 
   const userLocations = await getLocations(profileDataRequest.userId);
+  userLocations.sort((a, b) => b.timestamp - a.timestamp);
+
   const { id, password, ...userProfileData } = user;
 
   const profileData: ProfileData = {

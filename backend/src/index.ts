@@ -15,6 +15,7 @@ import {
 } from "./routes/User/profile";
 import bodyParser from "body-parser";
 import { addLocationPost, getLocationPosts } from "./routes/LocationPost/crud";
+import { searchForUsers } from "./routes/User/other";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "..", "public", "profile");
@@ -46,9 +47,12 @@ app.post("/followUser", followUser);
 app.post("/addLocation", addLocationPost);
 app.get("/locationPosts", getLocationPosts);
 
+// Search
+app.get("/searchForUsers", searchForUsers);
+
 const server = http.createServer(app);
 
-server.listen(PORT, "192.168.0.108", () => {
+server.listen(PORT, "192.168.100.7", () => {
   console.log(`Server running on http://192.168.0.108:${PORT}`);
 });
 
