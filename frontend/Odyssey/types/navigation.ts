@@ -37,6 +37,11 @@ export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
 
 export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
 
+export type BottomTabsNav = BottomTabNavigationProp<
+  BottomNavParamList,
+  "Search"
+>;
+
 export type ProfileScreenNavProp = CompositeNavigationProp<
   BottomTabNavigationProp<BottomNavParamList, "Profile">,
   NativeStackNavigationProp<MainNavParamList>
