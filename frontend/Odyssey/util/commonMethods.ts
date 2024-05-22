@@ -53,3 +53,12 @@ export function getTextLocationFromAddressArray(
     country: country ?? "",
   };
 }
+
+export function getRatingStars(rating: string): [number, number, boolean] {
+  const splitRating = rating.split(".");
+  const fullStarsCount = parseInt(splitRating[0]);
+  const hasHalfStar = splitRating.length === 1 ? false : true; // If the rating split returns 1 element, then it doesn't have a .5 at the end
+  const emptyStarsCount = 5 - fullStarsCount - (hasHalfStar ? 1 : 0);
+
+  return [fullStarsCount, emptyStarsCount, hasHalfStar];
+}

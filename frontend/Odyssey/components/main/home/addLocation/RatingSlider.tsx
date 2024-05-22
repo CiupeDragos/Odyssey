@@ -22,7 +22,7 @@ function RatingSlider({
       <Slider
         minimumValue={0}
         maximumValue={5}
-        step={0.1}
+        step={0.5}
         value={curRating}
         containerStyle={styles.slider}
         onValueChange={(value) => {

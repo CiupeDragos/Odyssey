@@ -65,7 +65,7 @@ function MainNavigation() {
       <Stack.Screen
         name="LocationDetails"
         component={LocationDetailsScreen}
-        options={{ headerBackTitle: "Back" }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

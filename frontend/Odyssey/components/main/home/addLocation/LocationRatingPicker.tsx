@@ -71,23 +71,6 @@ function LocationRatingPicker({
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  ratingCategoryView: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  ratingCategoryLabel: {
-    fontSize: 16,
-    marginRight: 6,
-    width: 90,
-  },
-  ratingNumberLabel: {
-    fontSize: 20,
-  },
-  slider: {
-    width: 180,
-  },
   mainLabel: {
     fontSize: 18,
     marginBottom: 4,

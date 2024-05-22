@@ -7,6 +7,7 @@ export const Colors = {
   inputError: "#fcd9d9",
   errorText: "#cc0000",
   successText: "#038f05",
+  ratingColor: "#ffe234",
 };
 
 // Auth

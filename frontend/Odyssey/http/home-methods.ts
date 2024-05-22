@@ -2,7 +2,7 @@ import {
   AddLocationRequest,
   LocationPostsRequest,
 } from "../types/request-types";
-import { LocationPost } from "../types/response-types";
+import { Coordinates, LocationPost } from "../types/response-types";
 import { MAPS_API_KEY } from "../util/constants";
 import { HttpResponse } from "./HttpResponse";
 import { genericGetMethod, genericPostMethod } from "./base-methods";
@@ -37,4 +37,25 @@ export function getLocationPosts(
   };
 
   return genericGetMethod("locationPosts", params);
+}
+
+export function getDistanceBetweenPoints(
+  origin: Coordinates,
+  destination: Coordinates
+): Promise<HttpResponse<any>> {
+  const originString = `${origin.lat},${origin.long}`;
+  const destinationString = `${destination.lat},${destination.long}`;
+
+  const payload = {
+    key: MAPS_API_KEY,
+    units: "metric",
+    origins: originString,
+    destinations: destinationString,
+  };
+
+  return genericGetMethod(
+    undefined,
+    payload,
+    "https://maps.googleapis.com/maps/api/distancematrix/json"
+  );
 }
