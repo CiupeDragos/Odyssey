@@ -6,8 +6,10 @@ import FollowersScreen from "./profile/FollowersScreen";
 import FollowingScreen from "./profile/FollowingScreen";
 import AddLocationScreen from "./home/AddLocationScreen";
 import PickLocationScreen from "./home/PickLocationScreen";
+import LocationDetailsScreen from "./home/LocationDetailsScreen";
+import { MainNavParamList } from "../../types/navigation";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<MainNavParamList>();
 
 function MainNavigation() {
   return (
@@ -59,6 +61,11 @@ function MainNavigation() {
           headerTitle: "Pick location",
           headerBackTitle: "Add location",
         }}
+      />
+      <Stack.Screen
+        name="LocationDetails"
+        component={LocationDetailsScreen}
+        options={{ headerBackTitle: "Back" }}
       />
     </Stack.Navigator>
   );

@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import { LocationPost } from "../../../../types/response-types";
 import { BASE_URL, Colors } from "../../../../util/constants";
 import UsernameWithPhoto from "../../../common/UsernameWithPhoto";
@@ -9,6 +9,8 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { getDateFromFromTimestamp } from "../../../../util/commonMethods";
+import { useNavigation } from "@react-navigation/native";
+import { BottomTabsNav, MainStackNavProp } from "../../../../types/navigation";
 
 type LocationPostComponentProps = {
   locationPost: LocationPost;
@@ -23,9 +25,14 @@ function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
       locationPost.rating.uncrowded) /
     4
   ).toFixed(1);
+  const navigation = useNavigation<MainStackNavProp>();
+
+  function goToDetails() {
+    navigation.navigate("LocationDetails", { location: locationPost });
+  }
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={goToDetails}>
       <Text style={styles.locationTitle}>{locationPost.title}</Text>
       <Image
         style={styles.locationImage}
@@ -76,7 +83,7 @@ function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

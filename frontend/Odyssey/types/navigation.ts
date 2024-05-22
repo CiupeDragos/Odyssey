@@ -7,7 +7,12 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ProfileUpdateRequest } from "./request-types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { Coordinates, Follower, TextLocation } from "./response-types";
+import {
+  Coordinates,
+  Follower,
+  LocationPost,
+  TextLocation,
+} from "./response-types";
 
 export type AuthNavParamList = {
   Register: undefined;
@@ -31,6 +36,7 @@ export type MainNavParamList = {
     | { textLocation: TextLocation; coordinates: Coordinates }
     | undefined;
   PickLocation: { initialLocation: Coordinates };
+  LocationDetails: { location: LocationPost };
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
@@ -52,6 +58,13 @@ export type PickLocationRouteProp = RouteProp<MainNavParamList, "PickLocation">;
 export type PickLocationNavProp = NativeStackNavigationProp<
   MainNavParamList,
   "PickLocation"
+>;
+
+export type MainStackNavProp = NativeStackNavigationProp<MainNavParamList>;
+
+export type LocationDetailsRouteProp = RouteProp<
+  MainNavParamList,
+  "LocationDetails"
 >;
 
 export type EditProfileRouteProp = RouteProp<MainNavParamList, "EditProfile">;
