@@ -43,6 +43,7 @@ function getUserFromModel(userModel: UserModel): User | null {
     password: userModel.password,
     visitedCountries: userModel.visitedCountries,
     favoriteCountry: userModel.favoriteCountry,
+    likedPosts: userModel.likedPosts,
     profileDescription: userModel.profileDescription,
     followers: userModel.followers,
     following: userModel.following,
@@ -89,6 +90,24 @@ export async function searchForUsers(searchQuery: string) {
   });
 
   return users;
+}
+
+export async function updateLikes(userId: string, locationId: string) {
+  const user = await User.findById(userId);
+
+  if (!user) return false;
+
+  if (user.likedPosts.includes(locationId)) {
+    user.likedPosts = user.likedPosts.filter((post) => post !== locationId);
+  } else {
+    user.likedPosts.push(locationId);
+  }
+
+  const updateResponse = await User.findByIdAndUpdate(userId, user);
+
+  if (!updateResponse) return false;
+
+  return true;
 }
 
 const UserMethods = {

@@ -14,8 +14,13 @@ import {
   updateProfileData,
 } from "./routes/User/profile";
 import bodyParser from "body-parser";
-import { addLocationPost, getLocationPosts } from "./routes/LocationPost/crud";
+import {
+  addLocationPost,
+  getLocationPosts,
+  likeLocation,
+} from "./routes/LocationPost/crud";
 import { searchForUsers } from "./routes/User/other";
+import { addComment, getComments } from "./routes/Lounge/crud";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "..", "public", "profile");
@@ -46,14 +51,23 @@ app.post("/followUser", followUser);
 // Locations
 app.post("/addLocation", addLocationPost);
 app.get("/locationPosts", getLocationPosts);
+app.post("/addComment", (req, res) => addComment(req, res, "Location"));
+app.get("/getComments", (req, res) => getComments(req, res, "Location"));
+app.post("/likeLocation", likeLocation);
 
 // Search
 app.get("/searchForUsers", searchForUsers);
 
+// Lounge
+app.post("/addThreadReply", (req, res) => addComment(req, res, "LoungeThread"));
+app.get("/getThreadReplies", (req, res) =>
+  getComments(req, res, "LoungeThread")
+);
+
 const server = http.createServer(app);
 
-server.listen(PORT, "192.168.100.7", () => {
-  console.log(`Server running on http://192.168.0.108:${PORT}`);
+server.listen(PORT, "192.168.0.108", () => {
+  console.log(`Server running on http:/192.168.0.108:${PORT}`);
 });
 
 mongoose.Promise = Promise;

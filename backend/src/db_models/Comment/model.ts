@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+export type CommentType = "Location" | "LoungeThread";
+
 export interface Comment {
   authorId: string;
   authorUsername: string;

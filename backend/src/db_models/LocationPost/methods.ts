@@ -1,3 +1,4 @@
+import { updateLikes } from "../../db_models/User/methods";
 import { LocationDbModel, LocationPost, LocationPostModel } from "./model";
 
 export async function getLocations(
@@ -39,8 +40,34 @@ export function addLocationPost(locationDbModel: LocationDbModel) {
   return new LocationPostModel(locationDbModel).save();
 }
 
+export async function likePost(
+  userId: string,
+  locationId: string
+): Promise<boolean> {
+  const curPost = await LocationPostModel.findById(locationId);
+
+  if (!curPost) return false;
+
+  if (curPost.likes.includes(userId)) {
+    curPost.likes = curPost.likes.filter((like) => like !== userId);
+  } else {
+    curPost.likes.push(userId);
+  }
+
+  const postUpdateResponse = await LocationPostModel.findByIdAndUpdate(
+    locationId,
+    curPost
+  );
+  const userUpdateRepsonse = await updateLikes(userId, locationId);
+
+  if (!postUpdateResponse || !userUpdateRepsonse) return false;
+
+  return true;
+}
+
 const LocationPostMethods = {
   getUserLocations: getLocations,
+  likePost: likePost,
 };
 
 export default LocationPostMethods;
