@@ -1,4 +1,4 @@
-import { LocationTypeEnum } from "../util/enums";
+import { LocationTypeEnum, ThreadType } from "../util/enums";
 import {
   LocationPoster,
   TextLocation,
@@ -74,6 +74,7 @@ export type AddThreadReplyRequest = {
   authorId: string;
   authorUsername: string;
   content: string;
+  timestamp: string;
   loungeThreadId: string;
 };
 
@@ -83,4 +84,16 @@ export type GetCommentsRequest = {
 
 export type GetThreadRepliesRequest = {
   loungeThreadId: string;
+};
+
+export type AddLoungeThreadRequest = {
+  threadType: ThreadType;
+  authorId: string;
+  authorUsername: string;
+  title: string;
+  content: string;
+};
+
+export type GetLoungeThreadsRequest = {
+  authorId?: string;
 };

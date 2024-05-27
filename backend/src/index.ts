@@ -20,7 +20,12 @@ import {
   likeLocation,
 } from "./routes/LocationPost/crud";
 import { searchForUsers } from "./routes/User/other";
-import { addComment, getComments } from "./routes/Lounge/crud";
+import {
+  addComment,
+  addThread,
+  getComments,
+  getThreads,
+} from "./routes/Lounge/crud";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "..", "public", "profile");
@@ -59,10 +64,9 @@ app.post("/likeLocation", likeLocation);
 app.get("/searchForUsers", searchForUsers);
 
 // Lounge
+app.post("/addThread", addThread);
+app.post("/getThreads", getThreads);
 app.post("/addThreadReply", (req, res) => addComment(req, res, "LoungeThread"));
-app.get("/getThreadReplies", (req, res) =>
-  getComments(req, res, "LoungeThread")
-);
 
 const server = http.createServer(app);
 

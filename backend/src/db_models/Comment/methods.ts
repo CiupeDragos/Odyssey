@@ -1,6 +1,8 @@
+import { getThread } from "../../db_models/LoungeThread/methods";
 import { LocationPostModel } from "../../db_models/LocationPost/model";
 import { Comment, CommentType } from "./model";
 import { AddCommentRequest } from "routes/requests";
+import { LoungeThreadModel } from "../../db_models/LoungeThread/model";
 
 export async function getComments(queryId: string, queryFor: CommentType) {
   if (queryFor === "Location") {
@@ -40,6 +42,18 @@ export async function addComment(
 
     return true;
   } else {
+    const thread = await getThread(addCommentRequest.modelId);
+
+    if (!thread) return false;
+
+    thread.answers.push(commentToAdd);
+    const updateResponse = await LoungeThreadModel.findByIdAndUpdate(
+      addCommentRequest.modelId,
+      thread
+    );
+
+    if (!updateResponse) return false;
+
     return true;
   }
 }

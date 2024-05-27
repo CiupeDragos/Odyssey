@@ -23,7 +23,7 @@ export type BottomNavParamList = {
   Home: undefined;
   Search: undefined;
   Trips: undefined;
-  TravelerLounge: undefined;
+  TravelerLounge: { refetchKey: number } | undefined;
   Profile: { userId: string } | undefined;
 };
 
@@ -37,11 +37,17 @@ export type MainNavParamList = {
     | undefined;
   PickLocation: { initialLocation: Coordinates };
   LocationDetails: { location: LocationPost };
+  AddThread: undefined;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
 
 export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
+
+export type LoungeScreenRouteProp = RouteProp<
+  BottomNavParamList,
+  "TravelerLounge"
+>;
 
 export type BottomTabsNav = BottomTabNavigationProp<
   BottomNavParamList,
@@ -79,6 +85,11 @@ export type AddLocationNavProp = NativeStackNavigationProp<
   "AddLocation"
 >;
 
+export type AddThreadNavProp = NativeStackNavigationProp<
+  MainNavParamList,
+  "AddThread"
+>;
+
 export type AddLocationRouteProp = RouteProp<MainNavParamList, "AddLocation">;
 
 export type FollowersRouteProp = RouteProp<MainNavParamList, "Followers">;
@@ -96,6 +107,11 @@ export type FollowingNavProp = NativeStackNavigationProp<
 
 export type HomeScreenNavProp = CompositeNavigationProp<
   BottomTabNavigationProp<BottomNavParamList, "Home">,
+  NativeStackNavigationProp<MainNavParamList>
+>;
+
+export type LoungeScreenNavProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomNavParamList, "TravelerLounge">,
   NativeStackNavigationProp<MainNavParamList>
 >;
 
