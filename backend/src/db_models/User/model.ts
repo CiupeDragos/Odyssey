@@ -9,6 +9,7 @@ export interface UserDbModel {
   password: string;
   visitedCountries: Array<string>;
   favoriteCountry: string;
+  likedPosts: Array<string>;
   profileDescription: string;
   followers: Array<Follower>;
   following: Array<Follower>;
@@ -23,6 +24,7 @@ export type User = {
   password: string;
   visitedCountries: Array<string>;
   favoriteCountry: string;
+  likedPosts: Array<string>;
   profileDescription: string;
   followers: Array<Follower>;
   following: Array<Follower>;
@@ -36,6 +38,7 @@ const userSchema = new mongoose.Schema<UserDbModel>({
   password: { type: String, required: true },
   visitedCountries: { type: [String], required: false },
   favoriteCountry: { type: String, required: false },
+  likedPosts: { type: [String], required: false },
   profileDescription: { type: String, required: false },
   followers: { type: [FollowerSchema], required: false },
   following: { type: [FollowerSchema], required: false },

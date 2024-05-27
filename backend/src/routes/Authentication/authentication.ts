@@ -39,6 +39,7 @@ export const registerUser = async (req: Request, res: Response) => {
     ...registerRequest,
     visitedCountries: new Array(),
     favoriteCountry: "",
+    likedPosts: [],
     profileDescription: "",
     followers: new Array(),
     following: new Array(),

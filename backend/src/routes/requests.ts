@@ -55,3 +55,16 @@ export type LocationPostsRequest = {
 export type SearchUsersRequest = {
   searchQuery: string;
 };
+
+export type LikeLocationRequest = {
+  userId: string;
+  locationId: string;
+};
+
+export type AddCommentRequest = {
+  authorId: string;
+  authorUsername: string;
+  content: string;
+  timestamp: number;
+  modelId: string;
+};

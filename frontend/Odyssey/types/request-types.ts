@@ -56,3 +56,31 @@ export type LocationPostsRequest = {
 export type SearchUsersRequest = {
   searchQuery: string;
 };
+
+export type LikeLocationRequest = {
+  userId: string;
+  locationId: string;
+};
+
+export type AddCommentRequest = {
+  authorId: string;
+  authorUsername: string;
+  content: string;
+  timestamp: number;
+  locationId: string;
+};
+
+export type AddThreadReplyRequest = {
+  authorId: string;
+  authorUsername: string;
+  content: string;
+  loungeThreadId: string;
+};
+
+export type GetCommentsRequest = {
+  locationId: string;
+};
+
+export type GetThreadRepliesRequest = {
+  loungeThreadId: string;
+};
