@@ -4,6 +4,7 @@ import MapView, { Marker, UserLocationChangeEvent } from "react-native-maps";
 import { getDistanceBetweenPoints } from "../../../http/home-methods";
 import { Coordinates } from "../../../types/response-types";
 import { HttpResponse } from "../../../http/HttpResponse";
+import { getTimeDurationTextFromSeconds } from "../../../util/commonMethods";
 
 type LocationMapViewProps = {
   lat: number;
@@ -19,8 +20,12 @@ function LocationMapView({ lat, long }: LocationMapViewProps) {
   const [userLocation, setUserLocation] = useState({ lat: 0, long: 0 });
   const [distanceInformation, setDistanceInformation] = useState({
     distance: "",
-    duration: "",
+    duration: 0,
   });
+
+  const timeToDestination = getTimeDurationTextFromSeconds(
+    distanceInformation.duration
+  );
 
   const handleUserLocationChange = (event: UserLocationChangeEvent) => {
     const lat = event.nativeEvent.coordinate?.latitude;
@@ -40,9 +45,7 @@ function LocationMapView({ lat, long }: LocationMapViewProps) {
       const distance = (
         response.data.rows[0].elements[0].distance.value / 1000
       ).toFixed(0);
-      const duration = (
-        response.data.rows[0].elements[0].duration.value / 3600
-      ).toFixed(1);
+      const duration = response.data.rows[0].elements[0].duration.value;
 
       setDistanceInformation({ distance: distance, duration: duration });
     }
@@ -68,7 +71,7 @@ function LocationMapView({ lat, long }: LocationMapViewProps) {
       </MapView>
       <Text
         style={styles.distanceInfoText}
-      >{`You are ${distanceInformation.distance} KM away (${distanceInformation.duration} hours by car)`}</Text>
+      >{`You are ${distanceInformation.distance} KM away (${timeToDestination})`}</Text>
     </View>
   );
 }
@@ -80,12 +83,12 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "90%",
-    height: "45%",
+    height: 250,
     borderRadius: 24,
     shadowColor: "black",
     shadowRadius: 8,
-    shadowOpacity: 0.7,
-    backgroundColor: "white",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 0 },
   },
   distanceInfoText: { fontSize: 16, marginTop: 6 },
 });

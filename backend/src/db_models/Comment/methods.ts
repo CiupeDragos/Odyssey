@@ -19,7 +19,7 @@ export async function addComment(
   const commentToAdd: Comment = {
     authorId: addCommentRequest.authorId,
     authorUsername: addCommentRequest.authorUsername,
-    timestamp: new Date().getTime(),
+    timestamp: addCommentRequest.timestamp,
     content: addCommentRequest.content,
   };
 

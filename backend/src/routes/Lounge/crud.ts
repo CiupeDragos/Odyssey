@@ -17,6 +17,7 @@ export const addComment = async (
     authorId: req.body.authorId,
     authorUsername: req.body.authorUsername,
     content: req.body.content,
+    timestamp: req.body.timestamp,
     modelId: "",
   };
 

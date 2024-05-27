@@ -37,6 +37,7 @@ function LocationMainData(locationData: LocationMainDataProps) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.locationTitle}>{locationData.title}</Text>
       <Text style={styles.infoText}>Details</Text>
       <View style={styles.postedByView}>
         <View style={styles.postAuthorView}>
@@ -144,9 +145,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   locationTitle: {
-    padding: 8,
-    fontSize: 18,
-    fontWeight: "400",
+    marginBottom: 16,
+    fontSize: 24,
+    fontWeight: "500",
   },
   postedByView: {
     flexDirection: "row",

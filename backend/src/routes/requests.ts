@@ -65,5 +65,6 @@ export type AddCommentRequest = {
   authorId: string;
   authorUsername: string;
   content: string;
+  timestamp: number;
   modelId: string;
 };

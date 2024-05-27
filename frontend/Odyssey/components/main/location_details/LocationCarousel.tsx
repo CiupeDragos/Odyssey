@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   photoCountCenteringView: {
     width: width,
     alignItems: "center",
-    marginTop: width * 0.8,
+    marginTop: -80,
   },
 });
 

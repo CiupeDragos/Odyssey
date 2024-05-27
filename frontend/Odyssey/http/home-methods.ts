@@ -1,5 +1,6 @@
 import {
   AddLocationRequest,
+  LikeLocationRequest,
   LocationPostsRequest,
 } from "../types/request-types";
 import { Coordinates, LocationPost } from "../types/response-types";
@@ -58,4 +59,16 @@ export function getDistanceBetweenPoints(
     payload,
     "https://maps.googleapis.com/maps/api/distancematrix/json"
   );
+}
+
+export function likeLocation(
+  userId: string,
+  locationId: string
+): Promise<HttpResponse<string>> {
+  const payload: LikeLocationRequest = {
+    userId: userId,
+    locationId: locationId,
+  };
+
+  return genericPostMethod(payload, "likeLocation");
 }

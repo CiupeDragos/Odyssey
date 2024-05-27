@@ -11,12 +11,15 @@ import {
 import { getDateFromFromTimestamp } from "../../../../util/commonMethods";
 import { useNavigation } from "@react-navigation/native";
 import { BottomTabsNav, MainStackNavProp } from "../../../../types/navigation";
+import { useContext } from "react";
+import { MainContext } from "../../../../store/MainContext";
 
 type LocationPostComponentProps = {
   locationPost: LocationPost;
 };
 
 function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
+  const mainContext = useContext(MainContext);
   const categories = locationPost.categories.join(", ");
   const averageRating = (
     (locationPost.rating.affordable +
@@ -26,6 +29,7 @@ function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
     4
   ).toFixed(1);
   const navigation = useNavigation<MainStackNavProp>();
+  const didUserLike = locationPost.likes.includes(mainContext.userData!!.id);
 
   function goToDetails() {
     navigation.navigate("LocationDetails", { location: locationPost });
@@ -70,7 +74,11 @@ function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
         </View>
         <View style={styles.actionsView}>
           <View style={styles.likesView}>
-            <AntDesign name="like1" size={24} color="gray" />
+            <AntDesign
+              name="like1"
+              size={24}
+              color={didUserLike ? Colors.primary : "gray"}
+            />
             <Text style={styles.countText}>{locationPost.likes.length}</Text>
           </View>
           <View style={styles.commentsView}>
@@ -152,7 +160,6 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   averageRatingView: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -162,18 +169,17 @@ const styles = StyleSheet.create({
   },
   actionsView: {
     flexDirection: "row",
-    marginTop: 18,
+    justifyContent: "space-between",
+    marginTop: 24,
     marginLeft: 4,
   },
   likesView: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 1,
   },
   commentsView: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 1,
   },
   countText: {
     fontSize: 18,
