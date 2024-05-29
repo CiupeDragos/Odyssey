@@ -74,7 +74,7 @@ export type AddThreadReplyRequest = {
   authorId: string;
   authorUsername: string;
   content: string;
-  timestamp: string;
+  timestamp: number;
   loungeThreadId: string;
 };
 

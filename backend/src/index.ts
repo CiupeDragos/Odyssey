@@ -65,12 +65,12 @@ app.get("/searchForUsers", searchForUsers);
 
 // Lounge
 app.post("/addThread", addThread);
-app.post("/getThreads", getThreads);
+app.get("/getThreads", getThreads);
 app.post("/addThreadReply", (req, res) => addComment(req, res, "LoungeThread"));
 
 const server = http.createServer(app);
 
-server.listen(PORT, "192.168.0.108", () => {
+server.listen(PORT, "192.168.100.7", () => {
   console.log(`Server running on http:/192.168.0.108:${PORT}`);
 });
 

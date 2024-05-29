@@ -9,6 +9,7 @@ import PickLocationScreen from "./home/PickLocationScreen";
 import LocationDetailsScreen from "./home/LocationDetailsScreen";
 import { MainNavParamList } from "../../types/navigation";
 import AddThreadScreen from "./travelerlounge/AddThreadScreen";
+import ThreadDetailsScreen from "./travelerlounge/ThreadDetailsScreen";
 
 const Stack = createNativeStackNavigator<MainNavParamList>();
 
@@ -72,6 +73,11 @@ function MainNavigation() {
         name="AddThread"
         component={AddThreadScreen}
         options={{ headerTitle: "Add a new thread", headerBackTitle: "Lounge" }}
+      />
+      <Stack.Screen
+        name="ThreadDetails"
+        component={ThreadDetailsScreen}
+        options={{ headerTitle: "", headerBackTitle: "Lounge" }}
       />
     </Stack.Navigator>
   );

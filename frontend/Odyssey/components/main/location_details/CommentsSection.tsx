@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AddCommentsModal from "./AddCommentsModal";
 import { useContext, useState } from "react";
 import { MainContext } from "../../../store/MainContext";
-import { addComment } from "../../../http/lounge";
+import { addComment, addThreadReply } from "../../../http/lounge";
 import { HttpResponse } from "../../../http/HttpResponse";
 import LoadingOverlay from "../../common/LoadingOverlay";
 import CommentComponent from "./CommentComponent";
@@ -21,6 +21,7 @@ type CommentsSectionProps = {
   onAddComment: (comment: Comment) => void;
   mode: "Location" | "Thread";
   commentOwnerId: string;
+  marginTop?: number;
 };
 
 function CommentsSection({
@@ -28,6 +29,7 @@ function CommentsSection({
   onAddComment,
   mode,
   commentOwnerId,
+  marginTop,
 }: CommentsSectionProps) {
   const mainContext = useContext(MainContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -58,7 +60,25 @@ function CommentsSection({
         );
       }
     } else {
-      // To do: implement for situation when we are on a thread instead of location
+      const addThreadReplyRequest: AddThreadReplyRequest = {
+        authorId: mainContext.userData!!.id,
+        authorUsername: mainContext.userData!!.username,
+        loungeThreadId: commentOwnerId,
+        timestamp: new Date().getTime(),
+        content: content,
+      };
+
+      const response = await addThreadReply(addThreadReplyRequest);
+
+      if (HttpResponse.isSuccess(response)) {
+        toggleModal(false);
+        onAddComment({ ...addThreadReplyRequest });
+      } else {
+        Alert.alert(
+          "An error occurred",
+          "There was an error when adding the answer"
+        );
+      }
     }
     setIsLoading(false);
   }
@@ -67,9 +87,11 @@ function CommentsSection({
     setIsModalVisible(value);
   }
 
+  const headerMarginTop = marginTop ?? 36;
+
   return (
     <View>
-      <View style={styles.header}>
+      <View style={[styles.header, { marginTop: headerMarginTop }]}>
         <View style={styles.labelView}>
           <Text style={styles.commentsLabel}>
             {mode === "Location" ? "Comments" : "Answers"}
@@ -85,7 +107,7 @@ function CommentsSection({
           <Ionicons name="add" color="white" size={24} />
         </FloatingActionButton>
       </View>
-      <HorizontalRule />
+      {mode === "Location" && <HorizontalRule />}
       <FlatList
         style={styles.list}
         data={comments}
@@ -109,7 +131,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     marginHorizontal: 18,
-    marginTop: 36,
     marginBottom: 16,
     alignItems: "center",
     justifyContent: "space-between",
@@ -127,6 +148,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: 100,
+    backgroundColor: "white",
   },
   addButton: {
     backgroundColor: Colors.secondary,

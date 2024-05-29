@@ -78,7 +78,7 @@ export const getComments = async (
 export const getThreads = async (req: Request, res: Response) => {
   const threadAuthorId: string | undefined = req.query.authorId as string;
 
-  const threads = getAllThreads(threadAuthorId);
+  const threads = await getAllThreads(threadAuthorId);
 
   res.json(threads);
 };

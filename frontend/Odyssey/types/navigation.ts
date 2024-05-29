@@ -11,6 +11,7 @@ import {
   Coordinates,
   Follower,
   LocationPost,
+  LoungeThread,
   TextLocation,
 } from "./response-types";
 
@@ -38,6 +39,7 @@ export type MainNavParamList = {
   PickLocation: { initialLocation: Coordinates };
   LocationDetails: { location: LocationPost };
   AddThread: undefined;
+  ThreadDetails: { thread: LoungeThread };
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
@@ -60,6 +62,10 @@ export type ProfileScreenNavProp = CompositeNavigationProp<
 >;
 
 export type PickLocationRouteProp = RouteProp<MainNavParamList, "PickLocation">;
+export type ThreadDetailsRouteProp = RouteProp<
+  MainNavParamList,
+  "ThreadDetails"
+>;
 
 export type PickLocationNavProp = NativeStackNavigationProp<
   MainNavParamList,
