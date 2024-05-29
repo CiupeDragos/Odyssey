@@ -5,8 +5,13 @@ import {
 } from "../../db_models/Comment/methods";
 import { Request, Response } from "express";
 import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
-import { AddCommentRequest } from "routes/requests";
+import { AddCommentRequest, AddLoungeThreadRequest } from "routes/requests";
 import { isRequestValid } from "../../util/methods";
+import { LoungeThreadDbModel } from "../../db_models/LoungeThread/model";
+import {
+  addThread as addNewThread,
+  getThreads as getAllThreads,
+} from "../../db_models/LoungeThread/methods";
 
 export const addComment = async (
   req: Request,
@@ -68,4 +73,37 @@ export const getComments = async (
   }
 
   res.json(comments);
+};
+
+export const getThreads = async (req: Request, res: Response) => {
+  const threadAuthorId: string | undefined = req.query.authorId as string;
+
+  const threads = await getAllThreads(threadAuthorId);
+
+  res.json(threads);
+};
+
+export const addThread = async (req: Request, res: Response) => {
+  const addThreadRequest: AddLoungeThreadRequest = {
+    threadType: req.body.threadType,
+    authorId: req.body.authorId,
+    authorUsername: req.body.authorUsername,
+    title: req.body.title,
+    content: req.body.content,
+  };
+
+  if (!isRequestValid(addThreadRequest)) {
+    res.status(400).send(INVALID_REQUEST_BODY_MESSAGE);
+    return;
+  }
+
+  const newThread: LoungeThreadDbModel = {
+    ...addThreadRequest,
+    answers: [],
+    timestamp: new Date().getTime(),
+  };
+
+  await addNewThread(newThread);
+
+  res.send("Thread added successfully");
 };

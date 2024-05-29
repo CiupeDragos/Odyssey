@@ -74,7 +74,9 @@ function Input({
           {...inputProps}
         />
       </View>
-      {errorText && <Text style={styles.errText}>{errorText}</Text>}
+      {errorText && errorText.length > 0 && (
+        <Text style={styles.errText}>{errorText}</Text>
+      )}
     </View>
   );
 }

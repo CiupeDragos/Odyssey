@@ -3,6 +3,7 @@ import { LocationPoster } from "db_models/LocationPost/LocationPoster/model";
 import { Rating } from "db_models/LocationPost/Rating/model";
 import { TextLocation } from "db_models/LocationPost/TextLocation/model";
 import { LocationTypeEnum } from "db_models/LocationPost/model";
+import { ThreadType } from "db_models/LoungeThread/model";
 import { UserDbModel } from "db_models/User/model";
 
 export type RegisterRequest = {
@@ -67,4 +68,12 @@ export type AddCommentRequest = {
   content: string;
   timestamp: number;
   modelId: string;
+};
+
+export type AddLoungeThreadRequest = {
+  threadType: ThreadType;
+  authorId: string;
+  authorUsername: string;
+  title: string;
+  content: string;
 };

@@ -4,3 +4,8 @@ export enum LocationTypeEnum {
   NATURE = "Nature",
   PANORAMIC = "Panoramic",
 }
+
+export enum ThreadType {
+  DISCUSSION = "Open discussion",
+  QUESTION = "Question",
+}
