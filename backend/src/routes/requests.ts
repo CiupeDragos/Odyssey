@@ -4,7 +4,8 @@ import { Rating } from "db_models/LocationPost/Rating/model";
 import { TextLocation } from "db_models/LocationPost/TextLocation/model";
 import { LocationTypeEnum } from "db_models/LocationPost/model";
 import { ThreadType } from "db_models/LoungeThread/model";
-import { Gender, UserDbModel } from "db_models/User/model";
+import { TripParticipantDbModel } from "db_models/Trip/TripParticipant/model";
+import { Gender } from "db_models/User/model";
 
 export type RegisterRequest = {
   username: string;
@@ -77,4 +78,24 @@ export type AddLoungeThreadRequest = {
   authorUsername: string;
   title: string;
   content: string;
+};
+
+export type AddTripRequest = {
+  organizerId: string;
+  organizerUsername: string;
+  title: string;
+  description: string;
+  visitedCountries: Array<string>;
+  participants: Array<TripParticipantDbModel>;
+};
+
+export type JoinTripRequest = {
+  userId: string;
+  tripId: string;
+  spotIndex: number;
+};
+
+export type GetTripsRequest = {
+  posterId?: string;
+  participantId?: string;
 };
