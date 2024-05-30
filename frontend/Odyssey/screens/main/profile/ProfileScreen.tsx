@@ -19,6 +19,7 @@ import ProfileInformation from "../../../components/main/profile/ProfileInformat
 import { Colors } from "../../../util/constants";
 import LoadingText from "../../../components/common/LoadingText";
 import LocationPostsList from "../../../components/main/home/feed/LocationPostsList";
+import { Gender } from "../../../util/enums";
 
 type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
@@ -36,6 +37,7 @@ const defaultProfileData: ProfileData = {
   username: "",
   visitedCountries: [],
   requesterFollowing: [],
+  gender: Gender.MAN,
 };
 
 function ProfileScreen({ route }: ProfileScreenProps) {

@@ -9,3 +9,8 @@ export enum ThreadType {
   DISCUSSION = "Open discussion",
   QUESTION = "Question",
 }
+
+export enum Gender {
+  MAN = "Man",
+  WOMAN = "Woman",
+}

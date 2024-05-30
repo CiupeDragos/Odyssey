@@ -17,6 +17,7 @@ export const registerUser = async (req: Request, res: Response) => {
     birthTimestamp: req.body.birthTimestamp,
     country: req.body.country,
     password: req.body.password,
+    gender: req.body.gender,
   };
 
   if (!isRequestValid(registerRequest)) {

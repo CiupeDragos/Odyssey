@@ -1,4 +1,4 @@
-import { LocationTypeEnum, ThreadType } from "../util/enums";
+import { Gender, LocationTypeEnum, ThreadType } from "../util/enums";
 
 export type UserData = {
   id: string;
@@ -6,6 +6,7 @@ export type UserData = {
   realName: string;
   birthTimestamp: number;
   country: string;
+  gender: Gender;
 };
 
 //
@@ -71,6 +72,7 @@ export type ProfileData = {
   following: Array<Follower>;
   locationPosts: Array<LocationPost>;
   requesterFollowing: Array<Follower>;
+  gender: Gender;
 };
 
 export type LoungeThread = {

@@ -4,7 +4,7 @@ import { Rating } from "db_models/LocationPost/Rating/model";
 import { TextLocation } from "db_models/LocationPost/TextLocation/model";
 import { LocationTypeEnum } from "db_models/LocationPost/model";
 import { ThreadType } from "db_models/LoungeThread/model";
-import { UserDbModel } from "db_models/User/model";
+import { Gender, UserDbModel } from "db_models/User/model";
 
 export type RegisterRequest = {
   username: string;
@@ -12,6 +12,7 @@ export type RegisterRequest = {
   birthTimestamp: number;
   country: string;
   password: string;
+  gender: Gender;
 };
 
 export type ProfileUpdateRequest = {

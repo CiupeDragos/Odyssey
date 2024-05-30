@@ -11,13 +11,17 @@ export async function registerAccount({
   birthTimestamp,
   country,
   password,
+  gender,
 }: RegisterFields): Promise<HttpResponse<string>> {
+  const chosenGender = gender!!;
+
   const registerRequest: RegisterRequest = {
     username: username,
     realName: normalizeSpaces(realName),
     birthTimestamp: parseInt(birthTimestamp),
     country: country,
     password: password,
+    gender: chosenGender,
   };
 
   return genericPostMethod(registerRequest, "register");

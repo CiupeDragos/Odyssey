@@ -7,6 +7,7 @@ import {
   MIN_TITLE_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "./constants";
+import { Gender } from "./enums";
 
 export function validateUsername(username: string): string {
   if (username.length < MIN_USERNAME_LENGTH) {
@@ -77,6 +78,14 @@ export function validateConfirmPassword(
 export function validateLocationTitle(title: string) {
   if (title.length < MIN_TITLE_LENGTH || title.length > MAX_TITLE_LENGTH) {
     return `The title needs to be between ${MIN_TITLE_LENGTH} and ${MAX_TITLE_LENGTH} characters`;
+  }
+
+  return "";
+}
+
+export function validateGender(gender?: Gender) {
+  if (!gender) {
+    return "You need to select a gender";
   }
 
   return "";

@@ -45,6 +45,7 @@ function MainContextProvider({ children }: MainContextProviderProps) {
 
   function handleLogin(data: UserData) {
     AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(data));
+    console.log(data);
     setUserData(data);
   }
 

@@ -1,4 +1,4 @@
-import { LocationTypeEnum, ThreadType } from "../util/enums";
+import { Gender, LocationTypeEnum, ThreadType } from "../util/enums";
 import {
   LocationPoster,
   TextLocation,
@@ -12,6 +12,7 @@ export type RegisterRequest = {
   birthTimestamp: number;
   country: string;
   password: string;
+  gender: Gender;
 };
 
 export type LoginRequest = {
