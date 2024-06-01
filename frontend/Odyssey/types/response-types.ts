@@ -85,3 +85,25 @@ export type LoungeThread = {
   answers: Array<Comment>;
   timestamp: number;
 };
+
+export type TripParticipant = {
+  participantId: string;
+  participantUsername: string;
+  gender: Gender;
+  age: number;
+  minAge: number;
+  maxAge: number;
+  index: number;
+};
+
+export type Trip = {
+  id: string;
+  organizerId: string;
+  organizerUsername: string;
+  title: string;
+  description: string;
+  visitedCountries: Array<string>;
+  participants: Array<TripParticipant>;
+  startTimestamp: number;
+  endTimestamp: number;
+};

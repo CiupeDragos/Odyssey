@@ -1,4 +1,4 @@
-import { Gender } from "db_models/User/model";
+import { Gender } from "../../User/model";
 import mongoose from "mongoose";
 
 export interface TripParticipantDbModel {
@@ -13,8 +13,8 @@ export interface TripParticipantDbModel {
 
 export const TripParticipantSchema =
   new mongoose.Schema<TripParticipantDbModel>({
-    participantId: { type: String, required: true },
-    participantUsername: { type: String, required: true },
+    participantId: { type: String, required: false },
+    participantUsername: { type: String, required: false },
     gender: { type: String, enum: Object.values(Gender), required: true },
     age: { type: Number, required: true },
     minAge: { type: Number, required: true },

@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.100.7:3000";
+export const BASE_URL = "http://192.168.0.108:3000";
 export const MAPS_API_KEY = "AIzaSyAk-6JxhfKISwFtBKeN4RCqP_3k5gxkm9E";
 
 export const Colors = {

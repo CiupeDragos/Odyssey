@@ -1,3 +1,4 @@
+import { TripParticipant } from "../types/response-types";
 import { getYearsFromTimestamp } from "./commonMethods";
 import {
   MAX_PASSWORD_LENGTH,
@@ -86,6 +87,61 @@ export function validateLocationTitle(title: string) {
 export function validateGender(gender?: Gender) {
   if (!gender) {
     return "You need to select a gender";
+  }
+
+  return "";
+}
+
+export function validateTripTitle(title: string) {
+  if (title.length === 0) {
+    return "The title can't be empty";
+  }
+
+  return "";
+}
+
+export function validateTripDescription(desc: string) {
+  if (desc.length === 0) {
+    return "The description can't be empty";
+  }
+
+  return "";
+}
+
+export function validateTripStartDate(timestamp: number) {
+  if (timestamp + 1000 * 60 * 5 < new Date().getTime()) {
+    return "Start can't be in the past";
+  }
+
+  return "";
+}
+
+export function validateTripEndDate(
+  startTimestamp: number,
+  endTimestamp: number
+) {
+  if (endTimestamp + 1000 * 60 * 5 < new Date().getTime()) {
+    return "End can't be in the past";
+  }
+
+  if (endTimestamp < startTimestamp) {
+    return "The end can't be before the start";
+  }
+
+  return "";
+}
+
+export function validateTripCountries(countries: Array<string>) {
+  if (countries.length === 0) {
+    return "You need to add at least one country";
+  }
+
+  return "";
+}
+
+export function validateTripParticipants(participantsCount: number) {
+  if (participantsCount === 0) {
+    return "You need to add at least one participant";
   }
 
   return "";

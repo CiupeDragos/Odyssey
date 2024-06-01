@@ -11,6 +11,8 @@ export interface TripDbModel {
   description: string;
   visitedCountries: Array<string>;
   participants: Array<TripParticipantDbModel>;
+  startTimestamp: number;
+  endTimestamp: number;
 }
 
 export type Trip = {
@@ -21,6 +23,8 @@ export type Trip = {
   description: string;
   visitedCountries: Array<string>;
   participants: Array<TripParticipantDbModel>;
+  startTimestamp: number;
+  endTimestamp: number;
 };
 
 const TripSchema = new mongoose.Schema<TripDbModel>({
@@ -30,6 +34,8 @@ const TripSchema = new mongoose.Schema<TripDbModel>({
   description: { type: String, required: true },
   visitedCountries: { type: [String], required: true },
   participants: { type: [TripParticipantSchema], required: true },
+  startTimestamp: { type: Number, required: true },
+  endTimestamp: { type: Number, required: true },
 });
 
 export const TripModel = mongoose.model<TripDbModel>("trip", TripSchema);

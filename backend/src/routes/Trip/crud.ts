@@ -1,19 +1,19 @@
-import { Trip, TripDbModel } from "db_models/Trip/model";
+import { Trip, TripDbModel } from "../../db_models/Trip/model";
 import { Request, Response } from "express";
 import {
   AddTripRequest,
   GetTripsRequest,
   JoinTripRequest,
 } from "routes/requests";
-import { INVALID_REQUEST_BODY_MESSAGE } from "util/constants";
-import { isRequestValid } from "util/methods";
+import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
+import { isRequestValid } from "../../util/methods";
 import {
   getTripById,
   addTrip as saveTrip,
   updateTrip,
   getTrips as getAllTrips,
-} from "db_models/Trip/methods";
-import { findUserById } from "db_models/User/methods";
+} from "../../db_models/Trip/methods";
+import { findUserById } from "../../db_models/User/methods";
 
 export const addTrip = async (req: Request, res: Response) => {
   const addTripRequest: AddTripRequest = {
@@ -23,6 +23,8 @@ export const addTrip = async (req: Request, res: Response) => {
     description: req.body.description,
     participants: req.body.participants,
     visitedCountries: req.body.visitedCountries,
+    startTimestamp: req.body.startTimestamp,
+    endTimestamp: req.body.endTimestamp,
   };
 
   if (!isRequestValid(addTripRequest)) {
@@ -93,6 +95,8 @@ export const getTrips = async (req: Request, res: Response) => {
       description: doc.description,
       participants: doc.participants,
       visitedCountries: doc.visitedCountries,
+      startTimestamp: doc.startTimestamp,
+      endTimestamp: doc.endTimestamp,
     };
 
     return trip;

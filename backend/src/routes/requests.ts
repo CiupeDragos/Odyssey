@@ -87,6 +87,8 @@ export type AddTripRequest = {
   description: string;
   visitedCountries: Array<string>;
   participants: Array<TripParticipantDbModel>;
+  startTimestamp: number;
+  endTimestamp: number;
 };
 
 export type JoinTripRequest = {

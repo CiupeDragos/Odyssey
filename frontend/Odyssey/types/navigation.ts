@@ -23,7 +23,7 @@ export type AuthNavParamList = {
 export type BottomNavParamList = {
   Home: undefined;
   Search: undefined;
-  Trips: undefined;
+  Trips: { refetchKey: number } | undefined;
   TravelerLounge: { refetchKey: number } | undefined;
   Profile: { userId: string } | undefined;
 };
@@ -40,11 +40,14 @@ export type MainNavParamList = {
   LocationDetails: { location: LocationPost };
   AddThread: undefined;
   ThreadDetails: { thread: LoungeThread };
+  AddTrip: undefined;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
 
 export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
+
+export type TripsScreenRouteProp = RouteProp<BottomNavParamList, "Trips">;
 
 export type LoungeScreenRouteProp = RouteProp<
   BottomNavParamList,

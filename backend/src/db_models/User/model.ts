@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 export enum Gender {
   MAN = "Man",
   WOMAN = "Woman",
+  ANY = "Any",
 }
 
 export interface UserDbModel {
@@ -49,7 +50,7 @@ const userSchema = new mongoose.Schema<UserDbModel>({
   profileDescription: { type: String, required: false },
   followers: { type: [FollowerSchema], required: false },
   following: { type: [FollowerSchema], required: false },
-  gender: { type: String, enum: Object.values(Gender), required: true },
+  gender: { type: String, enum: [Gender.MAN, Gender.WOMAN], required: true },
 });
 
 export const User = mongoose.model<UserDbModel>("user", userSchema);

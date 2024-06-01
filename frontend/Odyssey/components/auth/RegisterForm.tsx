@@ -212,6 +212,7 @@ function RegisterForm() {
           />
           <BirthDateInput
             errorText={inputErrors.birthTimestamp}
+            label="Enter your birthdate:"
             onDateChange={(stringTimestamp) =>
               handleInputChange("birthTimestamp", stringTimestamp)
             }

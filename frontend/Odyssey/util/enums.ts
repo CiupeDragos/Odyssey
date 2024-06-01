@@ -13,4 +13,5 @@ export enum ThreadType {
 export enum Gender {
   MAN = "Man",
   WOMAN = "Woman",
+  ANY = "Any",
 }
