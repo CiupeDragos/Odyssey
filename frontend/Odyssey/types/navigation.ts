@@ -13,6 +13,7 @@ import {
   LoungeThread,
   TextLocation,
   Trip,
+  TripParticipant,
 } from "./response-types";
 
 export type AuthNavParamList = {
@@ -23,7 +24,12 @@ export type AuthNavParamList = {
 export type BottomNavParamList = {
   Home: { modifiedLocationPost: LocationPost } | undefined;
   Search: undefined;
-  Trips: { refetchKey: number } | { modifiedTrip: undefined } | undefined;
+  Trips:
+    | {
+        refetchKey?: number;
+        modifiedTripData?: { id: string; participants: Array<TripParticipant> };
+      }
+    | undefined;
   TravelerLounge:
     | { refetchKey?: number; modifiedThread?: LoungeThread }
     | undefined;

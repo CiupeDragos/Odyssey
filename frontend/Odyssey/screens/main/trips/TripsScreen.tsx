@@ -20,6 +20,7 @@ function TripsScreen() {
   const [trips, setTrips] = useState<Array<Trip>>();
 
   const refetchKey = route.params?.refetchKey ?? undefined;
+  const modifiedTripData = route.params?.modifiedTripData ?? undefined;
 
   async function getAllTrips() {
     const response = await getTrips();
@@ -38,6 +39,19 @@ function TripsScreen() {
   useEffect(() => {
     getAllTrips();
   }, [refetchKey]);
+
+  useEffect(() => {
+    if (!modifiedTripData || !trips) return;
+    const tripIndex = trips.findIndex((t) => t.id === modifiedTripData.id);
+    const updatedTrips = [...trips];
+    const updatedTrip: Trip = {
+      ...updatedTrips[tripIndex],
+      participants: modifiedTripData.participants,
+    };
+    updatedTrips[tripIndex] = updatedTrip;
+
+    setTrips(updatedTrips);
+  }, [modifiedTripData]);
 
   if (!trips) {
     return <LoadingText text="Loading the trips..." />;

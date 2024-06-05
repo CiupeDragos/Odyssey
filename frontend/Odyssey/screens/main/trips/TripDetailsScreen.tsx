@@ -1,6 +1,9 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { StyleSheet, View, Text, Alert } from "react-native";
-import { TripDetailsRouteProp } from "../../../types/navigation";
+import {
+  MainStackNavProp,
+  TripDetailsRouteProp,
+} from "../../../types/navigation";
 import { Colors } from "../../../util/constants";
 import {
   getDateFromFromTimestamp,
@@ -12,7 +15,7 @@ import VisitedCountries from "../../../components/main/profile/VisitedCountries"
 import ParticipantsList from "../../../components/main/trips/ParticipantsList";
 import { ScrollView } from "react-native-gesture-handler";
 import CustomButton from "../../../components/common/CustomButton";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../../../store/MainContext";
 import { Gender } from "../../../util/enums";
 import { TripParticipant } from "../../../types/response-types";
@@ -22,6 +25,7 @@ import { HttpResponse } from "../../../http/HttpResponse";
 
 function TripDetailsScreen() {
   const mainContext = useContext(MainContext);
+  const navigation = useNavigation<MainStackNavProp>();
   const route = useRoute<TripDetailsRouteProp>();
   const trip = route.params.trip;
   const [participants, setParticipants] = useState(trip.participants);
@@ -110,6 +114,20 @@ function TripDetailsScreen() {
     setParticipants(updatedParticipants);
     joinTrip(freeSpot.index);
   }
+
+  useEffect(() => {
+    navigation.addListener("blur", () => {
+      navigation.navigate("MainTabs", {
+        screen: "Trips",
+        params: {
+          modifiedTripData: {
+            id: trip.id,
+            participants: participants,
+          },
+        },
+      });
+    });
+  }, [participants, trip]);
 
   return (
     <ScrollView style={styles.container}>
