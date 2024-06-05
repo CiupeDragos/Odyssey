@@ -1,6 +1,9 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Alert, LogBox, StyleSheet, View } from "react-native";
-import { LocationDetailsRouteProp } from "../../../types/navigation";
+import {
+  LocationDetailsRouteProp,
+  MainStackNavProp,
+} from "../../../types/navigation";
 import LocationCarousel from "../../../components/main/location_details/LocationCarousel";
 import LocationMainData from "../../../components/main/location_details/LocationMainData";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,6 +19,7 @@ import { Comment } from "../../../types/response-types";
 function LocationDetailsScreen() {
   const mainContext = useContext(MainContext);
   const route = useRoute<LocationDetailsRouteProp>();
+  const navigation = useNavigation<MainStackNavProp>();
   const [location, setLocation] = useState(route.params.location);
   const curUser = mainContext.userData!!.id;
 
@@ -56,7 +60,14 @@ function LocationDetailsScreen() {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+    navigation.addListener("blur", () => {
+      console.log("Intercepted back navigation");
+      navigation.navigate("MainTabs", {
+        screen: "Home",
+        params: { modifiedLocationPost: location },
+      });
+    });
+  }, [location]);
 
   return (
     <ScrollView

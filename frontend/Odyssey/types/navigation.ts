@@ -1,6 +1,5 @@
 import {
   CompositeNavigationProp,
-  CompositeScreenProps,
   NavigatorScreenParams,
   RouteProp,
 } from "@react-navigation/native";
@@ -22,7 +21,7 @@ export type AuthNavParamList = {
 };
 
 export type BottomNavParamList = {
-  Home: undefined;
+  Home: { modifiedLocationPost: LocationPost } | undefined;
   Search: undefined;
   Trips: { refetchKey: number } | undefined;
   TravelerLounge: { refetchKey: number } | undefined;
@@ -48,6 +47,8 @@ export type MainNavParamList = {
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
 
 export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
+
+export type HomeScreenRouteProp = RouteProp<BottomNavParamList, "Home">;
 
 export type TripsScreenRouteProp = RouteProp<BottomNavParamList, "Trips">;
 
