@@ -6,7 +6,7 @@ import {
   JoinTripRequest,
 } from "routes/requests";
 import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
-import { isRequestValid } from "../../util/methods";
+import { getYearsFromTimestamp, isRequestValid } from "../../util/methods";
 import {
   getTripById,
   addTrip as saveTrip,
@@ -14,6 +14,7 @@ import {
   getTrips as getAllTrips,
 } from "../../db_models/Trip/methods";
 import { findUserById } from "../../db_models/User/methods";
+import { Gender } from "../../db_models/User/model";
 
 export const addTrip = async (req: Request, res: Response) => {
   const addTripRequest: AddTripRequest = {
@@ -67,12 +68,20 @@ export const joinTrip = async (req: Request, res: Response) => {
   }
 
   const spotToOccupy = trip.participants.find(
-    (participant) => participant.index === joinTripRequest.spotIndex
+    (p) => p.index === joinTripRequest.spotIndex
   )!!;
-  spotToOccupy.participantId = user.id;
-  spotToOccupy.participantUsername = user.username;
-  spotToOccupy.age = user.birthTimestamp;
-  spotToOccupy.gender = user.gender;
+
+  if (spotToOccupy.participantId === joinTripRequest.userId) {
+    (spotToOccupy.participantId = ""),
+      (spotToOccupy.participantUsername = ""),
+      (spotToOccupy.age = 0);
+    spotToOccupy.gender = Gender.MAN;
+  } else {
+    spotToOccupy.participantId = user.id;
+    spotToOccupy.participantUsername = user.username;
+    spotToOccupy.age = getYearsFromTimestamp(user.birthTimestamp);
+    spotToOccupy.gender = user.gender;
+  }
 
   await updateTrip(trip, joinTripRequest.tripId);
 

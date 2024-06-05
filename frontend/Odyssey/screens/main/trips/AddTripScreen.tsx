@@ -85,7 +85,8 @@ function AddTripScreen() {
       for (let i = 0; i < difference; i++) {
         const participantToAdd: TripParticipant = {
           age: 0,
-          gender: Gender.ANY,
+          requiredGender: Gender.ANY,
+          gender: Gender.MAN,
           index: participants.length + i,
           maxAge: 0,
           minAge: 0,
@@ -174,6 +175,8 @@ function AddTripScreen() {
       Alert.alert("An error occurred", response.error);
     }
   }
+
+  console.log(participants);
 
   return (
     <KeyboardAvoidingContainer customStyle={styles.scrollContainer}>

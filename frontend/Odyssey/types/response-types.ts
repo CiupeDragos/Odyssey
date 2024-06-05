@@ -89,6 +89,7 @@ export type LoungeThread = {
 export type TripParticipant = {
   participantId: string;
   participantUsername: string;
+  requiredGender: Gender;
   gender: Gender;
   age: number;
   minAge: number;

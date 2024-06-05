@@ -13,6 +13,7 @@ import {
   LocationPost,
   LoungeThread,
   TextLocation,
+  Trip,
 } from "./response-types";
 
 export type AuthNavParamList = {
@@ -41,6 +42,7 @@ export type MainNavParamList = {
   AddThread: undefined;
   ThreadDetails: { thread: LoungeThread };
   AddTrip: undefined;
+  TripDetails: { trip: Trip };
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
@@ -83,6 +85,8 @@ export type LocationDetailsRouteProp = RouteProp<
 >;
 
 export type EditProfileRouteProp = RouteProp<MainNavParamList, "EditProfile">;
+
+export type TripDetailsRouteProp = RouteProp<MainNavParamList, "TripDetails">;
 
 export type EditProfileNavProp = NativeStackNavigationProp<
   MainNavParamList,

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 export interface TripParticipantDbModel {
   participantId: string;
   participantUsername: string;
+  requiredGender: Gender;
   gender: Gender;
   age: number;
   minAge: number;
@@ -15,7 +16,12 @@ export const TripParticipantSchema =
   new mongoose.Schema<TripParticipantDbModel>({
     participantId: { type: String, required: false },
     participantUsername: { type: String, required: false },
-    gender: { type: String, enum: Object.values(Gender), required: true },
+    requiredGender: {
+      type: String,
+      enum: Object.values(Gender),
+      required: true,
+    },
+    gender: { type: String, enum: [Gender.MAN, Gender.WOMAN], required: false },
     age: { type: Number, required: true },
     minAge: { type: Number, required: true },
     maxAge: { type: Number, required: true },

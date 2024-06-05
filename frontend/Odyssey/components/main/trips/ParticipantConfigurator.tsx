@@ -8,8 +8,6 @@ import {
 } from "react-native";
 import { TripParticipant } from "../../../types/response-types";
 import { Gender } from "../../../util/enums";
-import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import ParticipantGender from "./ParticipantGender";
 
 type ParticipantComponentProps = {
@@ -41,18 +39,18 @@ function ParticipantConfigurator({
         >
           <ParticipantGender
             gender={Gender.ANY}
-            selectedGender={participant.gender}
-            onSelect={() => handleFieldChange("gender", Gender.ANY)}
+            selectedGender={participant.requiredGender}
+            onSelect={() => handleFieldChange("requiredGender", Gender.ANY)}
           />
           <ParticipantGender
             gender={Gender.MAN}
-            selectedGender={participant.gender}
-            onSelect={() => handleFieldChange("gender", Gender.MAN)}
+            selectedGender={participant.requiredGender}
+            onSelect={() => handleFieldChange("requiredGender", Gender.MAN)}
           />
           <ParticipantGender
             gender={Gender.WOMAN}
-            selectedGender={participant.gender}
-            onSelect={() => handleFieldChange("gender", Gender.WOMAN)}
+            selectedGender={participant.requiredGender}
+            onSelect={() => handleFieldChange("requiredGender", Gender.WOMAN)}
           />
         </ScrollView>
       </View>
