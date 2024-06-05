@@ -26,6 +26,7 @@ function TravelerLoungeScreen() {
   const route = useRoute<LoungeScreenRouteProp>();
   const [threads, setThreads] = useState<Array<LoungeThread>>();
   const refetchKey = route.params?.refetchKey ?? undefined;
+  const modifiedThread = route.params?.modifiedThread ?? undefined;
 
   async function getThreads() {
     const response = await getAllThreads();
@@ -46,11 +47,18 @@ function TravelerLoungeScreen() {
     getThreads();
   }, [refetchKey]);
 
+  useEffect(() => {
+    if (!modifiedThread || !threads) return;
+    const threadIndex = threads.findIndex((t) => t.id === modifiedThread.id);
+    const updatedThreads = [...threads];
+    updatedThreads[threadIndex] = modifiedThread;
+
+    setThreads(updatedThreads);
+  }, [modifiedThread]);
+
   if (!threads) {
     return <LoadingText text="Loading threads..." />;
   }
-
-  console.log(threads);
 
   return (
     <SafeAreaView style={styles.container}>

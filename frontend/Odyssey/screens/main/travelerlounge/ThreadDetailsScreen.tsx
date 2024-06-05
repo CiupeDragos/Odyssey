@@ -31,7 +31,13 @@ function ThreadDetailsScreen() {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+    navigation.addListener("blur", () => {
+      navigation.navigate("MainTabs", {
+        screen: "TravelerLounge",
+        params: { modifiedThread: curThread },
+      });
+    });
+  }, [curThread]);
 
   return (
     <ScrollView

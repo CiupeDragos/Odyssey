@@ -23,8 +23,10 @@ export type AuthNavParamList = {
 export type BottomNavParamList = {
   Home: { modifiedLocationPost: LocationPost } | undefined;
   Search: undefined;
-  Trips: { refetchKey: number } | undefined;
-  TravelerLounge: { refetchKey: number } | undefined;
+  Trips: { refetchKey: number } | { modifiedTrip: undefined } | undefined;
+  TravelerLounge:
+    | { refetchKey?: number; modifiedThread?: LoungeThread }
+    | undefined;
   Profile: { userId: string } | undefined;
 };
 
