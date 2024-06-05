@@ -1,9 +1,10 @@
-import { LocationTypeEnum, ThreadType } from "../util/enums";
+import { Gender, LocationTypeEnum, ThreadType } from "../util/enums";
 import {
   LocationPoster,
   TextLocation,
   Coordinates,
   Rating,
+  TripParticipant,
 } from "./response-types";
 
 export type RegisterRequest = {
@@ -12,6 +13,7 @@ export type RegisterRequest = {
   birthTimestamp: number;
   country: string;
   password: string;
+  gender: Gender;
 };
 
 export type LoginRequest = {
@@ -96,4 +98,26 @@ export type AddLoungeThreadRequest = {
 
 export type GetLoungeThreadsRequest = {
   authorId?: string;
+};
+
+export type AddTripRequest = {
+  organizerId: string;
+  organizerUsername: string;
+  title: string;
+  description: string;
+  visitedCountries: Array<string>;
+  participants: Array<TripParticipant>;
+  startTimestamp: number;
+  endTimestamp: number;
+};
+
+export type JoinTripRequest = {
+  userId: string;
+  tripId: string;
+  spotIndex: number;
+};
+
+export type GetTripsRequest = {
+  posterId?: string;
+  participantId?: string;
 };

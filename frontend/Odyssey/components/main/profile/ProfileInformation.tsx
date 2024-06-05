@@ -34,6 +34,10 @@ function ProfileInformation({ profileData }: ProfileInformationProps) {
         </Text>
       </ProfileDataField>
 
+      <ProfileDataField fieldLabel="Gender">
+        <Text style={styles.textValue}>{profileData.gender}</Text>
+      </ProfileDataField>
+
       <ProfileDataField fieldLabel="Currently living in">
         <Text style={styles.textValue}>{profileData.country}</Text>
       </ProfileDataField>

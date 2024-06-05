@@ -8,12 +8,14 @@ type VisitedCountriesProps = {
   visitedCountries: Array<string>;
   editMode?: true;
   onUpdate?: (countries: Array<string>) => void;
+  errorText?: string;
 };
 
 function VisitedCountries({
   visitedCountries,
   editMode,
   onUpdate,
+  errorText,
 }: VisitedCountriesProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -22,32 +24,42 @@ function VisitedCountries({
   }
 
   return (
-    <View style={styles.countriesCount}>
-      <Text style={styles.visitedCountriesText}>Visited countries:</Text>
-      <Text style={styles.visitedCountriesCount}>
-        {visitedCountries.length}
-      </Text>
-      <Pressable
-        onPress={() => {
-          toggleModal(true);
-        }}
-      >
-        <FontAwesome5 name="map-marked-alt" size={24} color={Colors.primary} />
-      </Pressable>
-      <Modal visible={isModalVisible} transparent={true} animationType="fade">
-        <View style={styles.centeredView}>
-          <View style={styles.modalContainer}>
-            <VisitedCountriesContent
-              visitedCountries={visitedCountries}
-              onUpdate={onUpdate}
-              editMode={editMode}
-              closeModal={() => {
-                toggleModal(false);
-              }}
-            />
+    <View>
+      <View style={styles.countriesCount}>
+        <Text style={styles.visitedCountriesText}>Visited countries:</Text>
+        <Text style={styles.visitedCountriesCount}>
+          {visitedCountries.length}
+        </Text>
+        <Pressable
+          onPress={() => {
+            toggleModal(true);
+          }}
+        >
+          <FontAwesome5
+            name="map-marked-alt"
+            size={24}
+            color={Colors.primary}
+          />
+        </Pressable>
+
+        <Modal visible={isModalVisible} transparent={true} animationType="fade">
+          <View style={styles.centeredView}>
+            <View style={styles.modalContainer}>
+              <VisitedCountriesContent
+                visitedCountries={visitedCountries}
+                onUpdate={onUpdate}
+                editMode={editMode}
+                closeModal={() => {
+                  toggleModal(false);
+                }}
+              />
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+      </View>
+      {errorText && errorText.length !== 0 && (
+        <Text style={styles.errText}>{errorText}</Text>
+      )}
     </View>
   );
 }
@@ -80,6 +92,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   modalText: {},
+  errText: {
+    color: Colors.errorText,
+    fontSize: 15,
+    marginTop: 2,
+  },
 });
 
 export default VisitedCountries;

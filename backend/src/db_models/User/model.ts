@@ -1,6 +1,12 @@
 import { Follower, FollowerSchema } from "./Follower/model";
 import mongoose from "mongoose";
 
+export enum Gender {
+  MAN = "Man",
+  WOMAN = "Woman",
+  ANY = "Any",
+}
+
 export interface UserDbModel {
   username: string;
   realName: string;
@@ -13,6 +19,7 @@ export interface UserDbModel {
   profileDescription: string;
   followers: Array<Follower>;
   following: Array<Follower>;
+  gender: Gender;
 }
 
 export type User = {
@@ -28,6 +35,7 @@ export type User = {
   profileDescription: string;
   followers: Array<Follower>;
   following: Array<Follower>;
+  gender: Gender;
 };
 
 const userSchema = new mongoose.Schema<UserDbModel>({
@@ -42,6 +50,7 @@ const userSchema = new mongoose.Schema<UserDbModel>({
   profileDescription: { type: String, required: false },
   followers: { type: [FollowerSchema], required: false },
   following: { type: [FollowerSchema], required: false },
+  gender: { type: String, enum: [Gender.MAN, Gender.WOMAN], required: true },
 });
 
 export const User = mongoose.model<UserDbModel>("user", userSchema);

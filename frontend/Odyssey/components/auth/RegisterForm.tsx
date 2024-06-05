@@ -7,6 +7,7 @@ import {
   validateBirthdayTimestamp,
   validateConfirmPassword,
   validateCountry,
+  validateGender,
   validatePassword,
   validateRealName,
   validateUsername,
@@ -19,6 +20,8 @@ import BirthDateInput from "./BirthDateInput";
 import KeyboardAvoidingContainer from "../common/KeyboardAvoidingContainer";
 import { Ionicons } from "@expo/vector-icons";
 import AuthButton from "../common/AuthButton";
+import { Gender } from "../../util/enums";
+import GenderPicker from "./GenderPicker";
 
 export type RegisterFields = {
   username: string;
@@ -27,7 +30,10 @@ export type RegisterFields = {
   country: string;
   password: string;
   confirmPassword: string;
+  gender?: Gender;
 };
+
+type ErrorFields = Omit<RegisterFields, "gender"> & { gender: string };
 
 type RegisterInputValue =
   | "username"
@@ -35,7 +41,8 @@ type RegisterInputValue =
   | "birthTimestamp"
   | "country"
   | "password"
-  | "confirmPassword";
+  | "confirmPassword"
+  | "gender";
 
 const defaultRegisterState: RegisterFields = {
   username: "",
@@ -46,13 +53,14 @@ const defaultRegisterState: RegisterFields = {
   confirmPassword: "",
 };
 
-const defaultErrorsState: RegisterFields = {
+const defaultErrorsState: ErrorFields = {
   username: "",
   realName: "",
   birthTimestamp: "",
   country: "",
   password: "",
   confirmPassword: "",
+  gender: "",
 };
 
 type RegisterResponse = {
@@ -65,13 +73,16 @@ function RegisterForm() {
     useState<RegisterFields>(defaultRegisterState);
 
   const [inputErrors, setInputErrors] =
-    useState<RegisterFields>(defaultErrorsState);
+    useState<ErrorFields>(defaultErrorsState);
 
   const [isLoading, setIsLoading] = useState(false);
   const [registerResponse, setRegisterResponse] = useState<RegisterResponse>();
   const navigation = useNavigation<AuthNavigationProp>();
 
-  function handleInputChange(field: RegisterInputValue, value: string) {
+  function handleInputChange(
+    field: RegisterInputValue,
+    value: string | Gender
+  ) {
     setInputValues((curFields) => ({ ...curFields, [field]: value }));
   }
 
@@ -106,15 +117,17 @@ function RegisterForm() {
       inputValues.password,
       inputValues.confirmPassword
     );
+    const genderError = validateGender(inputValues.gender);
 
     setInputErrors(() => {
-      const updatedErrors: RegisterFields = {
+      const updatedErrors: ErrorFields = {
         username: usernameError,
         realName: realNameError,
         birthTimestamp: birthdayTimestampError,
         country: countryError,
         password: passwordError,
         confirmPassword: confirmPasswordError,
+        gender: genderError,
       };
 
       return updatedErrors;
@@ -126,7 +139,8 @@ function RegisterForm() {
       birthdayTimestampError.length != 0 ||
       countryError.length != 0 ||
       passwordError.length != 0 ||
-      confirmPasswordError.length != 0
+      confirmPasswordError.length != 0 ||
+      genderError.length != 0
     ) {
       return false;
     }
@@ -135,7 +149,7 @@ function RegisterForm() {
   }
 
   return (
-    <KeyboardAvoidingContainer>
+    <KeyboardAvoidingContainer customStyle={{ height: 1000 }}>
       <SafeAreaView style={styles.container}>
         <View style={styles.innerContainer}>
           <Text style={styles.registerStaticText}>Create account</Text>
@@ -198,9 +212,15 @@ function RegisterForm() {
           />
           <BirthDateInput
             errorText={inputErrors.birthTimestamp}
+            label="Enter your birthdate:"
             onDateChange={(stringTimestamp) =>
               handleInputChange("birthTimestamp", stringTimestamp)
             }
+          />
+          <GenderPicker
+            onPickGender={(gender) => handleInputChange("gender", gender)}
+            errorText={inputErrors.gender}
+            selectedGender={inputValues.gender}
           />
 
           {registerResponse && (
@@ -248,7 +268,6 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     width: "80%",
-    height: 650,
     justifyContent: "flex-end",
     paddingTop: 24,
   },

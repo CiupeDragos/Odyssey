@@ -8,9 +8,16 @@ import { useState } from "react";
 type BirthdayInputProps = {
   errorText?: string;
   onDateChange: (stringTimestamp: string) => void;
+  label: string;
+  labelMarginRight?: number;
 };
 
-function BirthInput({ errorText, onDateChange }: BirthdayInputProps) {
+function BirthInput({
+  errorText,
+  onDateChange,
+  label,
+  labelMarginRight,
+}: BirthdayInputProps) {
   const [curDate, setCurDate] = useState(new Date());
 
   function handleDateChange(
@@ -24,7 +31,9 @@ function BirthInput({ errorText, onDateChange }: BirthdayInputProps) {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.label}>Enter your birthdate:</Text>
+        <Text style={[styles.label, { marginRight: labelMarginRight }]}>
+          {label}
+        </Text>
         <DateTimePicker
           value={curDate}
           onChange={(event, date) =>

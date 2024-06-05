@@ -47,6 +47,7 @@ function getUserFromModel(userModel: UserModel): User | null {
     profileDescription: userModel.profileDescription,
     followers: userModel.followers,
     following: userModel.following,
+    gender: userModel.gender,
   };
 
   return user;

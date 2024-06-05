@@ -26,6 +26,7 @@ import {
   getComments,
   getThreads,
 } from "./routes/Lounge/crud";
+import { addTrip, getTrips, joinTrip } from "./routes/Trip/crud";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "..", "public", "profile");
@@ -68,9 +69,14 @@ app.post("/addThread", addThread);
 app.get("/getThreads", getThreads);
 app.post("/addThreadReply", (req, res) => addComment(req, res, "LoungeThread"));
 
+// Trip
+app.post("/addTrip", addTrip);
+app.post("/joinTrip", joinTrip);
+app.get("/getTrips", getTrips);
+
 const server = http.createServer(app);
 
-server.listen(PORT, "192.168.100.7", () => {
+server.listen(PORT, "192.168.0.108", () => {
   console.log(`Server running on http:/192.168.0.108:${PORT}`);
 });
 
