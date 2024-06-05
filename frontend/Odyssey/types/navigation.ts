@@ -33,7 +33,7 @@ export type BottomNavParamList = {
   TravelerLounge:
     | { refetchKey?: number; modifiedThread?: LoungeThread }
     | undefined;
-  Profile: { userId: string } | undefined;
+  Profile: { userId?: string } | undefined;
 };
 
 export type MainNavParamList = {

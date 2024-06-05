@@ -6,6 +6,7 @@ import ProfileScreen from "./profile/ProfileScreen";
 import SearchScreen from "./search/SearchScreen";
 import TravelerLoungeScreen from "./travelerlounge/TravelerLoungeScreen";
 import TripsScreen from "./trips/TripsScreen";
+import CustomTabButton from "../../components/main/profile/CustomTabButton";
 
 const BottomTab = createBottomTabNavigator<BottomNavParamList>();
 
@@ -62,12 +63,10 @@ function MainTabsNavigation() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons color={color} size={size} name="person" />
           ),
+          tabBarButton: (props) => <CustomTabButton {...props} />,
           headerShown: false,
           unmountOnBlur: true,
         }}
-        listeners={({ navigation }) => ({
-          blur: () => navigation.setParams({ userId: undefined }),
-        })}
       />
     </BottomTab.Navigator>
   );

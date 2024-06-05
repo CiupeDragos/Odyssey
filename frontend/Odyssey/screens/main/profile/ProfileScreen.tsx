@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
-  Text,
-  Button,
   ScrollView,
   StyleSheet,
   View,
@@ -11,7 +9,10 @@ import {
 } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
-import { ProfileScreenRouteProp } from "../../../types/navigation";
+import {
+  MainStackNavProp,
+  ProfileScreenRouteProp,
+} from "../../../types/navigation";
 import { ProfileData } from "../../../types/response-types";
 import { getProfileData } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
@@ -20,6 +21,7 @@ import { Colors } from "../../../util/constants";
 import LoadingText from "../../../components/common/LoadingText";
 import LocationPostsList from "../../../components/main/home/feed/LocationPostsList";
 import { Gender } from "../../../util/enums";
+import { useNavigation } from "@react-navigation/native";
 
 type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
