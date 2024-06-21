@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { BottomTabsNav, MainStackNavProp } from "../../../../types/navigation";
 import { useContext } from "react";
 import { MainContext } from "../../../../store/MainContext";
+import ImageWithLoader from "../../../common/ImageWithLoader";
 
 type LocationPostComponentProps = {
   locationPost: LocationPost;
@@ -38,7 +39,8 @@ function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
   return (
     <Pressable style={styles.container} onPress={goToDetails}>
       <Text style={styles.locationTitle}>{locationPost.title}</Text>
-      <Image
+      <ImageWithLoader
+        imageHeight={400}
         style={styles.locationImage}
         source={{ uri: `${BASE_URL}/locations/${locationPost.photos[1]}` }}
       />
