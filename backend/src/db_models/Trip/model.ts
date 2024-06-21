@@ -3,6 +3,7 @@ import {
   TripParticipantDbModel,
   TripParticipantSchema,
 } from "./TripParticipant/model";
+import { Comment, CommentSchema } from "db_models/Comment/model";
 
 export interface TripDbModel {
   organizerId: string;
@@ -13,6 +14,7 @@ export interface TripDbModel {
   participants: Array<TripParticipantDbModel>;
   startTimestamp: number;
   endTimestamp: number;
+  chat: Array<Comment>;
 }
 
 export type Trip = {
@@ -25,6 +27,7 @@ export type Trip = {
   participants: Array<TripParticipantDbModel>;
   startTimestamp: number;
   endTimestamp: number;
+  chat: Array<Comment>;
 };
 
 const TripSchema = new mongoose.Schema<TripDbModel>({
@@ -36,6 +39,7 @@ const TripSchema = new mongoose.Schema<TripDbModel>({
   participants: { type: [TripParticipantSchema], required: true },
   startTimestamp: { type: Number, required: true },
   endTimestamp: { type: Number, required: true },
+  chat: { type: [CommentSchema], required: true },
 });
 
 export const TripModel = mongoose.model<TripDbModel>("trip", TripSchema);

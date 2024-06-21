@@ -22,6 +22,7 @@ import { TripParticipant } from "../../../types/response-types";
 import { JoinTripRequest } from "../../../types/request-types";
 import { joinTrip as joinTripPost } from "../../../http/trips";
 import { HttpResponse } from "../../../http/HttpResponse";
+import CommentsSection from "../../../components/main/location_details/CommentsSection";
 
 function TripDetailsScreen() {
   const mainContext = useContext(MainContext);

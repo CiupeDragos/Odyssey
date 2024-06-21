@@ -80,6 +80,14 @@ export type AddThreadReplyRequest = {
   loungeThreadId: string;
 };
 
+export type AddTripMessageRequest = {
+  authorId: string;
+  authorUsername: string;
+  content: string;
+  timestamp: number;
+  tripId: string;
+};
+
 export type GetCommentsRequest = {
   locationId: string;
 };

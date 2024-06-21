@@ -35,6 +35,7 @@ export const addTrip = async (req: Request, res: Response) => {
 
   const tripToAdd: TripDbModel = {
     ...addTripRequest,
+    chat: [],
   };
 
   await saveTrip(tripToAdd);
@@ -106,6 +107,7 @@ export const getTrips = async (req: Request, res: Response) => {
       visitedCountries: doc.visitedCountries,
       startTimestamp: doc.startTimestamp,
       endTimestamp: doc.endTimestamp,
+      chat: doc.chat,
     };
 
     return trip;

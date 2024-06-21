@@ -3,6 +3,8 @@ import { LocationPostModel } from "../../db_models/LocationPost/model";
 import { Comment, CommentType } from "./model";
 import { AddCommentRequest } from "routes/requests";
 import { LoungeThreadModel } from "../../db_models/LoungeThread/model";
+import { query } from "express";
+import { getTripById, updateTrip } from "db_models/Trip/methods";
 
 export async function getComments(queryId: string, queryFor: CommentType) {
   if (queryFor === "Location") {
@@ -41,7 +43,7 @@ export async function addComment(
     if (!updateResponse) return false;
 
     return true;
-  } else {
+  } else if (queryFor === "LoungeThread") {
     const thread = await getThread(addCommentRequest.modelId);
 
     if (!thread) return false;
@@ -53,6 +55,17 @@ export async function addComment(
     );
 
     if (!updateResponse) return false;
+
+    return true;
+  } else {
+    const trip = await getTripById(addCommentRequest.modelId);
+
+    if (!trip) return false;
+
+    trip.chat.push(commentToAdd);
+    const updateReponse = await updateTrip(trip, trip.id);
+
+    if (!updateReponse) return false;
 
     return true;
   }
