@@ -3,7 +3,7 @@ import {
   TripParticipantDbModel,
   TripParticipantSchema,
 } from "./TripParticipant/model";
-import { Comment, CommentSchema } from "db_models/Comment/model";
+import { Comment, CommentSchema } from "../Comment/model";
 
 export interface TripDbModel {
   organizerId: string;

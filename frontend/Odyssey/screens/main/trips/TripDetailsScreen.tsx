@@ -18,7 +18,7 @@ import CustomButton from "../../../components/common/CustomButton";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../../../store/MainContext";
 import { Gender } from "../../../util/enums";
-import { TripParticipant } from "../../../types/response-types";
+import { Comment, Trip, TripParticipant } from "../../../types/response-types";
 import { JoinTripRequest } from "../../../types/request-types";
 import { joinTrip as joinTripPost } from "../../../http/trips";
 import { HttpResponse } from "../../../http/HttpResponse";
@@ -28,8 +28,8 @@ function TripDetailsScreen() {
   const mainContext = useContext(MainContext);
   const navigation = useNavigation<MainStackNavProp>();
   const route = useRoute<TripDetailsRouteProp>();
-  const trip = route.params.trip;
-  const [participants, setParticipants] = useState(trip.participants);
+  const [trip, setTrip] = useState(route.params.trip);
+  const participants = trip.participants;
 
   const startDate = getDateFromFromTimestamp(trip.startTimestamp);
   const endDate = getDateFromFromTimestamp(trip.endTimestamp);
@@ -43,6 +43,32 @@ function TripDetailsScreen() {
   const didUserJoin =
     participants.find((p) => p.participantId === mainContext.userData!!.id) !==
     undefined;
+  const isUserCreator = mainContext.userData!!.id === trip.organizerId;
+
+  function handleAddMessage(message: Comment) {
+    setTrip((curTrip) => {
+      const updatedChat = [message, ...curTrip.chat];
+      const updatedTrip: Trip = {
+        ...curTrip,
+        chat: updatedChat,
+      };
+
+      return updatedTrip;
+    });
+  }
+
+  function handleUpdateParticipants(
+    updatedParticipants: Array<TripParticipant>
+  ) {
+    setTrip((curTrip) => {
+      const updatedTrip: Trip = {
+        ...curTrip,
+        participants: updatedParticipants,
+      };
+
+      return updatedTrip;
+    });
+  }
 
   async function joinTrip(index: number) {
     const joinTripRequest: JoinTripRequest = {
@@ -59,6 +85,10 @@ function TripDetailsScreen() {
   }
 
   function handleJoinTrip() {
+    if (isUserCreator) {
+      Alert.alert("Not allowed", "You can't join a trip you organized");
+      return;
+    }
     if (didUserJoin) {
       const userSpot = participants.find(
         (p) => p.participantId === mainContext.userData!!.id
@@ -76,7 +106,7 @@ function TripDetailsScreen() {
       const updatedParticipants = [...participants];
       updatedParticipants[spotIndex] = updatedUserSpot;
 
-      setParticipants(updatedParticipants);
+      handleUpdateParticipants(updatedParticipants);
       joinTrip(userSpot.index);
       return;
     }
@@ -112,7 +142,7 @@ function TripDetailsScreen() {
     );
     updatedParticipants[spotIndex] = updatedParticipant;
 
-    setParticipants(updatedParticipants);
+    handleUpdateParticipants(updatedParticipants);
     joinTrip(freeSpot.index);
   }
 
@@ -170,6 +200,14 @@ function TripDetailsScreen() {
         />
         <ParticipantsList participants={participants} viewOnly />
       </View>
+      {(didUserJoin || isUserCreator) && (
+        <CommentsSection
+          mode="Trip"
+          commentOwnerId={trip.id}
+          comments={trip.chat}
+          onAddComment={handleAddMessage}
+        />
+      )}
     </ScrollView>
   );
 }

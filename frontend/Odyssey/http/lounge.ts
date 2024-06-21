@@ -2,6 +2,7 @@ import {
   AddCommentRequest,
   AddLoungeThreadRequest,
   AddThreadReplyRequest,
+  AddTripMessageRequest,
   GetLoungeThreadsRequest,
 } from "../types/request-types";
 import { LoungeThread } from "../types/response-types";
@@ -12,6 +13,12 @@ export function addComment(
   addCommentRequest: AddCommentRequest
 ): Promise<HttpResponse<string>> {
   return genericPostMethod(addCommentRequest, "addComment");
+}
+
+export function addTripMessage(
+  addTripMessageRequest: AddTripMessageRequest
+): Promise<HttpResponse<string>> {
+  return genericPostMethod(addTripMessageRequest, "addTripChat");
 }
 
 export function addThreadReply(

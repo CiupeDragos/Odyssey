@@ -3,8 +3,7 @@ import { LocationPostModel } from "../../db_models/LocationPost/model";
 import { Comment, CommentType } from "./model";
 import { AddCommentRequest } from "routes/requests";
 import { LoungeThreadModel } from "../../db_models/LoungeThread/model";
-import { query } from "express";
-import { getTripById, updateTrip } from "db_models/Trip/methods";
+import { getTripById, updateTrip } from "../Trip/methods";
 
 export async function getComments(queryId: string, queryFor: CommentType) {
   if (queryFor === "Location") {
