@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ProfileUpdateRequest } from "./request-types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
+  Comment,
   Coordinates,
   Follower,
   LocationPost,
@@ -27,7 +28,11 @@ export type BottomNavParamList = {
   Trips:
     | {
         refetchKey?: number;
-        modifiedTripData?: { id: string; participants: Array<TripParticipant> };
+        modifiedTripData?: {
+          id: string;
+          participants: Array<TripParticipant>;
+          chat: Array<Comment>;
+        };
       }
     | undefined;
   TravelerLounge:

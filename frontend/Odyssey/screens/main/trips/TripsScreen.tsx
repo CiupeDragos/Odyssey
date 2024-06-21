@@ -47,6 +47,7 @@ function TripsScreen() {
     const updatedTrip: Trip = {
       ...updatedTrips[tripIndex],
       participants: modifiedTripData.participants,
+      chat: modifiedTripData.chat,
     };
     updatedTrips[tripIndex] = updatedTrip;
 

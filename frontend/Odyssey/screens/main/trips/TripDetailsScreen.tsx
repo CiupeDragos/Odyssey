@@ -154,6 +154,7 @@ function TripDetailsScreen() {
           modifiedTripData: {
             id: trip.id,
             participants: participants,
+            chat: trip.chat,
           },
         },
       });
