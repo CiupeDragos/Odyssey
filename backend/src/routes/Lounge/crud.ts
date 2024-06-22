@@ -28,8 +28,10 @@ export const addComment = async (
 
   if (queryFor === "Location") {
     addCommentRequest.modelId = req.body.locationId;
-  } else {
+  } else if (queryFor === "LoungeThread") {
     addCommentRequest.modelId = req.body.loungeThreadId;
+  } else {
+    addCommentRequest.modelId = req.body.tripId;
   }
 
   if (!isRequestValid(addCommentRequest)) {

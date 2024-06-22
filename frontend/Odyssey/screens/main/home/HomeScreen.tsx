@@ -1,28 +1,36 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import * as Splash from "expo-splash-screen";
 import FloatingActionButton from "../../../components/common/FloatingActionButton";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../../util/constants";
-import { useNavigation } from "@react-navigation/native";
-import { HomeScreenNavProp } from "../../../types/navigation";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  HomeScreenNavProp,
+  HomeScreenRouteProp,
+} from "../../../types/navigation";
 import { LocationPost } from "../../../types/response-types";
 import { getLocationPosts as getLocations } from "../../../http/home-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
 import LocationPostsList from "../../../components/main/home/feed/LocationPostsList";
 import LoadingText from "../../../components/common/LoadingText";
+import { MainContext } from "../../../store/MainContext";
 
 function HomeScreen() {
   const [locationPosts, setLocationPosts] = useState<Array<LocationPost>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<HomeScreenNavProp>();
+  const route = useRoute<HomeScreenRouteProp>();
+  const mainContext = useContext(MainContext);
+
+  const modifiedLocationPost = route.params?.modifiedLocationPost ?? undefined;
 
   function onAddLocationClick() {
     navigation.navigate("AddLocation");
   }
 
   async function getLocationPosts() {
-    const response = await getLocations();
+    const response = await getLocations(mainContext.userData!!.id);
 
     if (HttpResponse.isSuccess(response)) {
       setLocationPosts(response.data);
@@ -37,7 +45,19 @@ function HomeScreen() {
     getLocationPosts();
   }, []);
 
-  console.log(locationPosts);
+  useEffect(() => {
+    if (modifiedLocationPost) {
+      console.log("Received updated location post");
+      const locationIndex = locationPosts.findIndex(
+        (l) => l.id === modifiedLocationPost.id
+      );
+      const updatedLocations = [...locationPosts];
+      updatedLocations[locationIndex] = modifiedLocationPost;
+
+      console.log(modifiedLocationPost);
+      setLocationPosts(updatedLocations);
+    }
+  }, [modifiedLocationPost]);
 
   if (isLoading) {
     return <LoadingText text="Loading the location posts..." />;
@@ -54,7 +74,7 @@ function HomeScreen() {
         </FloatingActionButton>
       </View>
 
-      <LocationPostsList locationPosts={locationPosts} />
+      <LocationPostsList locationPosts={locationPosts} navSource="Home" />
     </SafeAreaView>
   );
 }

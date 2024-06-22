@@ -1,20 +1,15 @@
+import { User } from "../../db_models/User/model";
 import { updateLikes } from "../../db_models/User/methods";
 import { LocationDbModel, LocationPost, LocationPostModel } from "./model";
+import { Types, type Document } from "mongoose";
 
-export async function getLocations(
-  userId?: string
-): Promise<Array<LocationPost>> {
-  let locationPostDbModels;
+type LocationDbDocument = Document<unknown, {}, LocationDbModel> &
+  LocationDbModel & {
+    _id: Types.ObjectId;
+  };
 
-  if (userId) {
-    locationPostDbModels = await LocationPostModel.find({
-      "postedBy.userId": userId,
-    });
-  } else {
-    locationPostDbModels = await LocationPostModel.find();
-  }
-
-  const locationPosts = locationPostDbModels.map((model) => {
+function getLocationPostsFromModels(models: Array<LocationDbDocument>) {
+  return models.map((model) => {
     const post: LocationPost = {
       id: model.id,
       title: model.title,
@@ -32,8 +27,43 @@ export async function getLocations(
 
     return post;
   });
+}
 
-  return locationPosts;
+export async function getLikedPosts(userId: string): Promise<Array<string>> {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    console.log("[liked-posts] User is null");
+    return [];
+  }
+
+  return user.likedPosts;
+}
+
+export async function getAllPosts() {
+  const locationPostsDbModels = await LocationPostModel.find();
+
+  return getLocationPostsFromModels(locationPostsDbModels);
+}
+
+export async function getLocationsByIds(
+  ids: Array<string>
+): Promise<Array<LocationPost>> {
+  const locationPostDbModels = await LocationPostModel.find({
+    _id: { $in: ids },
+  });
+
+  return getLocationPostsFromModels(locationPostDbModels);
+}
+
+export async function getUserLocations(
+  userId: string
+): Promise<Array<LocationPost>> {
+  const locationPostDbModels = await LocationPostModel.find({
+    "postedBy.userId": userId,
+  });
+
+  return getLocationPostsFromModels(locationPostDbModels);
 }
 
 export function addLocationPost(locationDbModel: LocationDbModel) {
@@ -66,7 +96,7 @@ export async function likePost(
 }
 
 const LocationPostMethods = {
-  getUserLocations: getLocations,
+  getUserLocations: getUserLocations,
   likePost: likePost,
 };
 

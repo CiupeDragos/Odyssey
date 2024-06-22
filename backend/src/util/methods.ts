@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { LocationPost } from "db_models/LocationPost/model";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
@@ -63,4 +64,24 @@ export function getYearsFromTimestamp(timestamp: string | number): number {
   const age = differenceMs / millisecondsPerYear;
 
   return Math.floor(age);
+}
+
+export type LocationForRecommendation = {
+  id: string;
+  title: string;
+  type: string;
+};
+
+export function mapLocationsForRecommendation(
+  locations: Array<LocationPost>
+): Array<LocationForRecommendation> {
+  return locations.map((loc) => {
+    const mappedLocation: LocationForRecommendation = {
+      id: loc.id,
+      title: loc.title,
+      type: loc.categories.join(" "),
+    };
+
+    return mappedLocation;
+  });
 }

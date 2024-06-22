@@ -1,6 +1,5 @@
 import {
   CompositeNavigationProp,
-  CompositeScreenProps,
   NavigatorScreenParams,
   RouteProp,
 } from "@react-navigation/native";
@@ -8,13 +7,16 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ProfileUpdateRequest } from "./request-types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
+  Comment,
   Coordinates,
   Follower,
   LocationPost,
   LoungeThread,
   TextLocation,
   Trip,
+  TripParticipant,
 } from "./response-types";
+import { NAV_SOURCE } from "../screens/main/home/LocationDetailsScreen";
 
 export type AuthNavParamList = {
   Register: undefined;
@@ -22,11 +24,22 @@ export type AuthNavParamList = {
 };
 
 export type BottomNavParamList = {
-  Home: undefined;
+  Home: { modifiedLocationPost: LocationPost } | undefined;
   Search: undefined;
-  Trips: { refetchKey: number } | undefined;
-  TravelerLounge: { refetchKey: number } | undefined;
-  Profile: { userId: string } | undefined;
+  Trips:
+    | {
+        refetchKey?: number;
+        modifiedTripData?: {
+          id: string;
+          participants: Array<TripParticipant>;
+          chat: Array<Comment>;
+        };
+      }
+    | undefined;
+  TravelerLounge:
+    | { refetchKey?: number; modifiedThread?: LoungeThread }
+    | undefined;
+  Profile: { userId?: string; modifiedLocationPost?: LocationPost } | undefined;
 };
 
 export type MainNavParamList = {
@@ -38,7 +51,7 @@ export type MainNavParamList = {
     | { textLocation: TextLocation; coordinates: Coordinates }
     | undefined;
   PickLocation: { initialLocation: Coordinates };
-  LocationDetails: { location: LocationPost };
+  LocationDetails: { location: LocationPost; navSource: NAV_SOURCE };
   AddThread: undefined;
   ThreadDetails: { thread: LoungeThread };
   AddTrip: undefined;
@@ -48,6 +61,8 @@ export type MainNavParamList = {
 export type AuthNavigationProp = NativeStackNavigationProp<AuthNavParamList>;
 
 export type ProfileScreenRouteProp = RouteProp<BottomNavParamList, "Profile">;
+
+export type HomeScreenRouteProp = RouteProp<BottomNavParamList, "Home">;
 
 export type TripsScreenRouteProp = RouteProp<BottomNavParamList, "Trips">;
 

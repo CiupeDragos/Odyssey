@@ -52,7 +52,7 @@ export type AddLocationRequest = {
 };
 
 export type LocationPostsRequest = {
-  posterId?: string;
+  userId: string;
 };
 
 export type SearchUsersRequest = {
@@ -78,6 +78,14 @@ export type AddThreadReplyRequest = {
   content: string;
   timestamp: number;
   loungeThreadId: string;
+};
+
+export type AddTripMessageRequest = {
+  authorId: string;
+  authorUsername: string;
+  content: string;
+  timestamp: number;
+  tripId: string;
 };
 
 export type GetCommentsRequest = {

@@ -3,6 +3,7 @@ import { Comment } from "../../../types/response-types";
 import {
   AddCommentRequest,
   AddThreadReplyRequest,
+  AddTripMessageRequest,
 } from "../../../types/request-types";
 import HorizontalRule from "../../common/HorizontalRule";
 import FloatingActionButton from "../../common/FloatingActionButton";
@@ -11,7 +12,11 @@ import { Ionicons } from "@expo/vector-icons";
 import AddCommentsModal from "./AddCommentsModal";
 import { useContext, useState } from "react";
 import { MainContext } from "../../../store/MainContext";
-import { addComment, addThreadReply } from "../../../http/lounge";
+import {
+  addComment,
+  addThreadReply,
+  addTripMessage,
+} from "../../../http/lounge";
 import { HttpResponse } from "../../../http/HttpResponse";
 import LoadingOverlay from "../../common/LoadingOverlay";
 import CommentComponent from "./CommentComponent";
@@ -19,7 +24,7 @@ import CommentComponent from "./CommentComponent";
 type CommentsSectionProps = {
   comments: Array<Comment>;
   onAddComment: (comment: Comment) => void;
-  mode: "Location" | "Thread";
+  mode: "Location" | "Thread" | "Trip";
   commentOwnerId: string;
   marginTop?: number;
 };
@@ -59,7 +64,7 @@ function CommentsSection({
           "There was an error when adding the comment"
         );
       }
-    } else {
+    } else if (mode === "Thread") {
       const addThreadReplyRequest: AddThreadReplyRequest = {
         authorId: mainContext.userData!!.id,
         authorUsername: mainContext.userData!!.username,
@@ -79,6 +84,26 @@ function CommentsSection({
           "There was an error when adding the answer"
         );
       }
+    } else {
+      const addTripMessageRequest: AddTripMessageRequest = {
+        authorId: mainContext.userData!!.id,
+        authorUsername: mainContext.userData!!.username,
+        tripId: commentOwnerId,
+        timestamp: new Date().getTime(),
+        content: content,
+      };
+
+      const response = await addTripMessage(addTripMessageRequest);
+
+      if (HttpResponse.isSuccess(response)) {
+        toggleModal(false);
+        onAddComment({ ...addTripMessageRequest });
+      } else {
+        Alert.alert(
+          "An error occurred",
+          "There was an error when adding the message"
+        );
+      }
     }
     setIsLoading(false);
   }
@@ -88,15 +113,20 @@ function CommentsSection({
   }
 
   const headerMarginTop = marginTop ?? 36;
+  let titleLabel = "Comments";
+  if (mode === "Thread") titleLabel = "Answers";
+  if (mode === "Trip") titleLabel = "Messages";
+
+  let loadingLabel = "Adding comment...";
+  if (mode === "Thread") loadingLabel = "Adding answer...";
+  if (mode === "Trip") loadingLabel = "Adding message...";
 
   return (
     <View>
       <View style={[styles.header, { marginTop: headerMarginTop }]}>
         <View style={styles.labelView}>
-          <Text style={styles.commentsLabel}>
-            {mode === "Location" ? "Comments" : "Answers"}
-          </Text>
-          {mode === "Thread" && (
+          <Text style={styles.commentsLabel}>{titleLabel}</Text>
+          {(mode === "Thread" || mode === "Trip") && (
             <Text style={styles.countLabel}>{comments.length}</Text>
           )}
         </View>
@@ -119,10 +149,7 @@ function CommentsSection({
         closeModal={() => toggleModal(false)}
         onAddComment={handleAddComment}
       />
-      <LoadingOverlay
-        isVisible={isLoading}
-        label={mode === "Location" ? "Adding comment..." : "Adding answer..."}
-      />
+      <LoadingOverlay isVisible={isLoading} label={loadingLabel} />
     </View>
   );
 }

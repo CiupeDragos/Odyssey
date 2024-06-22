@@ -73,6 +73,7 @@ app.post("/addThreadReply", (req, res) => addComment(req, res, "LoungeThread"));
 app.post("/addTrip", addTrip);
 app.post("/joinTrip", joinTrip);
 app.get("/getTrips", getTrips);
+app.post("/addTripChat", (req, res) => addComment(req, res, "Trip"));
 
 const server = http.createServer(app);
 

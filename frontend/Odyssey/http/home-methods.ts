@@ -31,10 +31,10 @@ export function addLocationPost(
 }
 
 export function getLocationPosts(
-  userId?: string
+  userId: string
 ): Promise<HttpResponse<Array<LocationPost>>> {
   const params: LocationPostsRequest = {
-    posterId: userId,
+    userId: userId,
   };
 
   return genericGetMethod("locationPosts", params);

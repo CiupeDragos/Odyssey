@@ -107,4 +107,5 @@ export type Trip = {
   participants: Array<TripParticipant>;
   startTimestamp: number;
   endTimestamp: number;
+  chat: Array<Comment>;
 };

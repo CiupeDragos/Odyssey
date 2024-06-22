@@ -6,7 +6,7 @@ import { useState } from "react";
 
 type AddCommentsModalProps = {
   isVisible: boolean;
-  mode: "Location" | "Thread";
+  mode: "Location" | "Thread" | "Trip";
   closeModal: () => void;
   onAddComment: (content: string) => void;
 };
@@ -39,6 +39,10 @@ function AddCommentsModal({
     closeModal();
   }
 
+  let titleLabel = "Add a new comment";
+  if (mode === "Thread") titleLabel = "Add a new answer";
+  if (mode === "Trip") titleLabel = "Add a new message";
+
   return (
     <Modal visible={isVisible} animationType="fade" transparent={true}>
       <View style={styles.modalContainer}>
@@ -47,9 +51,7 @@ function AddCommentsModal({
           <Input
             value={commentContent}
             onChangeText={handleContentChange}
-            placeholder={
-              mode === "Location" ? "Add a new comment" : "Add a new answer"
-            }
+            placeholder={titleLabel}
             customStyle={styles.input}
             flat
             borderColor={Colors.primary}

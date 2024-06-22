@@ -10,15 +10,21 @@ import {
 } from "@expo/vector-icons";
 import { getDateFromFromTimestamp } from "../../../../util/commonMethods";
 import { useNavigation } from "@react-navigation/native";
-import { BottomTabsNav, MainStackNavProp } from "../../../../types/navigation";
+import { MainStackNavProp } from "../../../../types/navigation";
 import { useContext } from "react";
 import { MainContext } from "../../../../store/MainContext";
+import ImageWithLoader from "../../../common/ImageWithLoader";
+import { NAV_SOURCE } from "../../../../screens/main/home/LocationDetailsScreen";
 
 type LocationPostComponentProps = {
   locationPost: LocationPost;
+  navSource: NAV_SOURCE;
 };
 
-function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
+function LocationPostComponent({
+  locationPost,
+  navSource,
+}: LocationPostComponentProps) {
   const mainContext = useContext(MainContext);
   const categories = locationPost.categories.join(", ");
   const averageRating = (
@@ -32,13 +38,17 @@ function LocationPostComponent({ locationPost }: LocationPostComponentProps) {
   const didUserLike = locationPost.likes.includes(mainContext.userData!!.id);
 
   function goToDetails() {
-    navigation.navigate("LocationDetails", { location: locationPost });
+    navigation.navigate("LocationDetails", {
+      location: locationPost,
+      navSource: navSource,
+    });
   }
 
   return (
     <Pressable style={styles.container} onPress={goToDetails}>
       <Text style={styles.locationTitle}>{locationPost.title}</Text>
-      <Image
+      <ImageWithLoader
+        imageHeight={400}
         style={styles.locationImage}
         source={{ uri: `${BASE_URL}/locations/${locationPost.photos[1]}` }}
       />
