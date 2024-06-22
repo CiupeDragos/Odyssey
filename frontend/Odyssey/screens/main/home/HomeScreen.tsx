@@ -72,7 +72,7 @@ function HomeScreen() {
         </FloatingActionButton>
       </View>
 
-      <LocationPostsList locationPosts={locationPosts} />
+      <LocationPostsList locationPosts={locationPosts} navSource="Home" />
     </SafeAreaView>
   );
 }

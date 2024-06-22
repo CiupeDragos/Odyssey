@@ -9,10 +9,7 @@ import {
 } from "react-native";
 import { MainContext } from "../../../store/MainContext";
 import ProfileHeader from "../../../components/main/profile/ProfileHeader";
-import {
-  MainStackNavProp,
-  ProfileScreenRouteProp,
-} from "../../../types/navigation";
+import { ProfileScreenRouteProp } from "../../../types/navigation";
 import { ProfileData } from "../../../types/response-types";
 import { getProfileData } from "../../../http/profile-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
@@ -21,7 +18,6 @@ import { Colors } from "../../../util/constants";
 import LoadingText from "../../../components/common/LoadingText";
 import LocationPostsList from "../../../components/main/home/feed/LocationPostsList";
 import { Gender } from "../../../util/enums";
-import { useNavigation } from "@react-navigation/native";
 
 type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
@@ -48,6 +44,7 @@ function ProfileScreen({ route }: ProfileScreenProps) {
 
   const curUserId = mainContext.userData!!.id;
   const visitedUserId = route.params?.userId ?? curUserId;
+  const modifiedLocationPost = route.params?.modifiedLocationPost ?? undefined;
 
   console.log(visitedUserId);
 
@@ -66,6 +63,29 @@ function ProfileScreen({ route }: ProfileScreenProps) {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     loadProfileData();
   }, []);
+
+  useEffect(() => {
+    if (!modifiedLocationPost) return;
+
+    const modifiedPostIndex = profileData!!.locationPosts.findIndex(
+      (p) => p.id === modifiedLocationPost.id
+    );
+
+    if (modifiedPostIndex === -1) return;
+
+    const modifiedPosts = [...profileData!!.locationPosts];
+    modifiedPosts[modifiedPostIndex] = modifiedLocationPost;
+
+    setProfileData((curData) => {
+      const curProfileData = curData!!;
+      const updatedData: ProfileData = {
+        ...curProfileData,
+        locationPosts: modifiedPosts,
+      };
+
+      return updatedData;
+    });
+  }, [modifiedLocationPost, setProfileData]);
 
   if (!profileData) {
     return <LoadingText text="Loading profile data..." />;
@@ -89,7 +109,10 @@ function ProfileScreen({ route }: ProfileScreenProps) {
         <View style={styles.mainArea}>
           <ProfileInformation profileData={profileData} />
         </View>
-        <LocationPostsList locationPosts={profileData.locationPosts} />
+        <LocationPostsList
+          locationPosts={profileData.locationPosts}
+          navSource="Profile"
+        />
       </SafeAreaView>
     </ScrollView>
   );

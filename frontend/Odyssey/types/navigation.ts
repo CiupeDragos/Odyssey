@@ -16,6 +16,7 @@ import {
   Trip,
   TripParticipant,
 } from "./response-types";
+import { NAV_SOURCE } from "../screens/main/home/LocationDetailsScreen";
 
 export type AuthNavParamList = {
   Register: undefined;
@@ -38,7 +39,7 @@ export type BottomNavParamList = {
   TravelerLounge:
     | { refetchKey?: number; modifiedThread?: LoungeThread }
     | undefined;
-  Profile: { userId?: string } | undefined;
+  Profile: { userId?: string; modifiedLocationPost?: LocationPost } | undefined;
 };
 
 export type MainNavParamList = {
@@ -50,7 +51,7 @@ export type MainNavParamList = {
     | { textLocation: TextLocation; coordinates: Coordinates }
     | undefined;
   PickLocation: { initialLocation: Coordinates };
-  LocationDetails: { location: LocationPost };
+  LocationDetails: { location: LocationPost; navSource: NAV_SOURCE };
   AddThread: undefined;
   ThreadDetails: { thread: LoungeThread };
   AddTrip: undefined;

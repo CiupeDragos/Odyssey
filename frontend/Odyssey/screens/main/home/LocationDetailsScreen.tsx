@@ -16,12 +16,15 @@ import { HttpResponse } from "../../../http/HttpResponse";
 import CommentsSection from "../../../components/main/location_details/CommentsSection";
 import { Comment } from "../../../types/response-types";
 
+export type NAV_SOURCE = "Home" | "Profile";
+
 function LocationDetailsScreen() {
   const mainContext = useContext(MainContext);
   const route = useRoute<LocationDetailsRouteProp>();
   const navigation = useNavigation<MainStackNavProp>();
   const [location, setLocation] = useState(route.params.location);
   const curUser = mainContext.userData!!.id;
+  const navSource = route.params.navSource;
 
   function updateLikes() {
     if (location.likes.includes(curUser)) {
@@ -60,13 +63,23 @@ function LocationDetailsScreen() {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    navigation.addListener("blur", () => {
-      console.log("Intercepted back navigation");
-      navigation.navigate("MainTabs", {
-        screen: "Home",
-        params: { modifiedLocationPost: location },
+    if (navSource === "Home") {
+      navigation.addListener("blur", () => {
+        console.log("Intercepted back navigation");
+        navigation.navigate("MainTabs", {
+          screen: "Home",
+          params: { modifiedLocationPost: location },
+        });
       });
-    });
+    } else {
+      navigation.addListener("blur", () => {
+        console.log("Intercepted back navigation");
+        navigation.navigate("MainTabs", {
+          screen: "Profile",
+          params: { modifiedLocationPost: location },
+        });
+      });
+    }
   }, [location]);
 
   return (

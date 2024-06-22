@@ -113,7 +113,7 @@ function CommentsSection({
   }
 
   const headerMarginTop = marginTop ?? 36;
-  let titleLabel = "Location";
+  let titleLabel = "Comments";
   if (mode === "Thread") titleLabel = "Answers";
   if (mode === "Trip") titleLabel = "Messages";
 
