@@ -52,7 +52,7 @@ export type AddLocationRequest = {
 };
 
 export type LocationPostsRequest = {
-  posterId?: string;
+  userId: string;
 };
 
 export type SearchUsersRequest = {

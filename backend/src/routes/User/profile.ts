@@ -1,4 +1,4 @@
-import { getLocations } from "../../db_models/LocationPost/methods";
+import { getUserLocations } from "../../db_models/LocationPost/methods";
 import {
   findUserById,
   updateFollowers,
@@ -34,7 +34,7 @@ export const getProfileData = async (req: Request, res: Response) => {
     return;
   }
 
-  const userLocations = await getLocations(profileDataRequest.userId);
+  const userLocations = await getUserLocations(profileDataRequest.userId);
   userLocations.sort((a, b) => b.timestamp - a.timestamp);
 
   const { id, password, ...userProfileData } = user;

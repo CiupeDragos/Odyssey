@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import * as Splash from "expo-splash-screen";
 import FloatingActionButton from "../../../components/common/FloatingActionButton";
@@ -14,12 +14,14 @@ import { getLocationPosts as getLocations } from "../../../http/home-methods";
 import { HttpResponse } from "../../../http/HttpResponse";
 import LocationPostsList from "../../../components/main/home/feed/LocationPostsList";
 import LoadingText from "../../../components/common/LoadingText";
+import { MainContext } from "../../../store/MainContext";
 
 function HomeScreen() {
   const [locationPosts, setLocationPosts] = useState<Array<LocationPost>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<HomeScreenNavProp>();
   const route = useRoute<HomeScreenRouteProp>();
+  const mainContext = useContext(MainContext);
 
   const modifiedLocationPost = route.params?.modifiedLocationPost ?? undefined;
 
@@ -28,7 +30,7 @@ function HomeScreen() {
   }
 
   async function getLocationPosts() {
-    const response = await getLocations();
+    const response = await getLocations(mainContext.userData!!.id);
 
     if (HttpResponse.isSuccess(response)) {
       setLocationPosts(response.data);

@@ -1,4 +1,4 @@
-import { LocationDbModel } from "db_models/LocationPost/model";
+import { LocationDbModel, LocationPost } from "db_models/LocationPost/model";
 import { Request, Response } from "express";
 import {
   AddLocationRequest,
@@ -6,12 +6,21 @@ import {
   LocationPostsRequest,
 } from "routes/requests";
 import { INVALID_REQUEST_BODY_MESSAGE } from "../../util/constants";
-import { isRequestValid, writePhotosFromBase64 } from "../../util/methods";
+import {
+  isRequestValid,
+  mapLocationsForRecommendation,
+  writePhotosFromBase64,
+} from "../../util/methods";
 import {
   addLocationPost as addLocationToDb,
-  getLocations,
+  getAllPosts,
+  getLikedPosts,
+  getLocationsByIds,
+  getUserLocations,
   likePost,
 } from "../../db_models/LocationPost/methods";
+
+import { exec } from "child_process";
 
 export const addLocationPost = async (req: Request, res: Response) => {
   const addLocationRequest: AddLocationRequest = {
@@ -56,10 +65,36 @@ export const addLocationPost = async (req: Request, res: Response) => {
 
 export const getLocationPosts = async (req: Request, res: Response) => {
   const getLocationsRequest: LocationPostsRequest = {
-    posterId: req.query.posterId as string,
+    userId: req.query.userId as string,
   };
 
-  const locationPosts = await getLocations(getLocationsRequest.posterId);
+  if (!getLocationsRequest.userId) {
+    res.status(400).send(INVALID_REQUEST_BODY_MESSAGE);
+    return;
+  }
+
+  const interactedPostIds = JSON.stringify(
+    await getLikedPosts(getLocationsRequest.userId)
+  );
+  const allPosts = JSON.stringify(
+    mapLocationsForRecommendation(await getAllPosts())
+  );
+
+  console.log("Liked locations", interactedPostIds);
+
+  const recommendations_command = `python recommendations.py --all_posts "${allPosts.replace(
+    /"/g,
+    '\\"'
+  )}" --interacted_post_ids "${interactedPostIds.replace(/"/g, '\\"')}"`;
+
+  const recommendedPostsIds = await getRecommendedIds(recommendations_command);
+
+  console.log(recommendedPostsIds);
+
+  const locationPosts = await getLocationsByIds(
+    recommendedPostsIds ? recommendedPostsIds : []
+  );
+
   locationPosts.sort((a, b) => b.timestamp - a.timestamp);
 
   res.json(locationPosts);
@@ -88,3 +123,25 @@ export const likeLocation = async (req: Request, res: Response) => {
 
   res.send("Post liked successfully");
 };
+
+function getRecommendedIds(cmd: string): Promise<Array<string>> {
+  return new Promise((resolve, reject) => {
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        reject(`Error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        reject(`Stderr: ${stderr}`);
+        return;
+      }
+
+      try {
+        const recommendedPostsIds = JSON.parse(stdout);
+        resolve(recommendedPostsIds);
+      } catch (e) {
+        reject(`Failed to parse JSON output: ${e}`);
+      }
+    });
+  });
+}
